@@ -8,6 +8,8 @@
 
 #include <string>
 
+using namespace rdf ;
+
 
 namespace bsml {
 
@@ -16,10 +18,10 @@ namespace bsml {
   {
     A_OBJECT
     METACLASS(BSML::Recording)
-    PROPERTY_STRING(format, rdf::DCT::format)
-    PROPERTY_NODE(dataset, bsml::BSML::dataset)
-    PROPERTY_NODE(source, rdf::DCT::source)
-    PROPERTY_NODE(subject, rdf::DCT::subject)
+    PROPERTY_STRING(format, DCT::format)
+    PROPERTY_NODE(dataset, BSML::dataset)
+    PROPERTY_NODE(source, DCT::source)
+    PROPERTY_NODE(subject, DCT::subject)
 
    public:
     Recording(const std::string &uri) ;
