@@ -20,6 +20,7 @@ namespace bsml {
     PROPERTY_NODE(time, BSML::time, SUBELEMENT)
 
    public:
+    Event() { }
     Event(const std::string &uri) ;
 
     } ;

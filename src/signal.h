@@ -31,6 +31,7 @@ namespace bsml {
     PROPERTY_DURATION(duration, DCT::extent)
 
    public:
+    Signal() { }
     Signal(const std::string &uri) ;
 
     } ;

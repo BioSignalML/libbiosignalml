@@ -26,6 +26,7 @@ namespace bsml {
     //, XSD.dateTime,  utils::datetime_to_isoformat, utils::isoformat_to_datetime)
 
    public:
+    Object() { }
     Object(const std::string &uri) ;
 
     } ;

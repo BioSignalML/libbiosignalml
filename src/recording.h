@@ -28,6 +28,7 @@ namespace bsml {
     PROPERTY_URI(generatedBy, PROV::wasGeneratedBy, SUBELEMENT)
 
    public:
+    Recording() { }
     Recording(const std::string &uri) ;
 
     } ;

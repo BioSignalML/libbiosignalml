@@ -19,6 +19,7 @@ namespace bsml {
     PROPERTY_NODE(time, BSML::time, SUBELEMENT)
 
    public:
+    Segment() { }
     Segment(const std::string &uri) ;
 
     } ;

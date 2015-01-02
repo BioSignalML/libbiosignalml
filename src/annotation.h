@@ -19,6 +19,7 @@ namespace bsml {
     PROPERTY_NODE(tags, BSML::tag, MANYVALUED)
 
    public:
+    Annotation() { }
     Annotation(const std::string &uri) ;
 
     } ;
