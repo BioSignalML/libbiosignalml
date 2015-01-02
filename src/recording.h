@@ -1,11 +1,7 @@
 #ifndef BSML_RECORDING_H
 #define BSML_RECORDING_H
 
-
-#include "aobject.h"
-#include "rdf.h"
-#include "bsml.h"
-
+#include "object.h"
 #include <string>
 
 using namespace rdf ;
@@ -13,15 +9,23 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Recording : public AObject::AObject
-  /*-------------------------------------*/
+  class Recording : public Object
+  /*---------------------------*/
   {
     A_OBJECT
     METACLASS(BSML::Recording)
+
     PROPERTY_STRING(format, DCT::format)
     PROPERTY_NODE(dataset, BSML::dataset)
-    PROPERTY_NODE(source, DCT::source)
-    PROPERTY_NODE(subject, DCT::subject)
+    PROPERTY_NODE(source, DCT::source, MANYVALUED)
+
+    PROPERTY_NODE(investigation, DCT::subject)
+    PROPERTY_NODE(investigator, DCT::creator)  // Also AObject::creator
+    PROPERTY_DATETIME(starttime, DCT::created) // Also AObject::created
+    PROPERTY_DURATION(duration, DCT::extent)
+
+    PROPERTY_URI(timeline, TL::timeline, SUBELEMENT)
+    PROPERTY_URI(generatedBy, PROV::wasGeneratedBy, SUBELEMENT)
 
    public:
     Recording(const std::string &uri) ;

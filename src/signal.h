@@ -1,11 +1,7 @@
 #ifndef BSML_SIGNAL_H
 #define BSML_SIGNAL_H
 
-
-#include "aobject.h"
-#include "rdf.h"
-#include "bsml.h"
-
+#include "object.h"
 #include <string>
 
 using namespace rdf ;
@@ -13,8 +9,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Signal : public AObject::AObject
-  /*----------------------------------*/
+  class Signal : public Object
+  /*------------------------*/
   {
     A_OBJECT
     METACLASS(BSML::Signal)
