@@ -9,6 +9,19 @@ using namespace rdf ;
 
 namespace bsml {
 
+
+  class RelativeTimeLine : public Object
+  /*----------------------------------*/
+  {
+    A_OBJECT
+    METACLASS(TL::RelativeTimeLine)
+
+   public:
+    RelativeTimeLine() { }
+    RelativeTimeLine(const std::string &uri) ;
+    } ;
+
+
   class Recording : public Object
   /*---------------------------*/
   {
@@ -24,7 +37,7 @@ namespace bsml {
     PROPERTY_DATETIME(starttime, DCT::created) // Also AObject::created
     PROPERTY_DURATION(duration, DCT::extent)
 
-    PROPERTY_URI(timeline, TL::timeline, SUBELEMENT)
+    PROPERTY_AOBJECT(RelativeTimeLine, timeline, TL::timeline)
     PROPERTY_URI(generatedBy, PROV::wasGeneratedBy, SUBELEMENT)
 
    public:
