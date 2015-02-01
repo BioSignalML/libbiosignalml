@@ -1,7 +1,9 @@
 #ifndef BSML_SIGNAL_H
 #define BSML_SIGNAL_H
 
+#include "timing.h"
 #include "object.h"
+
 #include <string>
 
 using namespace rdf ;
@@ -20,7 +22,7 @@ namespace bsml {
     PROPERTY_NODE(filter, BSML::preFilter)
     PROPERTY_DOUBLE(rate, BSML::rate)
     PROPERTY_DOUBLE(period, BSML::period)
-    PROPERTY_URI(clock, BSML::clock, SUB_ELEMENT)
+    PROPERTY_AOBJECT(Clock, clock, BSML::clock)
     PROPERTY_DOUBLE(minFrequency, BSML::minFrequency)
     PROPERTY_DOUBLE(maxFrequency, BSML::maxFrequency)
     PROPERTY_DOUBLE(minValue, BSML::minValue)

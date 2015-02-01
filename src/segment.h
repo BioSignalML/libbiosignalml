@@ -1,7 +1,9 @@
 #ifndef BSML_SEGMENT_H
 #define BSML_SEGMENT_H
 
+#include "timing.h"
 #include "object.h"
+
 #include <string>
 
 using namespace rdf ;
@@ -16,12 +18,11 @@ namespace bsml {
     METACLASS(BSML::Segment)
 
     PROPERTY_URI(source, DCT::source)
-    PROPERTY_NODE(time, BSML::time, SUBELEMENT)
+    PROPERTY_AOBJECT(TemporalEntity, time, BSML::time)
 
    public:
     Segment() { }
     Segment(const std::string &uri) ;
-
     } ;
 
   } ;

@@ -1,26 +1,15 @@
 #ifndef BSML_RECORDING_H
 #define BSML_RECORDING_H
 
+#include "timing.h"
 #include "object.h"
+
 #include <string>
 
 using namespace rdf ;
 
 
 namespace bsml {
-
-
-  class RelativeTimeLine : public Object
-  /*----------------------------------*/
-  {
-    A_OBJECT
-    METACLASS(TL::RelativeTimeLine)
-
-   public:
-    RelativeTimeLine() { }
-    RelativeTimeLine(const std::string &uri) ;
-    } ;
-
 
   class Recording : public Object
   /*---------------------------*/
