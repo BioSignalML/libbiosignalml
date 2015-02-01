@@ -19,7 +19,7 @@ namespace bsml {
 
     PROPERTY_STRING(format, DCT::format)
     PROPERTY_NODE(dataset, BSML::dataset)
-    PROPERTY_NODE(source, DCT::source, MANYVALUED)
+    PROPERTY_NODE_SET(source, DCT::source)
 
     PROPERTY_NODE(investigation, DCT::subject)
     PROPERTY_NODE(investigator, DCT::creator)  // Also AObject::creator

@@ -16,7 +16,7 @@ namespace bsml {
     METACLASS(BSML::Annotation)
 
     PROPERTY_URI(about, DCT::subject)
-    PROPERTY_NODE(tags, BSML::tag, MANYVALUED)
+    PROPERTY_NODE_SET(tags, BSML::tag)
 
    public:
     Annotation() { }
