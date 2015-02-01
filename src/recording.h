@@ -27,7 +27,7 @@ namespace bsml {
     PROPERTY_DURATION(duration, DCT::extent)
 
     PROPERTY_AOBJECT(RelativeTimeLine, timeline, TL::timeline)
-    PROPERTY_URI(generatedBy, PROV::wasGeneratedBy, SUBELEMENT)
+    PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
    public:
     Recording() { }
