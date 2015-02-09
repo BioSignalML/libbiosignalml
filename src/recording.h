@@ -14,8 +14,7 @@ namespace bsml {
   class Recording : public Object
   /*---------------------------*/
   {
-    A_OBJECT
-    METACLASS(BSML::Recording)
+    TYPED_OBJECT(Recording, BSML::Recording)
 
     PROPERTY_STRING(format, DCT::format)
     PROPERTY_NODE(dataset, BSML::dataset)
@@ -29,9 +28,6 @@ namespace bsml {
     PROPERTY_AOBJECT(RelativeTimeLine, timeline, TL::timeline)
     PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
-   public:
-    Recording() { }
-    Recording(const std::string &uri) ;
 
     } ;
 

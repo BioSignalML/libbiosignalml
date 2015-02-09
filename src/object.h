@@ -14,7 +14,7 @@ namespace bsml {
   class Object : public AObject::AObject
   /*----------------------------------*/
   {
-    A_OBJECT
+    TYPED_OBJECT(Object, OWL::Object)
 
     // Generic attributes all resources have:
     PROPERTY_STRING(label, RDFS::label)
@@ -24,11 +24,6 @@ namespace bsml {
     PROPERTY_URI(creator, DCT::creator)
     PROPERTY_DATETIME(created, DCT::created)
     //, XSD.dateTime,  utils::datetime_to_isoformat, utils::isoformat_to_datetime)
-
-   public:
-    Object() { }
-    Object(const std::string &uri) ;
-
     } ;
 
   } ;

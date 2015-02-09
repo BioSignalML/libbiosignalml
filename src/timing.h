@@ -13,66 +13,42 @@ namespace bsml {
   class RelativeTimeLine : public Object
   /*----------------------------------*/
   {
-    A_OBJECT
-    METACLASS(TL::RelativeTimeLine)
-
-   public:
-    RelativeTimeLine() { }
-    RelativeTimeLine(const std::string &uri) ;
+    TYPED_OBJECT(RelativeTimeLine, TL::RelativeTimeLine)
     } ;
 
 
   class TemporalEntity : public AObject::AObject
   /*------------------------------------------*/
   {
-    A_OBJECT
-    PROPERTY_AOBJECT(RelativeTimeLine, timeline, TL::timeline)
-    PROPERTY_DURATION(start, TL::start)
+    TYPED_OBJECT(TemporalEntity, TIME::TemporalEntity)
 
-   public:
-    TemporalEntity() { }
-    TemporalEntity(const std::string &uri) ;
     } ;
 
 
   class Interval : public TemporalEntity
   /*----------------------------------*/
   {
-    A_OBJECT
-    METACLASS(BSML::Interval)
-    PROPERTY_DURATION(duration, TL::duration)
+    TYPED_OBJECT(Interval, BSML::Interval)
 
-   public:
-    Interval() { }
-    Interval(const std::string &uri) ;
     } ;
 
 
   class Instant : public TemporalEntity
   /*---------------------------------*/
   {
-    A_OBJECT
-    METACLASS(BSML::Instant)
+    TYPED_OBJECT(Instant, BSML::Instant)
 
-   public:
-    Instant() { }
-    Instant(const std::string &uri) ;
     } ;
 
 
   class Clock : public Object
   /*-----------------------*/
   {
-    A_OBJECT
-    METACLASS(BSML::SampleClock)
+    TYPED_OBJECT(Clock, BSML::SampleClock)
 
     // Also have 'frequency' ?? and/or 'period' ??
     PROPERTY_DOUBLE(resolution, BSML::resolution)
     PROPERTY_DOUBLE(rate,       BSML::rate)
-
-   public:
-    Clock() { }
-    Clock(const std::string &uri) ;
     } ;
 
   } ;

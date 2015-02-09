@@ -12,16 +12,11 @@ namespace bsml {
   class Event : public Object
   /*-----------------------*/
   {
-    A_OBJECT
-    METACLASS(BSML::Event)
+    TYPED_OBJECT(Event, BSML::Event)
 
     PROPERTY_URI(recording, BSML::recording)
     PROPERTY_URI(eventtype, BSML::eventType)
     PROPERTY_NODE(time, BSML::time, SUBELEMENT)
-
-   public:
-    Event() { }
-    Event(const std::string &uri) ;
 
     } ;
 

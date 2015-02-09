@@ -14,15 +14,11 @@ namespace bsml {
   class Segment : public Object
   /*-------------------------*/
   {
-    A_OBJECT
-    METACLASS(BSML::Segment)
+    TYPED_OBJECT(Segment, BSML::Segment)
 
     PROPERTY_URI(source, DCT::source)
     PROPERTY_AOBJECT(TemporalEntity, time, BSML::time)
 
-   public:
-    Segment() { }
-    Segment(const std::string &uri) ;
     } ;
 
   } ;

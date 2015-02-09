@@ -14,8 +14,7 @@ namespace bsml {
   class Signal : public Object
   /*------------------------*/
   {
-    A_OBJECT
-    METACLASS(BSML::Signal)
+    TYPED_OBJECT(Signal, BSML::Signal)
     PROPERTY_URI(recording, BSML::recording)
     PROPERTY_URI(units, BSML::units)
     PROPERTY_NODE(sensor, BSML::sensor)
@@ -31,10 +30,6 @@ namespace bsml {
     PROPERTY_NODE(signaltype, BSML::signalType)
     PROPERTY_DURATION(offset, BSML::offset)
     PROPERTY_DURATION(duration, DCT::extent)
-
-   public:
-    Signal() { }
-    Signal(const std::string &uri) ;
 
     } ;
 
