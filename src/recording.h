@@ -1,6 +1,8 @@
 #ifndef BSML_RECORDING_H
 #define BSML_RECORDING_H
 
+#include "signal.h"
+#include "annotation.h"
 #include "timing.h"
 #include "object.h"
 
@@ -28,7 +30,8 @@ namespace bsml {
     PROPERTY_AOBJECT(RelativeTimeLine, timeline, TL::timeline)
     PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
-
+    PROPERTY_OBJECT_RSET(signals, BSML::recording, Signal)
+    PROPERTY_OBJECT_RSET(annotations, DCT::subject, Annotation)
     } ;
 
   } ;
