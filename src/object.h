@@ -1,7 +1,7 @@
 #ifndef BSML_OBJECT_H
 #define BSML_OBJECT_H
 
-#include "aobject.h"
+#include "typedobject.h"
 #include "ontology.h"
 
 #include <string>
@@ -11,8 +11,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Object : public AObject::AObject
-  /*----------------------------------*/
+  class Object : public TypedObject::TypedObject
+  /*------------------------------------------*/
   {
     TYPED_OBJECT(Object, OWL::Object)
 
