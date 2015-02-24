@@ -2,7 +2,7 @@
 #define BSML_EVENT_H
 
 #include "object.h"
-#include <string>
+#include "timing.h"
 
 using namespace rdf ;
 
@@ -16,8 +16,7 @@ namespace bsml {
 
     PROPERTY_URI(recording, BSML::recording)
     PROPERTY_URI(eventtype, BSML::eventType)
-    PROPERTY_NODE(time, BSML::time, SUBELEMENT)
-
+    PROPERTY_OBJECT(time, BSML::time, TemporalEntity) // Instant or Interval
     } ;
 
   } ;

@@ -17,8 +17,7 @@ namespace bsml {
     TYPED_OBJECT(Segment, BSML::Segment)
 
     PROPERTY_URI(source, DCT::source)
-    PROPERTY_AOBJECT(TemporalEntity, time, BSML::time)
-
+    PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
     } ;
 
   } ;

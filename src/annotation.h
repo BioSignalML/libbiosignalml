@@ -2,7 +2,7 @@
 #define BSML_ANNOTATION_H
 
 #include "object.h"
-#include <string>
+#include "timing.h"
 
 using namespace rdf ;
 
@@ -16,6 +16,7 @@ namespace bsml {
 
     PROPERTY_URI(about, DCT::subject)
     PROPERTY_NODE_SET(tags, BSML::tag)
+    PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
     } ;
 
   } ;

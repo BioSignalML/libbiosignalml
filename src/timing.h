@@ -17,11 +17,14 @@ namespace bsml {
     } ;
 
 
-  class TemporalEntity : public AObject::AObject
-  /*------------------------------------------*/
+  class TemporalEntity : public Object
+  /*--------------------------------*/
   {
     TYPED_OBJECT(TemporalEntity, TIME::TemporalEntity)
 
+    PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
+    PROPERTY_DURATION(start, NONE)
+    PROPERTY_DURATION(duration, NONE)
     } ;
 
 
@@ -30,6 +33,8 @@ namespace bsml {
   {
     TYPED_OBJECT(Interval, BSML::Interval)
 
+    ASSIGN_DURATION(start, TL::start)
+    ASSIGN_DURATION(duration, TL::duration)
     } ;
 
 
@@ -38,6 +43,7 @@ namespace bsml {
   {
     TYPED_OBJECT(Instant, BSML::Instant)
 
+    ASSIGN_DURATION(start, TL::at)
     } ;
 
 

@@ -21,7 +21,7 @@ namespace bsml {
     PROPERTY_NODE(filter, BSML::preFilter)
     PROPERTY_DOUBLE(rate, BSML::rate)
     PROPERTY_DOUBLE(period, BSML::period)
-    PROPERTY_AOBJECT(Clock, clock, BSML::clock)
+    PROPERTY_OBJECT(clock, BSML::clock, Clock)
     PROPERTY_DOUBLE(minFrequency, BSML::minFrequency)
     PROPERTY_DOUBLE(maxFrequency, BSML::maxFrequency)
     PROPERTY_DOUBLE(minValue, BSML::minValue)

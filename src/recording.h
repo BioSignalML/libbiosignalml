@@ -23,11 +23,11 @@ namespace bsml {
     PROPERTY_NODE_SET(source, DCT::source)
 
     PROPERTY_NODE(investigation, DCT::subject)
-    PROPERTY_NODE(investigator, DCT::creator)  // Also AObject::creator
-    PROPERTY_DATETIME(starttime, DCT::created) // Also AObject::created
+    PROPERTY_NODE(investigator, DCT::creator)  // Also Object::creator
+    PROPERTY_DATETIME(starttime, DCT::created) // Also Object::created
     PROPERTY_DURATION(duration, DCT::extent)
 
-    PROPERTY_AOBJECT(RelativeTimeLine, timeline, TL::timeline)
+    PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
     PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
     PROPERTY_OBJECT_RSET(signals, BSML::recording, Signal)
