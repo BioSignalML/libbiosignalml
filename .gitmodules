@@ -1,0 +1,3 @@
+[submodule "external/typedobject"]
+	path = external/typedobject
+	url = git@github.com:dbrnz/typedobject.git
