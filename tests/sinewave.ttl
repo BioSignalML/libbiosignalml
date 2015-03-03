@@ -1,0 +1,128 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix bsml: <http://www.biosignalml.org/ontologies/2011/04/biosignalml#> .
+@prefix ns4: <http://purl.org/NET/c4dm/timeline.owl#> .
+
+<http://demo.biosignalml.org/examples/sinewave>
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    dct:created "2003-01-01T10:00:00+13:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:description "Startdate 01-JAN-2003 X X X" ;
+    dct:extent "PT5.5S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    dct:format "application/x-bsml+edf" ;
+    dct:subject "X X X X" ;
+    bsml:dataset <file:///home/dave/biosignalml/server/recordings/f12a3f1e-8784-11e2-9e2f-00163edeed03.edf> ;
+    a bsml:Recording .
+
+<http://demo.biosignalml.org/examples/sinewave/2d053691-aa78-11e2-a4e4-001c4229719c>
+    dct:source <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/2d053692-aa78-11e2-9e34-001c4229719c> ;
+    a bsml:Segment .
+
+<http://demo.biosignalml.org/examples/sinewave/2d15ff70-aa78-11e2-a24f-001c4229719c>
+    dct:created "2013-04-21T11:39:50.375Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave/2d053691-aa78-11e2-a4e4-001c4229719c> ;
+    a bsml:Annotation ;
+    rdfs:comment "ssss" .
+
+<http://demo.biosignalml.org/examples/sinewave/420f1ba1-aa78-11e2-a612-001c4229719c>
+    dct:source <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/420f1ba2-aa78-11e2-a98d-001c4229719c> ;
+    a bsml:Segment .
+
+<http://demo.biosignalml.org/examples/sinewave/4226e95e-aa78-11e2-9269-001c4229719c>
+    dct:created "2013-04-21T11:40:25.718Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave/420f1ba1-aa78-11e2-a612-001c4229719c> ;
+    a bsml:Annotation ;
+    rdfs:comment "sssq" .
+
+<http://demo.biosignalml.org/examples/sinewave/annotation/tal_0_1>
+    dct:created "2013-03-08T00:13:02.687289Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/f136cc0c-8784-11e2-9e2f-00163edeed03> ;
+    a bsml:Annotation ;
+    rdfs:comment "This is the first data record" .
+
+<http://demo.biosignalml.org/examples/sinewave/annotation/tal_1_1>
+    dct:created "2013-03-08T00:13:02.688060Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/f136e980-8784-11e2-9e2f-00163edeed03> ;
+    a bsml:Annotation ;
+    rdfs:comment "olivan@neurotraces.com" .
+
+<http://demo.biosignalml.org/examples/sinewave/annotation/tal_2_1>
+    dct:created "2013-03-08T00:13:02.688881Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/f13705d2-8784-11e2-9e2f-00163edeed03> ;
+    a bsml:Annotation ;
+    rdfs:comment "<EDF_XMLnote>content</EDF_XMLnote>" .
+
+<http://demo.biosignalml.org/examples/sinewave/annotation/tal_3_1>
+    dct:created "2013-03-08T00:13:02.689483Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/f13723be-8784-11e2-9e2f-00163edeed03> ;
+    a bsml:Annotation ;
+    rdfs:comment "Unicode  5927 = 大" .
+
+<http://demo.biosignalml.org/examples/sinewave/annotation/tal_4_1>
+    dct:created "2013-03-08T00:13:02.690042Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/f1373ad4-8784-11e2-9e2f-00163edeed03> ;
+    a bsml:Annotation ;
+    rdfs:comment "TAL (ann1)" .
+
+<http://demo.biosignalml.org/examples/sinewave/annotation/tal_4_2>
+    dct:created "2013-03-08T00:13:02.690294Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+    dct:subject <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:time <http://demo.biosignalml.org/examples/sinewave/timeline/f1373ad4-8784-11e2-9e2f-00163edeed03> ;
+    a bsml:Annotation ;
+    rdfs:comment "TAL (ann2)" .
+
+<http://demo.biosignalml.org/examples/sinewave/signal/0>
+    bsml:index 0 ;
+    bsml:rate 100.0 ;
+    bsml:recording <http://demo.biosignalml.org/examples/sinewave> ;
+    bsml:units <http://www.sbpax.org/uome/list.owl#Microvolt> ;
+    a bsml:Signal ;
+    rdfs:label "Sin wave" .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline>
+    a ns4:RelativeTimeLine .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline/2d053692-aa78-11e2-9e34-001c4229719c>
+    ns4:duration "PT1.384S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:start "PT1.36S" ; # ^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    a bsml:Interval .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline/420f1ba2-aa78-11e2-a98d-001c4229719c>
+    ns4:duration "PT0.706999S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:start "PT2.3725S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    a bsml:Interval .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline/f136cc0c-8784-11e2-9e2f-00163edeed03>
+    ns4:at "PT0S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    a bsml:Instant .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline/f136e980-8784-11e2-9e2f-00163edeed03>
+    ns4:at "PT1.1S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    a bsml:Instant .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline/f13705d2-8784-11e2-9e2f-00163edeed03>
+    ns4:at "PT2.2S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    a bsml:Instant .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline/f13723be-8784-11e2-9e2f-00163edeed03>
+    ns4:at "PT3.3S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    a bsml:Instant .
+
+<http://demo.biosignalml.org/examples/sinewave/timeline/f1373ad4-8784-11e2-9e2f-00163edeed03>
+    ns4:at "PT4.4S"^^<http://www.w3.org/2001/XMLSchema#dayTimeDuration> ;
+    ns4:timeline <http://demo.biosignalml.org/examples/sinewave/timeline> ;
+    a bsml:Instant .
+
