@@ -8,8 +8,8 @@ Full documentation of the ontology is at http://www.biosignalml.org/ontologies/2
 
 #ifndef BSML_ONTOLOGY_H
 
-#include "rdf/rdf.h"
-#include "rdf/defs.h"
+#include "rdf.h"
+#include "rdfdefs.h"
 
 namespace bsml {
 
