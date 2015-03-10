@@ -35,30 +35,7 @@ namespace bsml {
 
   } ;
 
-/**
-  metaclass = BSML.Signal     #: :attr:`.BSML.Signal`
 
-  mapping = { 'recording':    PropertyMap(BSML.recording, to_rdf=PropertyMap.get_uri),
-              'units':        PropertyMap(BSML.units, to_rdf=PropertyMap.get_uri),
-              'sensor':       PropertyMap(BSML.sensor),
-              'filter':       PropertyMap(BSML.preFilter),
-              'rate':        PropertyMap(BSML.rate, XSD.double),
-              'period':      PropertyMap(BSML.period, XSD.double),
-              'clock':        PropertyMap(BSML.clock, to_rdf=PropertyMap.get_uri, subelement=True),
-              'minFrequency': PropertyMap(BSML.minFrequency, XSD.double),
-              'maxFrequency': PropertyMap(BSML.maxFrequency, XSD.double),
-              'minValue':     PropertyMap(BSML.minValue, XSD.double),
-              'maxValue':     PropertyMap(BSML.maxValue, XSD.double),
-              'dataBits':     PropertyMap(BSML.dataBits, XSD.integer),
-              'signaltype':   PropertyMap(BSML.signalType),
-              'offset':       PropertyMap(BSML.offset, XSD.dayTimeDuration,
-                                          utils.seconds_to_isoduration,
-                                          utils.isoduration_to_seconds),
-              'duration':    PropertyMap(DCT.extent, XSD.dayTimeDuration,
-                                          utils.seconds_to_isoduration,
-                                          utils.isoduration_to_seconds),
-            }
 
-**/
 
 #endif
