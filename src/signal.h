@@ -5,6 +5,8 @@
 #include "object.h"
 
 #include <string>
+#include <vector>
+#include <type_traits>
 
 using namespace rdf ;
 
@@ -31,6 +33,12 @@ namespace bsml {
     PROPERTY_DURATION(offset, BSML::offset)
     PROPERTY_DURATION(duration, DCT::extent)
 
+    } ;
+
+  template<class SIGNAL = Signal> class SignalVector : public std::vector<SIGNAL *>
+  /*-----------------------------------------------------------------------------*/
+  {
+    static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
     } ;
 
   } ;

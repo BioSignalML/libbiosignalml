@@ -7,6 +7,7 @@
 #include "object.h"
 
 #include <string>
+#include <vector>
 
 using namespace rdf ;
 
@@ -32,7 +33,33 @@ namespace bsml {
 
     PROPERTY_OBJECT_RSET(signals, BSML::recording, Signal)
     PROPERTY_OBJECT_RSET(annotations, DCT::subject, Annotation)
+
+   public:
+    template<class SIGNAL = Signal>
+    SIGNAL *new_signal(const std::string &uri)
+    /*--------------------------------------*/
+    {
+      static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
+      SIGNAL *signal = new SIGNAL(uri) ;
+      signal->set_recording(this->uri()) ;
+      this->m_signals.insert(signal) ;
+      return signal ;
+      }
+
+    template<class SIGNAL = Signal>
+    SignalVector<SIGNAL> new_signal(const std::vector<const std::string> &uris)
+    /*------------------------------------------------------------------*/
+    {
+      static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
+      SignalVector<SIGNAL> signals ;
+      for (const auto uri : uris) {
+        signals.push_back(this->new_signal<SIGNAL>(uri)) ;
+        }
+      return signals ;
+      }
+
     } ;
+
 
   } ;
 
