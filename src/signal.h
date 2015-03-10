@@ -43,7 +43,4 @@ namespace bsml {
 
   } ;
 
-
-
-
 #endif
