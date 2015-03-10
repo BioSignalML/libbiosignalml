@@ -53,8 +53,8 @@ namespace bsml {
     TYPED_OBJECT(Clock, BSML::SampleClock)
 
     // Also have 'frequency' ?? and/or 'period' ??
-    PROPERTY_DOUBLE(resolution, BSML::resolution)
-    PROPERTY_DOUBLE(rate,       BSML::rate)
+    PROPERTY_DECIMAL(resolution, BSML::resolution)
+    PROPERTY_DECIMAL(rate,       BSML::rate)
     } ;
 
   } ;
