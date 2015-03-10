@@ -1,19 +1,3 @@
-## This function needs to come from ${TYPEDOBJECT}/cmake
-function(make_tobj output filename)
-  get_filename_component(base ${filename} NAME_WE)
-  set(tobj_file ${CMAKE_CURRENT_BINARY_DIR}/tobj_${base}.cpp)
-  set(${output} ${${output}} ${tobj_file} PARENT_SCOPE)
-  add_custom_command(
-    OUTPUT ${tobj_file}
-    COMMAND python ${TYPEDOBJECT}/src/clang/generate.py
-                   -I${TYPEDOBJECT}/src
-                   ${CMAKE_CURRENT_SOURCE_DIR}/${filename}
-                   ${tobj_file}
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${filename}
-    )
-  set_source_files_properties(${tobj_file} PROPERTIES GENERATED TRUE)
-endfunction()
-
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/ontology.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/object.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/recording.cpp
@@ -23,7 +7,6 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/ontology.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/event.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/annotation.cpp
             )
-source_group(cpp FILES ${SOURCES})
 
 set(HEADERS object.h
             recording.h
@@ -34,13 +17,10 @@ set(HEADERS object.h
             annotation.h
             )
 foreach(file ${HEADERS})
-  make_tobj(GENERATED ${file})
+  typedobject_generate(GENERATED_FILES ${file})
 endforeach()
-source_group(gen FILES ${GENERATED})
 
-message(${GENERATED})
-
-set(SOURCES ${SOURCES} ${GENERATED})
+set(SOURCES ${SOURCES} ${GENERATED_FILES})
 
 set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR} ${TYPEDOBJECT}/src)
 

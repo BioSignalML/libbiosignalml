@@ -6,8 +6,8 @@ if (UNIX)
   add_definitions(-std=c++11)
 endif()
 
-set(TYPEDOBJECT ${CMAKE_SOURCE_DIR}/external/typedobject)
-add_subdirectory(${TYPEDOBJECT})
+set(typedobject_DIR ${CMAKE_SOURCE_DIR}/external/typedobject)
+add_subdirectory(${typedobject_DIR})
 
 add_subdirectory(src)
 
