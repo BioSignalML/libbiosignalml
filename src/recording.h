@@ -19,7 +19,7 @@ namespace bsml {
   {
     TYPED_OBJECT(Recording, BSML::Recording)
 
-    PROPERTY_STRING(format, DCT::format)
+    PROPERTY_NODE(format, DCT::format)
     PROPERTY_NODE(dataset, BSML::dataset)
     PROPERTY_NODE_SET(source, DCT::source)
 
