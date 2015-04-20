@@ -53,8 +53,13 @@ namespace bsml {
     TYPED_OBJECT(Clock, BSML::SampleClock)
 
     // Also have 'frequency' ?? and/or 'period' ??
+    PROPERTY_URI(units,          BSML::units)
     PROPERTY_DECIMAL(resolution, BSML::resolution)
     PROPERTY_DECIMAL(rate,       BSML::rate)
+    PROPERTY_URI(recording,      BSML::recording)
+
+   public:
+    Clock(const std::string &uri, const std::string &units) ;
     } ;
 
   } ;
