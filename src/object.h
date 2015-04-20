@@ -1,8 +1,9 @@
 #ifndef BSML_OBJECT_H
 #define BSML_OBJECT_H
 
-#include "typedobject.h"
 #include "ontology.h"
+
+#include "typedobject/typedobject.h"
 
 #include <string>
 

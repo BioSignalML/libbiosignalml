@@ -21,8 +21,7 @@ foreach(file ${HEADERS})
 endforeach()
 
 set(SOURCES ${SOURCES} ${GENERATED_FILES})
-
-set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR} ${TYPEDOBJECT}/src)
+set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(bsml SHARED ${SOURCES})
 target_link_libraries(bsml typedobject)
