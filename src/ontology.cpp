@@ -1,4 +1,4 @@
-#include "bsml.h"
+#include "ontology.h"
 
 namespace bsml {
   const rdf::Namespace BSML::NS("bsml", "http://www.biosignalml.org/ontologies/2011/04/biosignalml#") ;
