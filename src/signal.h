@@ -23,7 +23,7 @@ namespace bsml {
     PROPERTY_NODE(filter, BSML::preFilter)
     PROPERTY_DECIMAL(rate, BSML::rate)
     PROPERTY_DECIMAL(period, BSML::period)
-    PROPERTY_OBJECT(clock, BSML::clock, Clock)
+    PROPERTY_URI(clock, BSML::clock)
     PROPERTY_DECIMAL(minFrequency, BSML::minFrequency)
     PROPERTY_DECIMAL(maxFrequency, BSML::maxFrequency)
     PROPERTY_DECIMAL(minValue, BSML::minValue)
@@ -33,6 +33,8 @@ namespace bsml {
     PROPERTY_DURATION(offset, BSML::offset)
     PROPERTY_DURATION(duration, DCT::extent)
 
+   public:
+    Signal(const std::string &uri, const std::string &units, Clock *clock=nullptr) ;
     } ;
 
   template<class SIGNAL = Signal> class SignalVector : public std::vector<SIGNAL *>
