@@ -32,10 +32,22 @@ namespace bsml {
     PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
     PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
+    PROPERTY_OBJECT_RSET(clocks, BSML::recording, Clock)
     PROPERTY_OBJECT_RSET(signals, BSML::recording, Signal)
     PROPERTY_OBJECT_RSET(annotations, DCT::subject, Annotation)
 
    public:
+    template<class CLOCK = Clock>
+    CLOCK *new_clock(const std::string &uri, const std::string &units)
+    /*--------------------------------------------------------------*/
+    {
+      static_assert(std::is_base_of<Clock, CLOCK>::value, "CLOCK must be derived from Clock") ;
+      CLOCK *clock = new CLOCK(uri, units) ;
+      clock->set_recording(this->uri()) ;
+      this->m_clocks.insert(clock) ;
+      return clock ;
+      }
+
     template<class SIGNAL = Signal>
     SIGNAL *new_signal(const std::string &uri, const std::string &units)
     /*----------------------------------------------------------------*/
