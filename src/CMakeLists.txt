@@ -7,6 +7,7 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/ontology.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/event.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/annotation.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/formats.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/formats/hdf5.cpp
             )
 
 set(HEADERS object.h
@@ -16,6 +17,7 @@ set(HEADERS object.h
             timing.h
             event.h
             annotation.h
+            formats/hdf5.h
             )
 foreach(file ${HEADERS})
   typedobject_generate(GENERATED_FILES ${file})
