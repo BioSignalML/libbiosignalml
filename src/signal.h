@@ -35,12 +35,17 @@ namespace bsml {
 
    public:
     Signal(const std::string &uri, const std::string &units, Clock *clock=nullptr) ;
+
+    virtual size_t extend(const double *points, const size_t length) { return 0 ; }
     } ;
+
 
   template<class SIGNAL = Signal> class SignalVector : public std::vector<SIGNAL *>
   /*-----------------------------------------------------------------------------*/
   {
     static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
+
+    virtual size_t extend(const double *points, const size_t length) { return 0 ; }
     } ;
 
   } ;
