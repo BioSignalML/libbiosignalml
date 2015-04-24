@@ -23,14 +23,26 @@
 
 #include "model.h"
 
-//#include <H5Cpp.h>
-
 #include <string>
+#include <stdexcept>
 
 
 namespace bsml {
 
   namespace HDF5 {
+
+    class File ;        // Declare forward
+    class ClockData ;   // Declare forward
+    class SignalData ;  // Declare forward
+
+
+    class Exception : public std::runtime_error
+    /*=======================================*/
+    {
+     public:
+      Exception(const std::string &msg) : std::runtime_error(msg) { }
+      } ;
+
 
     class Clock : public bsml::Clock
     /*============================*/
@@ -39,7 +51,10 @@ namespace bsml {
 
      public:
       Clock(const std::string &uri, const std::string &units) ;
-      size_t extend(const double *times, const size_t length) { return 1 ; } // TEMP
+      size_t extend(const double *times, const size_t length) ;
+
+     private:
+      ClockData *m_data ;
       } ;
 
 
@@ -50,7 +65,10 @@ namespace bsml {
 
      public:
       Signal(const std::string &uri, const std::string &units, Clock *clock=nullptr) ;
-      size_t extend(const double *points, const size_t length) { return 1 ; } // TEMP
+      size_t extend(const double *points, const size_t length) ;
+
+     private:
+      SignalData *m_data ;
       } ;
 
 
@@ -58,7 +76,7 @@ namespace bsml {
     /*--------------------------------------------------------*/
     {
      public:
-      size_t extend(const double *points, const size_t length) { return 1 ; } // TEMP
+      size_t extend(const double *points, const size_t length) ;
       } ;
 
 
@@ -69,6 +87,7 @@ namespace bsml {
       RESTRICTION(format, Format::HDF5)
 
       PROPERTY_OBJECT_RSET(signals, BSML::recording, Signal) // Override...
+      PROPERTY_OBJECT_RSET(clockss, BSML::recording, Clock)  // Override...
 
      public:
       Recording(const std::string &uri, const std::string &filename) ;
@@ -85,12 +104,9 @@ namespace bsml {
 
 // Variants of new_signal() with rate/period (== regular Clock)
 
-
-
-
      private:
-  //    H5::H5File h5 ;
-      bool closed ;
+      File *m_file ;
+      bool m_closed ;
       } ;
 
     } ;

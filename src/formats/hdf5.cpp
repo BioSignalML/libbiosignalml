@@ -1,4 +1,3 @@
-#include "formats/hdf5.h"
 /******************************************************************************
  *                                                                            *
  *  BioSignalML Management in C++                                             *
@@ -19,6 +18,8 @@
  *                                                                            *
  ******************************************************************************/
 
+#include "hdf5.h"
+#include "hdf5impl.h"
 
 
 using namespace bsml ;
@@ -31,6 +32,12 @@ HDF5::Clock::Clock(const std::string &uri, const std::string &units)
   this->set_units(rdf::URI(units)) ;
   }
 
+size_t HDF5::Clock::extend(const double *times, const size_t length)
+/*----------------------------------------------------------------*/
+{
+  return 1 ;   // TEMP
+  }
+
 
 HDF5::Signal::Signal(const std::string &uri, const std::string &units, HDF5::Clock *clock)
 /*--------------------------------------------------------------------------------------*/
@@ -40,13 +47,25 @@ HDF5::Signal::Signal(const std::string &uri, const std::string &units, HDF5::Clo
   if (clock != nullptr) this->set_clock(clock->uri()) ;
   }
 
+size_t HDF5::Signal::extend(const double *points, const size_t length)
+/*------------------------------------------------------------------*/
+{
+  return 1 ;   // TEMP
+  }
+
+
+size_t HDF5::SignalVector::extend(const double *points, const size_t length)
+/*------------------------------------------------------------------------*/
+{
+  return 1 ;   // TEMP
+  }
 
 
 HDF5::Recording::Recording(const std::string &uri, const std::string &filename)
 /*---------------------------------------------------------------------------*/
 : HDF5::Recording(uri)
 {
-  closed = true ;
+  m_closed = true ;
   }
 
 
@@ -60,8 +79,8 @@ HDF5::Recording::Recording(const std::string &uri, const std::string &filename)
 void HDF5::Recording::close(void)
 /*-----------------------------*/
 {
-  if (!closed) {
-    closed = true ;
+  if (!m_closed) {
+    m_closed = true ;
     }
   }
 
@@ -86,4 +105,3 @@ HDF5::SignalVector HDF5::Recording::new_signal(const std::vector<const std::stri
 {
   return bsml::Recording::create_signalvector<HDF5::SignalVector, HDF5::Signal, HDF5::Clock>(uris, units, clock) ;
   }
-
