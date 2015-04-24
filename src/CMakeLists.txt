@@ -9,13 +9,13 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/ontology.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/formats.cpp
             )
 
-set(HEADERS object.h
-            recording.h
-            signal.h
-            segment.h
-            timing.h
-            event.h
-            annotation.h
+set(HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/object.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/recording.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/signal.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/segment.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/timing.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/event.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/annotation.h
             )
 
 set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
