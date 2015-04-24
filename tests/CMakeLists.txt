@@ -1,3 +1,8 @@
+if(WIN32)
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+  add_definitions(-DBOOST_DATE_TIME_NO_LIB)
+endif()
+
 add_executable(test_bsml bsml.cpp)
 target_link_libraries(test_bsml bsml)
 add_test(BSML, test_bsml)
