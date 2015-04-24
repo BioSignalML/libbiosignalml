@@ -7,7 +7,6 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/ontology.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/event.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/annotation.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/formats.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/formats/hdf5.cpp
             )
 
 set(HEADERS object.h
@@ -17,15 +16,19 @@ set(HEADERS object.h
             timing.h
             event.h
             annotation.h
-            formats/hdf5.h
             )
+
+set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
+set(LIBRARIES typedobject)
+
+add_subdirectory(formats)
+
 foreach(file ${HEADERS})
   typedobject_generate(GENERATED_FILES ${file})
 endforeach()
-
 set(SOURCES ${SOURCES} ${GENERATED_FILES})
-set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(bsml SHARED ${SOURCES})
-target_link_libraries(bsml typedobject)
+add_library(bsml STATIC ${SOURCES})
+
+target_link_libraries(bsml ${LIBRARIES})
 target_include_directories(bsml PUBLIC ${INCLUDES})
