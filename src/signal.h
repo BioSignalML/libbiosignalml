@@ -36,7 +36,7 @@ namespace bsml {
    public:
     Signal(const std::string &uri, const std::string &units, Clock *clock=nullptr) ;
 
-    virtual size_t extend(const double *points, const size_t length) { return 0 ; }
+    virtual void extend(const double *points, const size_t length) { }
     } ;
 
 
@@ -45,7 +45,7 @@ namespace bsml {
   {
     static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
 
-    virtual size_t extend(const double *points, const size_t length) { return 0 ; }
+    virtual void extend(const double *points, const size_t length) { }
     } ;
 
   } ;

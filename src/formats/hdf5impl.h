@@ -63,7 +63,7 @@ namespace bsml {
       hobj_ref_t get_reference(void) const ;
       size_t length(void) const ;
       std::string name(void) ;
-      void extend(double *, size_t, int, int64_t) ;
+      void extend(const double *, size_t, int, int64_t) ;
 
      protected:
       std::string m_uri ;

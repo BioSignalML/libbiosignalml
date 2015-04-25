@@ -162,8 +162,8 @@ std::string HDF5::Dataset::name(void)
   }
 
 
-void HDF5::Dataset::extend(double *data, size_t size, int nsignals, int64_t clock_size)
-/*-----------------------------------------------------------------------------------*/
+void HDF5::Dataset::extend(const double *data, size_t size, int nsignals, int64_t clock_size)
+/*-----------------------------------------------------------------------------------------*/
 {
   H5::DataSpace dspace = m_dataset.getSpace() ;
   int ndims = dspace.getSimpleExtentNdims() ;

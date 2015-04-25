@@ -32,10 +32,10 @@ HDF5::Clock::Clock(const std::string &uri, const std::string &units)
   this->set_units(rdf::URI(units)) ;
   }
 
-size_t HDF5::Clock::extend(const double *times, const size_t length)
-/*----------------------------------------------------------------*/
+void HDF5::Clock::extend(const double *times, const size_t length)
+/*--------------------------------------------------------------*/
 {
-  return 1 ;   // TEMP
+  m_data->extend(times, length, 1, -1) ;
   }
 
 
@@ -47,17 +47,17 @@ HDF5::Signal::Signal(const std::string &uri, const std::string &units, HDF5::Clo
   if (clock != nullptr) this->set_clock(clock->uri()) ;
   }
 
-size_t HDF5::Signal::extend(const double *points, const size_t length)
-/*------------------------------------------------------------------*/
+void HDF5::Signal::extend(const double *points, const size_t length)
+/*----------------------------------------------------------------*/
 {
-  return 1 ;   // TEMP
+  //m_data->extend(points, length, 1, xx) ; // Clock size
   }
 
 
-size_t HDF5::SignalVector::extend(const double *points, const size_t length)
-/*------------------------------------------------------------------------*/
+void HDF5::SignalVector::extend(const double *points, const size_t length)
+/*----------------------------------------------------------------------*/
 {
-  return 1 ;   // TEMP
+  //m_data->extend(times, length, vectorsize, xx) ;  // clock size
   }
 
 

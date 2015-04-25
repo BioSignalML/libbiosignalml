@@ -58,7 +58,7 @@ namespace bsml {
 
      public:
       Clock(const std::string &uri, const std::string &units) ;
-      size_t extend(const double *times, const size_t length) ;
+      void extend(const double *times, const size_t length) ;
 
      private:
       ClockData *m_data ;
@@ -74,7 +74,7 @@ namespace bsml {
 
      public:
       Signal(const std::string &uri, const std::string &units, Clock *clock=nullptr) ;
-      size_t extend(const double *points, const size_t length) ;
+      void extend(const double *points, const size_t length) ;
 
      private:
       SignalData *m_data ;
@@ -87,7 +87,7 @@ namespace bsml {
     /*--------------------------------------------------------*/
     {
      public:
-      size_t extend(const double *points, const size_t length) ;
+      void extend(const double *points, const size_t length) ;
       } ;
 
 
