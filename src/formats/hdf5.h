@@ -36,6 +36,13 @@ namespace bsml {
     class SignalData ;  // Declare forward
 
 
+    class IOError : public std::runtime_error
+    /*=====================================*/
+    {
+     public:
+      IOError(const std::string &msg) : std::runtime_error(msg) { }
+      } ;
+
     class Exception : public std::runtime_error
     /*=======================================*/
     {
@@ -55,6 +62,8 @@ namespace bsml {
 
      private:
       ClockData *m_data ;
+
+      friend class Recording ;
       } ;
 
 
@@ -69,6 +78,8 @@ namespace bsml {
 
      private:
       SignalData *m_data ;
+
+      friend class Recording ;
       } ;
 
 
@@ -94,7 +105,8 @@ namespace bsml {
 
       void close(void) ;
 
-      Clock *new_clock(const std::string &uri, const std::string &units, double *times = nullptr) ;
+      Clock *new_clock(const std::string &uri, const std::string &units,
+                       double *times = nullptr, size_t datasize=0) ;
 
       HDF5::Signal *new_signal(const std::string &uri, const std::string &units) ;
 
@@ -106,7 +118,6 @@ namespace bsml {
 
      private:
       File *m_file ;
-      bool m_closed ;
       } ;
 
     } ;

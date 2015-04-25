@@ -276,7 +276,7 @@ HDF5::File *HDF5::File::create(const std::string &uri, const std::string &fname,
     }
   catch (H5::FileIException e) {
   // Need to remove any file... (only if replace ??)
-    throw HDF5::Exception("Cannot create '" + fname + "': " + e.getDetailMsg()) ;
+    throw HDF5::IOError("Cannot create '" + fname + "': " + e.getDetailMsg()) ;
     }
   }
 
@@ -299,7 +299,7 @@ HDF5::File *HDF5::File::open(const std::string &fname, bool readonly)
     h5file = H5::H5File(fn, readonly ? H5F_ACC_RDONLY : H5F_ACC_RDWR) ;
     }
   catch (H5::FileIException e) {
-    throw HDF5::Exception("Cannot open '" + fname + "': " + e.getDetailMsg()) ;
+    throw HDF5::IOError("Cannot open '" + fname + "': " + e.getDetailMsg()) ;
     }
 
   H5::StrType varstr(H5::PredType::C_S1, H5T_VARIABLE) ;

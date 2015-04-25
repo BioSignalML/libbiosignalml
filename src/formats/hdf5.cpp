@@ -65,7 +65,13 @@ HDF5::Recording::Recording(const std::string &uri, const std::string &filename)
 /*---------------------------------------------------------------------------*/
 : HDF5::Recording(uri)
 {
-  m_closed = true ;
+  m_file = nullptr ;
+  try {
+    m_file = HDF5::File::open(filename) ;
+    }
+  catch (HDF5::IOError e) {
+    m_file = HDF5::File::create(uri, filename) ;
+    }
   }
 
 
@@ -79,23 +85,38 @@ HDF5::Recording::Recording(const std::string &uri, const std::string &filename)
 void HDF5::Recording::close(void)
 /*-----------------------------*/
 {
-  if (!m_closed) {
-    m_closed = true ;
+  if (m_file != nullptr) {
+    // First close and delete all signal and clock `m_data` objects.
+    // Iterate through the `signals` and `clocks` sets???
+
+    // But isn't `clocks` now just a set of URI strings?
+
+    // Clocks allocated via `new_clock` (below) need to be deleted.
+    // This is the time to close/delete `m_data` members.
+
+    m_file->close() ;
+    delete m_file ;
+    m_file = nullptr ;
     }
   }
 
 
-HDF5::Clock *HDF5::Recording::new_clock(const std::string &uri, const std::string &units, double *times)
-/*----------------------------------------------------------------------------------------------------*/
+HDF5::Clock *HDF5::Recording::new_clock(const std::string &uri, const std::string &units,
+/*-------------------------------------------------------------------------------------*/
+                                        double *data, size_t datasize)
 {
-  return bsml::Recording::new_clock<HDF5::Clock>(uri, units) ;
+  auto clock = bsml::Recording::new_clock<HDF5::Clock>(uri, units) ;
+  clock->m_data = m_file->create_clock(uri, units, data, datasize) ;
+  return clock ;
   }
 
 
 HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::string &units)
 /*---------------------------------------------------------------------------------------*/
 {
-  return bsml::Recording::new_signal<HDF5::Signal>(uri, units) ;
+  auto signal = bsml::Recording::new_signal<HDF5::Signal>(uri, units) ;
+  signal->m_data = m_file->create_signal(uri, units) ;
+  return signal ;
   }
 
 HDF5::SignalVector HDF5::Recording::new_signal(const std::vector<const std::string> &uris,
@@ -103,5 +124,10 @@ HDF5::SignalVector HDF5::Recording::new_signal(const std::vector<const std::stri
                                                            const std::vector<const std::string> &units,
                                                            HDF5::Clock *clock)
 {
-  return bsml::Recording::create_signalvector<HDF5::SignalVector, HDF5::Signal, HDF5::Clock>(uris, units, clock) ;
+  auto signals =
+    bsml::Recording::create_signalvector<HDF5::SignalVector, HDF5::Signal, HDF5::Clock>(uris, units, clock) ;
+  auto signaldata = m_file->create_signal(uris, units, nullptr, 0, 1.0, 0.0, 0.0, clock->m_data) ;
+  for (auto n = 0 ;  n < signals.size() ;  ++n)
+    signals[n]->m_data = signaldata[n] ;
+  return signals ;
   }
