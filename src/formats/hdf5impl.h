@@ -110,45 +110,42 @@ namespace bsml {
       static File *open(const std::string &fname, bool readonly=false) ;
       void close(void) ;
 
+      SignalData *create_signal(const std::string &uri, const std::string &units,
+        const double *data=nullptr, size_t datasize=0, std::vector<hsize_t> datashape=std::vector<hsize_t>(),
+        double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
+      std::vector<SignalData *> create_signal(const std::vector<const std::string> &uris,
+        const std::vector<const std::string> &units,
+        const double *data=nullptr, size_t datasize=0,
+        double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
+
 #ifdef TODO_READ_HDF5
       SignalData get_signal(const std::string &uri) ;
       std::list<SignalData> get_signals(void) ;
 #endif
 
+      ClockData *create_clock(const std::string &uri, const std::string &units,
+        double rate, const double *data=nullptr, size_t datasize=0) ;
+      ClockData *create_clock(const std::string &uri, const std::string &units,
+        const double *data, size_t datasize) ;
+
       ClockData *get_clock(const std::string &uri) ;
       std::list<ClockData *> get_clocks(void) ;
 
+      void store_metadata(const std::string &, const std::string &) ;
       std::pair<std::string, std::string> get_metadata(void) ;
-//      void save_metadata(void) ;
 
      private:
-     public:
       DatasetRef get_dataref(const std::string &uri, const std::string &prefix) ;
       DatasetRef create_dataset(const std::string &group, int rank,
         hsize_t *shape, hsize_t *maxshape, const double *data) ;
 
       void set_signal_attributes(const H5::DataSet &dset, double gain=1.0, double offset=0.0,
         double rate=0.0, const std::string &timeunits="", const ClockData *clock=nullptr) ;
-      SignalData *create_signal(const std::string &uri, const std::string &units,
-        const double *data=nullptr, size_t datasize=0, std::vector<hsize_t> datashape=std::vector<hsize_t>(),
-        double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
-      std::vector<SignalData *> create_signal(const std::vector<std::string> &uris,
-        const std::vector<std::string> &units,
-        const double *data=nullptr, size_t datasize=0,
-        double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
-
-      ClockData *create_clock(const std::string &uri, const std::string &units,
-        double rate, const double *data=nullptr, size_t datasize=0) ;
-      ClockData *create_clock(const std::string &uri, const std::string &units,
-        const double *data, size_t datasize) ;
       ClockData *check_timing(double rate, const std::string &uri, size_t npoints) ;
-
-      void store_metadata(const std::string &, const std::string &) ;
 
       H5::H5File m_h5file ;
       bool m_closed ;
       } ;
-
 
     } ;
 

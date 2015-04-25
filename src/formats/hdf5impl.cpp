@@ -524,9 +524,9 @@ HDF5::SignalData *HDF5::File::create_signal(const std::string &uri, const std::s
   }
 
 
-std::vector<HDF5::SignalData *> HDF5::File::create_signal(const std::vector<std::string> &uris,
-/*-------------------------------------------------------------------------------------------*/
- const std::vector<std::string> &units, const double *data, size_t datasize,
+std::vector<HDF5::SignalData *> HDF5::File::create_signal(const std::vector<const std::string> &uris,
+/*-------------------------------------------------------------------------------------------------*/
+ const std::vector<const std::string> &units, const double *data, size_t datasize,
  double gain, double offset, double rate, HDF5::ClockData *clock)
 {
 #if !H5_DEBUG
