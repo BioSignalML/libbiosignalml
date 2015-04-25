@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
   auto *sig = hdf5.new_signal("http://ex.org/signal", units[1]) ;
 
-  std::cout << hdf5.serialise_metadata(rdf::Graph::Format::TURTLE) << std::endl ;
+//  std::cout << hdf5.serialise_metadata(rdf::Graph::Format::TURTLE) << std::endl ;
 
 
 #define NPOINTS  1001
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
   bsml::HDF5::Clock *clock = hdf5.new_clock("http://ex.org/clock",
                                             "http://units.org/Second",
-                                            times) ;
+                                            times, NPOINTS) ;
   clock->set_label("A common clock") ;
 
   auto signals = hdf5.new_signal(uris, units, clock) ;
