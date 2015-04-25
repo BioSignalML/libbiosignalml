@@ -440,7 +440,7 @@ void HDF5::File::set_signal_attributes(const H5::DataSet &dset, double gain, dou
     attr.write(H5::PredType::NATIVE_DOUBLE, &rate) ;
     attr.close() ;
     }
-  else {
+  else if (clock != nullptr) {
     attr = dset.createAttribute("clock", H5::PredType::STD_REF_OBJ, scalar) ;
     hobj_ref_t ref = clock->get_reference() ;
     attr.write(H5::PredType::STD_REF_OBJ, &ref) ;
@@ -452,7 +452,6 @@ void HDF5::File::set_signal_attributes(const H5::DataSet &dset, double gain, dou
     attr.write(varstr, timeunits) ;
     attr.close() ;
     }
-
   }
 
 
