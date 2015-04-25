@@ -21,8 +21,8 @@
 #include <iostream>
 #include <vector>
 
-#include "formats/hdf5.h"
-#include "formats/hdf5impl.h"
+#include "data/hdf5.h"
+#include "data/hdf5impl.h"
 
 
 using namespace bsml ;

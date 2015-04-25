@@ -1,4 +1,4 @@
-#include "formats/hdf5.h"
+#include "data/hdf5.h"
 #include "model.h"
 
 #include <iostream>

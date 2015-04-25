@@ -21,7 +21,7 @@ set(HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/object.h
 set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARIES typedobject)
 
-add_subdirectory(formats)
+add_subdirectory(data)
 
 foreach(file ${HEADERS})
   typedobject_generate(GENERATED_FILES ${file})
