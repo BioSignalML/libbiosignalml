@@ -54,7 +54,7 @@ void HDF5::Signal::extend(const double *points, const size_t length)
   }
 
 
-void HDF5::SignalVector::extend(const double *points, const size_t length)
+void HDF5::SignalArray::extend(const double *points, const size_t length)
 /*----------------------------------------------------------------------*/
 {
   //m_data->extend(times, length, vectorsize, xx) ;  // clock size

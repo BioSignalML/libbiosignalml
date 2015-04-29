@@ -61,7 +61,6 @@ namespace bsml {
    public:
     Clock(const std::string &uri, const std::string &units) ;
 
-    virtual void extend(const double *times, const size_t length) { }
     } ;
 
   } ;

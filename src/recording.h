@@ -59,31 +59,10 @@ namespace bsml {
       return signal ;
       }
 
-    template<class SIGNAL = Signal>
-    SignalVector<SIGNAL> new_signal(const std::vector<const std::string> &uris,
-    /*-----------------------------------------------------------------------*/
-                                    const std::vector<const std::string> &units)
     {
-      return create_signalvector<SignalVector<SIGNAL>, SIGNAL, bsml::Clock>(uris, units) ;
       }
 
-
-   protected:
-    template<class SIGNALVECTOR, class SIGNAL, class CLOCK>
-    SIGNALVECTOR create_signalvector(const std::vector<const std::string> &uris,
-    /*-----------------------------------------------------------------------*/
-                                    const std::vector<const std::string> &units,
-                                    CLOCK *clock = nullptr)
     {
-      assert(uris.size() == units.size()) ;  // Lengths of `uris` and `units` are different
-      auto signals = SIGNALVECTOR() ;
-      for (int n = 0 ;  n < uris.size() ;  ++n) {
-        auto signal = new SIGNAL(uris[n], units[n], clock) ;
-        signals.push_back(signal) ;
-        signal->set_recording(this->uri()) ;
-        this->m_signals.insert(signal) ;
-        }
-      return signals ;
       }
 
     } ;

@@ -22,6 +22,7 @@
 #define BSML_HDF5_H
 
 #include "model.h"
+#include "../model.h"
 
 #include <string>
 #include <stdexcept>
@@ -51,7 +52,7 @@ namespace bsml {
       } ;
 
 
-    class Clock : public bsml::Clock
+    class Clock : public data::Clock
     /*============================*/
     {
       TYPED_OBJECT(Clock, BSML::SampleClock)
@@ -67,7 +68,7 @@ namespace bsml {
       } ;
 
 
-    class Signal : public bsml::Signal
+    class Signal : public data::Signal
     /*==============================*/
     {
       TYPED_OBJECT(Signal, BSML::Signal)
@@ -83,15 +84,15 @@ namespace bsml {
       } ;
 
 
-    class SignalVector : public bsml::SignalVector<HDF5::Signal>
-    /*--------------------------------------------------------*/
+    class SignalArray : public data::SignalArray<HDF5::Signal>
+    /*======================================================*/
     {
      public:
       void extend(const double *points, const size_t length) ;
       } ;
 
 
-    class Recording : public bsml::Recording
+    class Recording : public data::Recording
     /*====================================*/
     {
       TYPED_OBJECT(Recording, BSML::Recording)
