@@ -33,6 +33,7 @@ namespace bsml {
   namespace HDF5 {
 
     class File ;        // Declare forward
+    class Dataset ;     // Declare forward
     class ClockData ;   // Declare forward
     class SignalData ;  // Declare forward
 
@@ -63,7 +64,6 @@ namespace bsml {
 
      private:
       ClockData *m_data ;
-
       friend class Recording ;
       } ;
 
@@ -80,7 +80,6 @@ namespace bsml {
 
      private:
       SignalData *m_data ;
-
       friend class Recording ;
       } ;
 
@@ -91,6 +90,10 @@ namespace bsml {
      public:
       void extend(const double *points, const size_t length) ;
       int index(const std::string &uri) const ;
+
+     private:
+      SignalData *m_data ;
+      friend class Recording ;
       } ;
 
 
@@ -125,6 +128,7 @@ namespace bsml {
 
      private:
       File *m_file ;
+      std::set<Dataset *> datasets ;
       } ;
 
     } ;

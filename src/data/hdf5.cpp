@@ -99,6 +99,10 @@ void HDF5::Recording::close(void)
 /*-----------------------------*/
 {
   if (m_file != nullptr) {
+    for (auto ds : datasets) {
+      ds->close() ;
+      delete ds ;
+      }
     // First close and delete all signal and clock `m_data` objects.
     // Iterate through the `signals` and `clocks` sets???
 
@@ -120,6 +124,7 @@ HDF5::Clock *HDF5::Recording::new_clock(const std::string &uri, const std::strin
 {
   auto clock = bsml::Recording::new_clock<HDF5::Clock>(uri, units) ;
   clock->m_data = m_file->create_clock(uri, units, data, datasize) ;
+  datasets.insert(clock->m_data) ;
   return clock ;
   }
 
@@ -130,6 +135,7 @@ HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::str
   auto signal = bsml::Recording::new_signal<HDF5::Signal>(uri, units, rate) ;
   signal->m_data = m_file->create_signal(uri, units, nullptr, 0, std::vector<hsize_t>(),
                                          1.0, 0.0, rate, nullptr) ;
+  datasets.insert(signal->m_data) ;
   return signal ;
   }
 
@@ -139,6 +145,7 @@ HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::str
   auto signal = bsml::Recording::new_signal<HDF5::Signal, HDF5::Clock>(uri, units, clock) ;
   signal->m_data = m_file->create_signal(uri, units, nullptr, 0, std::vector<hsize_t>(),
                                          1.0, 0.0, 0.0, clock->m_data) ;
+  datasets.insert(signal->m_data) ;
   return signal ;
   }
 
@@ -151,6 +158,7 @@ HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<const std:
   auto signals =
     data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, rate, nullptr) ;
   signals->m_data = m_file->create_signal(uris, units, nullptr, 0, 1.0, 0.0, rate, nullptr) ;
+  datasets.insert(signals->m_data) ;
   return signals ;
   }
 
@@ -162,5 +170,6 @@ HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<const std:
   auto signals =
     data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, 0.0, clock) ;
   signals->m_data = m_file->create_signal(uris, units, nullptr, 0, 1.0, 0.0, 0.0, clock->m_data) ;
+  datasets.insert(signals->m_data) ;
   return signals ;
   }
