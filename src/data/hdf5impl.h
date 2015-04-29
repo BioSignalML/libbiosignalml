@@ -70,6 +70,9 @@ namespace bsml {
       H5::DataSet m_dataset ;
       hobj_ref_t m_reference ;
       int m_index ;
+
+     private:
+      int64_t clock_size(void) ;
       } ;
 
 
@@ -92,9 +95,6 @@ namespace bsml {
       SignalData() ;
       SignalData(const std::string &uri, const DatasetRef &ds) ;
 
-      size_t clock_size(void) ;
-
-     private:
       int signal_count(void) ;
       } ;
 

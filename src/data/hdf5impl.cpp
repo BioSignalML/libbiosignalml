@@ -165,10 +165,33 @@ std::string HDF5::Dataset::name(void)
   return result ;
   }
 
-
-void HDF5::Dataset::extend(const double *data, size_t size, int nsignals, int64_t clock_size)
-/*-----------------------------------------------------------------------------------------*/
+int64_t HDF5::Dataset::clock_size(void)
+/*-----------------------------------*/
 {
+  try {
+    H5::Attribute attr = m_dataset.openAttribute("clock") ;
+    hobj_ref_t ref ;
+    attr.read(H5::PredType::STD_REF_OBJ, &ref) ;
+    attr.close() ;
+    H5::DataSet clk(H5Rdereference(H5Iget_file_id(m_dataset.getId()), H5R_OBJECT, &ref)) ;
+    H5::DataSpace cspace = clk.getSpace() ;
+    int cdims = cspace.getSimpleExtentNdims() ;
+    hsize_t *cshape = (hsize_t *)calloc(cdims, sizeof(hsize_t)) ;
+    cspace.getSimpleExtentDims(cshape) ;
+    hsize_t result = cshape[0] ;
+    free(cshape) ;
+    return result ;
+    }
+  catch (H5::AttributeIException e) { }
+  return -1 ;
+  }
+
+void HDF5::Dataset::extend(const double *data, size_t size, int nsignals)
+/*---------------------------------------------------------------------*/
+{
+
+  int64_t clocksize = this->clock_size() ;
+
   H5::DataSpace dspace = m_dataset.getSpace() ;
   int ndims = dspace.getSimpleExtentNdims() ;
   hsize_t
@@ -194,10 +217,8 @@ void HDF5::Dataset::extend(const double *data, size_t size, int nsignals, int64_
       }
     start[0] = shape[0] ;
     newshape[0] = shape[0] + count[0] ;
-
-    if (clock_size >= 0 && clock_size < newshape[0])
+    if (clocksize >= 0 && clocksize < newshape[0])
       throw HDF5::Exception("Clock for '" + m_uri + "' doesn't have sufficient times") ;
-
     m_dataset.extend(newshape) ;
     dspace = m_dataset.getSpace() ;
     dspace.selectHyperslab(H5S_SELECT_SET, count, start) ; // Starting at 'shape' for 'count'
@@ -690,7 +711,7 @@ HDF5::DatasetRef HDF5::File::get_dataref(const std::string &uri, const std::stri
 
 #ifdef TODO_READ_HDF5
 HDF5::SignalData HDF5::File::get_signal(const std::string &uri)
-/*---------------------------------------------------*/
+/*-----------------------------------------------------------*/
 {
 //Find a signal from its URI.
 //
@@ -927,26 +948,3 @@ int HDF5::SignalData::signal_count(void)
     return uspace.getSimpleExtentNpoints() ;
     }
   }
-
-
-size_t HDF5::SignalData::clock_size(void)
-/*-------------------------------------*/
-{
-  try {
-    H5::Attribute attr = m_dataset.openAttribute("clock") ;
-    hobj_ref_t ref ;
-    attr.read(H5::PredType::STD_REF_OBJ, &ref) ;
-    attr.close() ;
-    H5::DataSet clk(H5Rdereference(H5Iget_file_id(m_dataset.getId()), H5R_OBJECT, &ref)) ;
-    H5::DataSpace cspace = clk.getSpace() ;
-    int cdims = cspace.getSimpleExtentNdims() ;
-    hsize_t *cshape = (hsize_t *)calloc(cdims, sizeof(hsize_t)) ;
-    cspace.getSimpleExtentDims(cshape) ;
-    hsize_t result = cshape[0] ;
-    free(cshape) ;
-    return result ;
-    }
-  catch (H5::AttributeIException e) { }
-  return -1 ;
-  }
-

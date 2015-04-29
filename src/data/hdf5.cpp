@@ -35,7 +35,7 @@ HDF5::Clock::Clock(const std::string &uri, const std::string &units)
 void HDF5::Clock::extend(const double *times, const size_t length)
 /*--------------------------------------------------------------*/
 {
-  m_data->extend(times, length, 1, -1) ;
+  m_data->extend(times, length, 1) ;
   }
 
 
@@ -58,14 +58,16 @@ HDF5::Signal::Signal(const std::string &uri, const std::string &units, HDF5::Clo
 void HDF5::Signal::extend(const double *points, const size_t length)
 /*----------------------------------------------------------------*/
 {
-  //m_data->extend(points, length, 1, xx) ; // Clock size
+  m_data->extend(points, length, 1) ;
   }
 
 
 void HDF5::SignalArray::extend(const double *points, const size_t length)
 /*----------------------------------------------------------------------*/
 {
-  //m_data->extend(times, length, vectorsize, xx) ;  // clock size
+  m_data->extend(points, length, this->size()) ;
+  }
+
 
 int HDF5::SignalArray::index(const std::string &uri) const
 /*------------------------------------------------------*/
