@@ -55,7 +55,7 @@ namespace bsml {
      public:
 
       Dataset() ;
-      Dataset(const std::string &uri, const DatasetRef &dataref, int index) ;
+      Dataset(const std::string &uri, const DatasetRef &dataref) ;
       virtual ~Dataset() ;
 
       void close(void) ;
@@ -63,7 +63,7 @@ namespace bsml {
       hobj_ref_t get_reference(void) const ;
       size_t length(void) const ;
       std::string name(void) ;
-      void extend(const double *, size_t, int, int64_t) ;
+      void extend(const double *data, size_t length, int nsignals) ;
 
      protected:
       std::string m_uri ;
@@ -90,7 +90,7 @@ namespace bsml {
     {
      public:
       SignalData() ;
-      SignalData(const std::string &uri, const DatasetRef &ds, int n) ;
+      SignalData(const std::string &uri, const DatasetRef &ds) ;
 
       size_t clock_size(void) ;
 
@@ -113,7 +113,7 @@ namespace bsml {
       SignalData *create_signal(const std::string &uri, const std::string &units,
         const double *data=nullptr, size_t datasize=0, std::vector<hsize_t> datashape=std::vector<hsize_t>(),
         double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
-      std::vector<SignalData *> create_signal(const std::vector<const std::string> &uris,
+      SignalData *create_signal(const std::vector<const std::string> &uris,
         const std::vector<const std::string> &units,
         const double *data=nullptr, size_t datasize=0,
         double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;

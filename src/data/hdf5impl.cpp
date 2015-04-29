@@ -64,12 +64,16 @@ HDF5::Dataset::Dataset()
   }
 
 
-HDF5::Dataset::Dataset(const std::string &uri, const HDF5::DatasetRef &dataref, int index)
-/*-----------------------------------------------------------------------------------------*/
+
+// Check that the HDF5 dataset (given by `dataref`) has the given `uri` and if
+// an array, set `m_index` to the index of the uri in the array.
+HDF5::Dataset::Dataset(const std::string &uri, const HDF5::DatasetRef &dataref)
+/*---------------------------------------------------------------------------*/
 : m_uri(uri),
   m_dataset(dataref.first),
   m_reference(dataref.second)
 {
+  int index = -1 ;
   H5::StrType varstr(H5::PredType::C_S1, H5T_VARIABLE) ;
   try {
     H5::Attribute attr = m_dataset.openAttribute("uri") ;
@@ -79,7 +83,7 @@ HDF5::Dataset::Dataset(const std::string &uri, const HDF5::DatasetRef &dataref, 
       attr.read(varstr, ds_uri) ;
       if (uri != ds_uri) throw HDF5::Exception("Dataset URI '" + ds_uri + "' should be '" + uri + "'") ;
       }
-    else {
+    else if (uri != "") {
       char **uris = (char **)calloc(nsignals, sizeof(char *)) ;
       attr.read(varstr, uris) ;
       int ds_index = -1 ;
@@ -118,7 +122,7 @@ HDF5::Dataset::~Dataset()
 void HDF5::Dataset::close(void)
 /*---------------------------*/
 {
-  m_dataset.close() ;
+  if (m_index == -1) m_dataset.close() ;
   }
 
 
@@ -519,12 +523,12 @@ HDF5::SignalData *HDF5::File::create_signal(const std::string &uri, const std::s
     }
 
   m_h5file.flush(H5F_SCOPE_GLOBAL) ;
-  return new HDF5::SignalData(uri, sigdata, -1) ;
+  return new HDF5::SignalData(uri, sigdata) ;
   }
 
 
-std::vector<HDF5::SignalData *> HDF5::File::create_signal(const std::vector<const std::string> &uris,
-/*-------------------------------------------------------------------------------------------------*/
+HDF5::SignalData *HDF5::File::create_signal(const std::vector<const std::string> &uris,
+/*-----------------------------------------------------------------------------------*/
  const std::vector<const std::string> &units, const double *data, size_t datasize,
  double gain, double offset, double rate, HDF5::ClockData *clock)
 {
@@ -533,13 +537,10 @@ std::vector<HDF5::SignalData *> HDF5::File::create_signal(const std::vector<cons
 #endif
   if (uris.size() != units.size()) throw HDF5::Exception("'uri' and 'units' have different sizes") ;
   int nsignals = uris.size() ;
-  std::vector<HDF5::SignalData *> signals(nsignals) ;
 
   if (nsignals == 1) {
-    signals[0] = create_signal(uris[0], units[0],
-                               data, datasize, std::vector<hsize_t>(),
-                               gain, offset, rate, clock) ;
-    return signals ;
+    return
+      create_signal(uris[0], units[0], data, datasize, std::vector<hsize_t>(), gain, offset, rate, clock) ;
     }
   H5::Attribute attr ;
   H5::Group urigroup = m_h5file.openGroup("/uris") ;
@@ -574,7 +575,6 @@ std::vector<HDF5::SignalData *> HDF5::File::create_signal(const std::vector<cons
       attr = urigroup.createAttribute(uris[n], H5::PredType::STD_REF_OBJ, scalar) ;
       attr.write(H5::PredType::STD_REF_OBJ, &reference) ;
       attr.close() ;
-      signals[n] = new HDF5::SignalData(uris[n], sigdata, n) ;
       }
     attr = dset.createAttribute("uri", varstr, attrspace) ;
     attr.write(varstr, values) ;
@@ -598,7 +598,7 @@ std::vector<HDF5::SignalData *> HDF5::File::create_signal(const std::vector<cons
   free(values) ;
 
   m_h5file.flush(H5F_SCOPE_GLOBAL) ;
-  return signals ;
+  return new HDF5::SignalData("", sigdata) ;
   }
 
 
@@ -698,7 +698,7 @@ HDF5::SignalData HDF5::File::get_signal(const std::string &uri)
 //:return: A :class:`HDF5::SignalData` containing the signal, or None if
 //         the URI is unknown or the dataset is not that for a signal.
   HDF5::DatasetRef dataref = get_dataref(uri, "/recording/signal/") ;
-  if (dataref.first.getId() != 0) return HDF5::SignalData(uri, dataref, -1) ;
+  if (dataref.first.getId() != 0) return HDF5::SignalData(uri, dataref) ;
   throw HDF5::Exception("Cannot find signal:" + uri) ;
   }
 
@@ -720,14 +720,14 @@ static herr_t save_signal(hid_t id, const char *name, void *op_data)
     if (nsignals == 1) {
       std::string uri ;
       attr.read(varstr, uri) ;
-      sig.push_back(HDF5::SignalData(uri, dataref, -1)) ;
+      sig.push_back(HDF5::SignalData(uri, dataref)) ;
       }
     else if (nsignals > 1) {
       char *uris[nsignals] ;
       attr.read(varstr, uris) ;
       int n = 0 ;
       while (n < nsignals) {
-        sig.push_back(HDF5::SignalData(std::string(uris[n]), dataref, n)) ;
+        sig.push_back(HDF5::SignalData(std::string(uris[n]), dataref)) ;
         free(uris[n]) ;
         ++n ;
         }
@@ -867,7 +867,7 @@ HDF5::ClockData::ClockData()
 
 HDF5::ClockData::ClockData(const std::string &uri, const HDF5::DatasetRef &ds)
 /*--------------------------------------------------------------------------*/
-: HDF5::Dataset(uri, ds, -1)
+: HDF5::Dataset(uri, ds)
 {
   }
 
@@ -908,9 +908,9 @@ HDF5::SignalData::SignalData()
   }
 
 
-HDF5::SignalData::SignalData(const std::string &uri, const HDF5::DatasetRef &ds, int n)
-/*-----------------------------------------------------------------------------------*/
-: HDF5::Dataset(uri, ds, n)
+HDF5::SignalData::SignalData(const std::string &uri, const HDF5::DatasetRef &ds)
+/*----------------------------------------------------------------------------*/
+: HDF5::Dataset(uri, ds)
 {
   }
 
