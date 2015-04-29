@@ -57,7 +57,7 @@ namespace bsml {
     PROPERTY_OBJECT_RSET(annotations, DCT::subject, Annotation)
 
    public:
-    template<class CLOCK = Clock>
+    template<class CLOCK=Clock>
     CLOCK *new_clock(const std::string &uri, const std::string &units)
     /*--------------------------------------------------------------*/
     {
@@ -68,21 +68,30 @@ namespace bsml {
       return clock ;
       }
 
-    template<class SIGNAL = Signal>
-    SIGNAL *new_signal(const std::string &uri, const std::string &units)
-    /*----------------------------------------------------------------*/
+    template<class SIGNAL=Signal>
+    SIGNAL *new_signal(const std::string &uri, const std::string &units, double rate)
+    /*-----------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
-      SIGNAL *signal = new SIGNAL(uri, units) ;
+      return add_signal<SIGNAL>(new SIGNAL(uri, units, rate)) ;
+      }
+
+    template<class SIGNAL=Signal, class CLOCK=Clock>
+    SIGNAL *new_signal(const std::string &uri, const std::string &units, CLOCK *clock)
+    /*------------------------------------------------------------------------------*/
+    {
+      static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
+      return add_signal<SIGNAL>(new SIGNAL(uri, units, clock)) ;
+      }
+
+   private:
+    template<class SIGNAL>
+    SIGNAL *add_signal(SIGNAL *signal)
+    /*------------------------------*/
+    {
       signal->set_recording(this->uri()) ;
       this->m_signals.insert(signal) ;
       return signal ;
-      }
-
-    {
-      }
-
-    {
       }
 
     } ;
