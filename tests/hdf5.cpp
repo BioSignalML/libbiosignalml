@@ -24,7 +24,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <cmath>
 
 
 int main(int argc, char *argv[])
@@ -45,9 +45,8 @@ int main(int argc, char *argv[])
 
 
 
-  auto *sig = hdf5.new_signal("http://ex.org/signal", units[1]) ;
+  auto *sig = hdf5.new_signal("http://ex.org/signal", units[1], 1000.0) ;
 
-//  std::cout << hdf5.serialise_metadata(rdf::Graph::Format::TURTLE) << std::endl ;
 
 
 #define NPOINTS  1001
@@ -66,77 +65,22 @@ int main(int argc, char *argv[])
                                             times, NPOINTS) ;
   clock->set_label("A common clock") ;
 
-  auto signals = hdf5.new_signal(uris, units, clock) ;
+  auto signals = hdf5.new_signalarray(uris, units, clock) ;
   double data[NPOINTS*NSIGS] ;
   for (int t = 0 ;  t < NPOINTS ;  ++t) {
     for (int n = 0 ;  n < NSIGS ;  ++n) {
-      data[t + n] = times[t] ;
+      double x = 2.0*M_PI*times[t]/times[NPOINTS-1] ;
+      if      (n == 1) data[NSIGS*t + 1] = sin(x) ;
+      else if (n == 2) data[NSIGS*t + 2] = cos(x) ;
+      else             data[NSIGS*t + n] = times[t] ;
       }
     }
-  signals.extend(data, sizeof(data)) ;
+  signals->extend(data, NPOINTS*NSIGS) ;
+
+
+//  std::cout << hdf5.serialise_metadata(rdf::Graph::Format::TURTLE) << std::endl ;
 
 
   hdf5.close() ;  // Should automatically update metadata...
 
-
   }
-
-
-/***
-
-void CsvDataStoreExporter::execute(CoreDataStore::CoreDataStore *pDataStore) const
-{
-    // Export the given data store to a CSV file
-
-    QString fileName = Core::getSaveFileName(QObject::tr("Export to a CSV file"),
-                                             QString(),
-                                             QObject::tr("CSV File")+" (*.csv)");
-
-    if (!fileName.isEmpty()) {
-        // Header
-
-        static const QString Header = "%1 (%2)";
-
-        CoreDataStore::DataStoreVariable *voi = pDataStore->voi();
-        CoreDataStore::DataStoreVariables variables = pDataStore->variables();
-
-        QString data = QString();
-
-        data += Header.arg(voi->uri().replace("/prime", "'").replace("/", " | "),
-                           voi->unit());
-
-        auto variableBegin = variables.begin();
-        auto variableEnd = variables.end();
-
-        for (auto variable = variableBegin; variable != variableEnd; ++variable)
-            data += ","+Header.arg((*variable)->uri().replace("/prime", "'").replace("/", " | "),
-                                   (*variable)->unit());
-
-        data += "\n";
-
-        // Data itself
-
-        for (qulonglong i = 0; i < pDataStore->size(); ++i) {
-            data += QString::number(voi->value(i));
-
-            for (auto variable = variableBegin; variable != variableEnd; ++variable)
-                data += ","+QString::number((*variable)->value(i));
-
-            data += "\n";
-
-            qApp->processEvents();
-//---GRY--- THE CALL TO qApp->processEvents() SHOULD BE REMOVED AND THE EXPORTER
-//          BE SUCH THAT IT DOESN'T BLOCK THE MAIN THREAD (E.G. WHEN EXPORTING
-//          LONG SIMULATIONS). MAYBE THIS COULD BE DONE BY MAKING THE EXPORTER
-//          WORK IN ITS OWN THREAD?...
-        }
-
-        // The data is ready, so write it to the file
-
-        Core::writeTextToFile(fileName, data);
-    }
-}
-
-
-
-**/
