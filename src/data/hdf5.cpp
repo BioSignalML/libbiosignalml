@@ -39,12 +39,20 @@ void HDF5::Clock::extend(const double *times, const size_t length)
   }
 
 
+HDF5::Signal::Signal(const std::string &uri, const std::string &units, double rate)
+/*-------------------------------------------------------------------------------*/
+: HDF5::Signal(uri)
+{
+  this->set_units(rdf::URI(units)) ;  // bsml::Units::get_units_uri(const std::string &u)
+  this->set_rate(rate) ;
+  }
+
 HDF5::Signal::Signal(const std::string &uri, const std::string &units, HDF5::Clock *clock)
 /*--------------------------------------------------------------------------------------*/
 : HDF5::Signal(uri)
 {
   this->set_units(rdf::URI(units)) ;  // bsml::Units::get_units_uri(const std::string &u)
-  if (clock != nullptr) this->set_clock(clock->uri()) ;
+  this->set_clock(clock->uri()) ;
   }
 
 void HDF5::Signal::extend(const double *points, const size_t length)
@@ -111,23 +119,43 @@ HDF5::Clock *HDF5::Recording::new_clock(const std::string &uri, const std::strin
   }
 
 
-HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::string &units)
-/*---------------------------------------------------------------------------------------*/
+HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::string &units, double rate)
+/*----------------------------------------------------------------------------------------------------*/
 {
-  auto signal = bsml::Recording::new_signal<HDF5::Signal>(uri, units) ;
-  signal->m_data = m_file->create_signal(uri, units) ;
+  auto signal = bsml::Recording::new_signal<HDF5::Signal>(uri, units, rate) ;
+  signal->m_data = m_file->create_signal(uri, units, nullptr, 0, std::vector<hsize_t>(),
+                                         1.0, 0.0, rate, nullptr) ;
   return signal ;
   }
 
-HDF5::SignalVector HDF5::Recording::new_signal(const std::vector<const std::string> &uris,
-/*--------------------------------------------------------------------------------------*/
-                                                           const std::vector<const std::string> &units,
-                                                           HDF5::Clock *clock)
+HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::string &units, HDF5::Clock *clock)
+/*-----------------------------------------------------------------------------------------------------------*/
+{
+  auto signal = bsml::Recording::new_signal<HDF5::Signal, HDF5::Clock>(uri, units, clock) ;
+  signal->m_data = m_file->create_signal(uri, units, nullptr, 0, std::vector<hsize_t>(),
+                                         1.0, 0.0, 0.0, clock->m_data) ;
+  return signal ;
+  }
+
+
+HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<const std::string> &uris,
+/*-------------------------------------------------------------------------------------------*/
+                                                    const std::vector<const std::string> &units,
+                                                    double rate)
 {
   auto signals =
-    bsml::Recording::create_signalvector<HDF5::SignalVector, HDF5::Signal, HDF5::Clock>(uris, units, clock) ;
-  auto signaldata = m_file->create_signal(uris, units, nullptr, 0, 1.0, 0.0, 0.0, clock->m_data) ;
-  for (auto n = 0 ;  n < signals.size() ;  ++n)
-    signals[n]->m_data = signaldata[n] ;
+    data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, rate, nullptr) ;
+  signals->m_data = m_file->create_signal(uris, units, nullptr, 0, 1.0, 0.0, rate, nullptr) ;
+  return signals ;
+  }
+
+HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<const std::string> &uris,
+/*-------------------------------------------------------------------------------------------*/
+                                                    const std::vector<const std::string> &units,
+                                                    HDF5::Clock *clock)
+{
+  auto signals =
+    data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, 0.0, clock) ;
+  signals->m_data = m_file->create_signal(uris, units, nullptr, 0, 1.0, 0.0, 0.0, clock->m_data) ;
   return signals ;
   }

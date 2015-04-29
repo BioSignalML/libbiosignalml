@@ -74,7 +74,8 @@ namespace bsml {
       TYPED_OBJECT(Signal, BSML::Signal)
 
      public:
-      Signal(const std::string &uri, const std::string &units, Clock *clock=nullptr) ;
+      Signal(const std::string &uri, const std::string &units, double rate) ;
+      Signal(const std::string &uri, const std::string &units, Clock *clock) ;
       void extend(const double *points, const size_t length) ;
 
      private:
@@ -109,11 +110,15 @@ namespace bsml {
       Clock *new_clock(const std::string &uri, const std::string &units,
                        double *times = nullptr, size_t datasize=0) ;
 
-      HDF5::Signal *new_signal(const std::string &uri, const std::string &units) ;
+      Signal *new_signal(const std::string &uri, const std::string &units, double rate) ;
+      Signal *new_signal(const std::string &uri, const std::string &units, Clock *clock) ;
 
-      HDF5::SignalVector new_signal(const std::vector<const std::string> &uris,
-                                    const std::vector<const std::string> &units,
-                                    Clock *clock = nullptr) ;
+      SignalArray *new_signalarray(const std::vector<const std::string> &uris,
+                                   const std::vector<const std::string> &units,
+                                   double rate) ;
+      SignalArray *new_signalarray(const std::vector<const std::string> &uris,
+                                   const std::vector<const std::string> &units,
+                                   Clock *clock) ;
 
 // Variants of new_signal() with rate/period (== regular Clock)
 
