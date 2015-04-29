@@ -90,6 +90,7 @@ namespace bsml {
     {
      public:
       void extend(const double *points, const size_t length) ;
+      int index(const std::string &uri) const ;
       } ;
 
 

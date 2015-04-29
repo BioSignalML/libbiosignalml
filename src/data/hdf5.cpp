@@ -66,6 +66,11 @@ void HDF5::SignalArray::extend(const double *points, const size_t length)
 /*----------------------------------------------------------------------*/
 {
   //m_data->extend(times, length, vectorsize, xx) ;  // clock size
+
+int HDF5::SignalArray::index(const std::string &uri) const
+/*------------------------------------------------------*/
+{
+  return -1 ;
   }
 
 
