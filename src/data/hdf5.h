@@ -101,7 +101,7 @@ namespace bsml {
     /*====================================*/
     {
       TYPED_OBJECT(Recording, BSML::Recording)
-      RESTRICTION(format, Format::HDF5)
+      RESTRICT_NODE(format, Format::HDF5)
 
       PROPERTY_OBJECT_RSET(signals, BSML::recording, Signal) // Override...
       PROPERTY_OBJECT_RSET(clockss, BSML::recording, Clock)  // Override...
