@@ -19,16 +19,11 @@ set(HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/object.h
             )
 
 set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
-set(LIBRARIES typedobject)
 
 add_subdirectory(data)
 
-foreach(file ${HEADERS})
-  typedobject_generate(GENERATED_FILES ${file})
-endforeach()
-set(SOURCES ${SOURCES} ${GENERATED_FILES})
+set(INCLUDES  ${INCLUDES}  PARENT_SCOPE)
+set(HEADERS   ${HEADERS}   PARENT_SCOPE)
+set(SOURCES   ${SOURCES}   PARENT_SCOPE)
+set(LIBRARIES ${LIBRARIES} PARENT_SCOPE)
 
-add_library(bsml STATIC ${SOURCES})
-
-target_link_libraries(bsml ${LIBRARIES})
-target_include_directories(bsml PUBLIC ${INCLUDES})

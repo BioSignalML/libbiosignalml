@@ -21,7 +21,7 @@
 #ifndef BSML_FORMATS_H
 #define BSML_FORMATS_H
 
-#include "typedobject/rdf.h"
+#include <typedobject/rdf.h>
 
 namespace bsml {
 

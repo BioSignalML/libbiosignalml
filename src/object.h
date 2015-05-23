@@ -23,7 +23,7 @@
 
 #include "ontology.h"
 
-#include "typedobject/typedobject.h"
+#include <typedobject/typedobject.h>
 
 #include <string>
 
