@@ -23,10 +23,19 @@
 
 #include "recording.h"
 
+#include <stdexcept>
+
 
 namespace bsml {
 
   namespace data {
+
+    class Exception : public std::runtime_error
+    /*=======================================*/
+    {
+     public:
+      Exception(const std::string &msg) : std::runtime_error(msg) { }
+      } ;
 
     class Clock : public bsml::Clock
     /*============================*/

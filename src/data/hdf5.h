@@ -25,7 +25,6 @@
 #include "../model.h"
 
 #include <string>
-#include <stdexcept>
 
 
 namespace bsml {
@@ -37,19 +36,20 @@ namespace bsml {
     class ClockData ;   // Declare forward
     class SignalData ;  // Declare forward
 
+    class Recording ;   // VS2013 needs class visible for friendship...
 
-    class IOError : public std::runtime_error
-    /*=====================================*/
+    class IOError : public data::Exception
+    /*==================================*/
     {
      public:
-      IOError(const std::string &msg) : std::runtime_error(msg) { }
+      IOError(const std::string &msg) : bsml::data::Exception(msg) { }
       } ;
 
-    class Exception : public std::runtime_error
-    /*=======================================*/
+    class Exception : public data::Exception
+    /*====================================*/
     {
      public:
-      Exception(const std::string &msg) : std::runtime_error(msg) { }
+      Exception(const std::string &msg) : bsml::data::Exception(msg) { }
       } ;
 
 
