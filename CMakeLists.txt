@@ -15,8 +15,13 @@ elseif(WIN32)
 endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
+
+set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+             $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+             )
+
 FIND_PACKAGE(typedobject REQUIRED)
-set(INCLUDES ${typedobject_INCLUDE_DIR})
+set(INCLUDES ${INCLUDES} ${typedobject_INCLUDE_DIR})
 find_library(typedobject_LIB typedobject PATHS ${typedobject_LIBRARY_DIR})
 set(LIBRARIES ${typedobject_LIB})
 
@@ -36,7 +41,7 @@ target_include_directories(biosignalml PUBLIC ${INCLUDES})
 
 generate_export_header(biosignalml
                        EXPORT_FILE_NAME
-                       ${CMAKE_BINARY_DIR}/include/typedobject/typedobject_export.h)
+                       ${CMAKE_BINARY_DIR}/include/biosignalml_export.h)
 
 enable_testing()
 add_subdirectory(tests)
@@ -57,17 +62,23 @@ install(TARGETS biosignalml EXPORT biosignalmlTargets
   )
 
 install(
-  DIRECTORY
-    ${CMAKE_SOURCE_DIR}/include/biosignalml
-  DESTINATION
-    include
-  COMPONENT
-    Devel
+  DIRECTORY src/
+  DESTINATION include/biosignalml
+  COMPONENT Devel
+  FILES_MATCHING PATTERN "*.h"
   )
 
 install(
   FILES
-    ${CMAKE_BINARY_DIR}/include/biosignalml/biosignalml_export.h
+    src/data/data.h
+    src/data/hdf5.h
+  DESTINATION include/biosignalml/data
+  COMPONENT Devel
+  )
+
+install(
+  FILES
+    ${CMAKE_BINARY_DIR}/include/biosignalml_export.h
   DESTINATION
     include/biosignalml
   COMPONENT

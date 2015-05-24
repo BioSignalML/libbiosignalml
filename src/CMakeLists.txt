@@ -18,8 +18,6 @@ set(HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/object.h
             ${CMAKE_CURRENT_SOURCE_DIR}/annotation.h
             )
 
-set(INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
-
 add_subdirectory(data)
 
 set(INCLUDES  ${INCLUDES}  PARENT_SCOPE)
