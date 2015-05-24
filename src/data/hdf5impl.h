@@ -31,23 +31,12 @@ namespace bsml {
 
   namespace HDF5 {
 
-    const std::string BSML_H5_MAJOR   = "1" ;
-    const std::string BSML_H5_MINOR   = "0" ;
-    const std::string BSML_H5_VERSION = std::string("BSML ") + BSML_H5_MAJOR + "." + BSML_H5_MINOR ;
-
-    enum H5Compression {
-      BSML_H5_COMPRESS_NONE,
-      BSML_H5_COMPRESS_GZIP,
-      BSML_H5_COMPRESS_SZIP
-      } ;
-
 #define BSML_H5_DEFAULT_DATATYPE    H5::PredType::IEEE_F64LE
 #define BSML_H5_DEFAULT_COMPRESSION BSML_H5_COMPRESS_GZIP
 #define BSML_H5_CHUNK_BYTES         (128*1024)
 
 
     typedef std::pair<H5::DataSet, hobj_ref_t> DatasetRef ;
-
 
     class Dataset
     /*=========*/

@@ -32,6 +32,17 @@ namespace bsml {
 
   namespace HDF5 {
 
+    const BIOSIGNALML_EXPORT std::string BSML_H5_MAJOR   = "1" ;
+    const BIOSIGNALML_EXPORT std::string BSML_H5_MINOR   = "0" ;
+    const BIOSIGNALML_EXPORT std::string BSML_H5_VERSION = std::string("BSML ") + BSML_H5_MAJOR + "." + BSML_H5_MINOR ;
+
+    enum H5Compression {
+      BSML_H5_COMPRESS_NONE,
+      BSML_H5_COMPRESS_GZIP,
+      BSML_H5_COMPRESS_SZIP
+      } ;
+
+
     class File ;        // Declare forward
     class Dataset ;     // Declare forward
     class ClockData ;   // Declare forward
