@@ -21,6 +21,7 @@
 #ifndef BSML_OBJECT_H
 #define BSML_OBJECT_H
 
+#include "biosignalml_export.h"
 #include "ontology.h"
 
 #include <typedobject/typedobject.h>
@@ -32,8 +33,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Object : public TypedObject::TypedObject
-  /*------------------------------------------*/
+  class BIOSIGNALML_EXPORT Object : public TypedObject::TypedObject
+  /*-------------------------------------------------------------*/
   {
     TYPED_OBJECT(Object, OWL::Object)
 

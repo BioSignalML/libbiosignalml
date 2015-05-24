@@ -21,6 +21,7 @@
 #ifndef BSML_ANNOTATION_H
 #define BSML_ANNOTATION_H
 
+#include "biosignalml_export.h"
 #include "object.h"
 #include "timing.h"
 
@@ -29,8 +30,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Annotation : public Object
-  /*----------------------------*/
+  class BIOSIGNALML_EXPORT Annotation : public Object
+  /*-----------------------------------------------*/
   {
     TYPED_OBJECT(Annotation, BSML::Annotation)
 

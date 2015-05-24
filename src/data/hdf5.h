@@ -21,6 +21,7 @@
 #ifndef BSML_HDF5_H
 #define BSML_HDF5_H
 
+#include "biosignalml_export.h"
 #include "data.h"
 #include "../biosignalml.h"
 
@@ -38,23 +39,23 @@ namespace bsml {
 
     class Recording ;   // VS2013 needs class visible for friendship...
 
-    class IOError : public data::Exception
-    /*==================================*/
+    class BIOSIGNALML_EXPORT IOError : public data::Exception
+    /*-----------------------------------------------------*/
     {
      public:
       IOError(const std::string &msg) : bsml::data::Exception(msg) { }
       } ;
 
-    class Exception : public data::Exception
-    /*====================================*/
+    class BIOSIGNALML_EXPORT Exception : public data::Exception
+    /*-------------------------------------------------------*/
     {
      public:
       Exception(const std::string &msg) : bsml::data::Exception(msg) { }
       } ;
 
 
-    class Clock : public data::Clock
-    /*============================*/
+    class BIOSIGNALML_EXPORT Clock : public data::Clock
+    /*-----------------------------------------------*/
     {
       TYPED_OBJECT(Clock, BSML::SampleClock)
 
@@ -68,8 +69,8 @@ namespace bsml {
       } ;
 
 
-    class Signal : public data::Signal
-    /*==============================*/
+    class BIOSIGNALML_EXPORT Signal : public data::Signal
+    /*-------------------------------------------------*/
     {
       TYPED_OBJECT(Signal, BSML::Signal)
 
@@ -84,8 +85,8 @@ namespace bsml {
       } ;
 
 
-    class SignalArray : public data::SignalArray<HDF5::Signal>
-    /*======================================================*/
+    class BIOSIGNALML_EXPORT SignalArray : public data::SignalArray<HDF5::Signal>
+    /*-------------------------------------------------------------------------*/
     {
      public:
       void extend(const double *points, const size_t length) ;
@@ -97,8 +98,8 @@ namespace bsml {
       } ;
 
 
-    class Recording : public data::Recording
-    /*====================================*/
+    class BIOSIGNALML_EXPORT Recording : public data::Recording
+    /*-------------------------------------------------------*/
     {
       TYPED_OBJECT(Recording, BSML::Recording)
       RESTRICT_NODE(format, Format::HDF5)

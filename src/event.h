@@ -21,6 +21,7 @@
 #ifndef BSML_EVENT_H
 #define BSML_EVENT_H
 
+#include "biosignalml_export.h"
 #include "object.h"
 #include "timing.h"
 
@@ -29,8 +30,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Event : public Object
-  /*-----------------------*/
+  class BIOSIGNALML_EXPORT Event : public Object
+  /*------------------------------------------*/
   {
     TYPED_OBJECT(Event, BSML::Event)
 

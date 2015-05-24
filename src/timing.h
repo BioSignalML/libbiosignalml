@@ -21,6 +21,7 @@
 #ifndef BSML_TIMING_H
 #define BSML_TIMING_H
 
+#include "biosignalml_export.h"
 #include "timing.h"
 #include "object.h"
 
@@ -30,15 +31,15 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class RelativeTimeLine : public Object
-  /*----------------------------------*/
+  class BIOSIGNALML_EXPORT RelativeTimeLine : public Object
+  /*-----------------------------------------------------*/
   {
     TYPED_OBJECT(RelativeTimeLine, TL::RelativeTimeLine)
     } ;
 
 
-  class TemporalEntity : public Object
-  /*--------------------------------*/
+  class BIOSIGNALML_EXPORT TemporalEntity : public Object
+  /*---------------------------------------------------*/
   {
     TYPED_OBJECT(TemporalEntity, TIME::TemporalEntity)
 
@@ -48,8 +49,8 @@ namespace bsml {
     } ;
 
 
-  class Interval : public TemporalEntity
-  /*----------------------------------*/
+  class BIOSIGNALML_EXPORT Interval : public TemporalEntity
+  /*-----------------------------------------------------*/
   {
     TYPED_OBJECT(Interval, BSML::Interval)
 
@@ -58,8 +59,8 @@ namespace bsml {
     } ;
 
 
-  class Instant : public TemporalEntity
-  /*---------------------------------*/
+  class BIOSIGNALML_EXPORT Instant : public TemporalEntity
+  /*----------------------------------------------------*/
   {
     TYPED_OBJECT(Instant, BSML::Instant)
 
@@ -67,8 +68,8 @@ namespace bsml {
     } ;
 
 
-  class Clock : public Object
-  /*-----------------------*/
+  class BIOSIGNALML_EXPORT Clock : public Object
+  /*------------------------------------------*/
   {
     TYPED_OBJECT(Clock, BSML::SampleClock)
 

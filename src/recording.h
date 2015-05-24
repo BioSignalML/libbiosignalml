@@ -21,6 +21,7 @@
 #ifndef BSML_RECORDING_H
 #define BSML_RECORDING_H
 
+#include "biosignalml_export.h"
 #include "signal.h"
 #include "annotation.h"
 #include "timing.h"
@@ -35,8 +36,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Recording : public Object
-  /*---------------------------*/
+  class BIOSIGNALML_EXPORT Recording : public Object
+  /*----------------------------------------------*/
   {
     TYPED_OBJECT(Recording, BSML::Recording)
 

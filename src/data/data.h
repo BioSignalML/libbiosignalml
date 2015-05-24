@@ -22,6 +22,7 @@
 #define BSML_DATA_H
 
 #include "recording.h"
+#include "biosignalml_export.h"
 
 #include <stdexcept>
 
@@ -30,15 +31,15 @@ namespace bsml {
 
   namespace data {
 
-    class Exception : public std::runtime_error
-    /*=======================================*/
+    class BIOSIGNALML_EXPORT Exception : public std::runtime_error
+    /*----------------------------------------------------------*/
     {
      public:
       Exception(const std::string &msg) : std::runtime_error(msg) { }
       } ;
 
-    class Clock : public bsml::Clock
-    /*============================*/
+    class BIOSIGNALML_EXPORT Clock : public bsml::Clock
+    /*-----------------------------------------------*/
     {
       TYPED_OBJECT(Clock, BSML::SampleClock)
   
@@ -47,8 +48,8 @@ namespace bsml {
       } ;
 
 
-    class Signal : public bsml::Signal
-    /*==============================*/
+    class BIOSIGNALML_EXPORT Signal : public bsml::Signal
+    /*-------------------------------------------------*/
     {
       TYPED_OBJECT(Signal, BSML::Signal)
 
@@ -58,8 +59,8 @@ namespace bsml {
 
 
     template<class SIGNAL = Signal>
-    class SignalArray : public std::vector<SIGNAL *>
-    /*============================================*/
+    class BIOSIGNALML_EXPORT SignalArray : public std::vector<SIGNAL *>
+    /*---------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
 
@@ -69,8 +70,8 @@ namespace bsml {
       } ;
 
 
-    class Recording : public bsml::Recording
-    /*====================================*/
+    class BIOSIGNALML_EXPORT Recording : public bsml::Recording
+    /*-------------------------------------------------------*/
     {
       TYPED_OBJECT(Recording, BSML::Recording)
 

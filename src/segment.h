@@ -21,6 +21,7 @@
 #ifndef BSML_SEGMENT_H
 #define BSML_SEGMENT_H
 
+#include "biosignalml_export.h"
 #include "timing.h"
 #include "object.h"
 
@@ -31,8 +32,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class Segment : public Object
-  /*-------------------------*/
+  class BIOSIGNALML_EXPORT Segment : public Object
+  /*--------------------------------------------*/
   {
     TYPED_OBJECT(Segment, BSML::Segment)
 

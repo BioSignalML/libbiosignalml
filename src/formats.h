@@ -21,12 +21,14 @@
 #ifndef BSML_FORMATS_H
 #define BSML_FORMATS_H
 
+#include "biosignalml_export.h"
+
 #include <typedobject/rdf.h>
 
 namespace bsml {
 
-  class Format
-  /*--------*/
+  class BIOSIGNALML_EXPORT Format
+  /*---------------------------*/
   {
    public:
     static const rdf::Literal EDF ;
