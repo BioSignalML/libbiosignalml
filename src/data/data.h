@@ -18,8 +18,8 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_DATA_MODEL_H
-#define BSML_DATA_MODEL_H
+#ifndef BSML_DATA_H
+#define BSML_DATA_H
 
 #include "recording.h"
 

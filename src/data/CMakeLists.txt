@@ -26,7 +26,7 @@ set(SOURCES ${SOURCES}
             PARENT_SCOPE)
 
 set(HEADERS ${HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/model.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/data.h
             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5.h
             PARENT_SCOPE)
 

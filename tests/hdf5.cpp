@@ -19,7 +19,7 @@
  ******************************************************************************/
 
 #include "data/hdf5.h"
-#include "model.h"
+#include "biosignalml.h"
 
 #include <iostream>
 #include <string>

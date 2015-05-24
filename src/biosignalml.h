@@ -18,8 +18,8 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_MODEL_H
-#define BSML_MODEL_H
+#ifndef BIOSIGNALML_H
+#define BIOSIGNALML_H
 
 #include "ontology.h"
 #include "formats.h"
