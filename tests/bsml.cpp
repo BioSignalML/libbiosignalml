@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
   std::string source(argv[1]) ; 
   rdf::Graph g ;
-  g.parseResource(source, rdf::Graph::Format::TURTLE) ;
+  g.parse_resource(source, rdf::Graph::Format::TURTLE) ;
   std::cout << g.serialise(rdf::Graph::Format::TURTLE) << std::endl ;
 
   std::string recording(argv[2]) ;
