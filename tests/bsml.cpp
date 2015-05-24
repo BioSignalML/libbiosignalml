@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
             << "  Format: "       << rec.format() << std::endl
             << "  Investigation: "<< rec.investigation() << std::endl
             << "  Timeline: "     << rec.timeline()->uri() << std::endl
-            << "  Duration: "     << rec.duration().to_string() << std::endl ;
+            << "  Duration: "     << rec.duration()        << std::endl ;
 
   std::cout << std::endl << "Signals:" << std::endl ;
   for (const auto &signal: rec.signals()) {
@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
 
   std::cout << std::endl << "Annotations:" << std::endl ;
   for (const auto &note: rec.annotations()) {
-    std::cout << "  Note: "        << note->comment()  << std::endl
-              << "  Time: "        << note->time()->start().to_string() << std::endl ;
+    std::cout << "  Note: "        << note->comment()       << std::endl
+              << "  Time: "        << note->time()->start() << std::endl ;
     }
 
   }
