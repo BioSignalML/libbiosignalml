@@ -48,7 +48,7 @@ add_subdirectory(tests)
 
 
 set_property(TARGET biosignalml PROPERTY VERSION ${BioSignalML_VERSION})
-set_property(TARGET biosignalml PROPERTY SOVERSION 3)
+set_property(TARGET biosignalml PROPERTY SOVERSION 0)
 set_property(TARGET biosignalml PROPERTY INTERFACE_biosignalml_MAJOR_VERSION 0)
 set_property(TARGET biosignalml APPEND PROPERTY
   COMPATIBLE_INTERFACE_STRING biosignalml_MAJOR_VERSION
