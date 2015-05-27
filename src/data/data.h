@@ -44,7 +44,11 @@ namespace bsml {
       TYPED_OBJECT(Clock, BSML::SampleClock)
   
      public:
-      virtual void extend(const double *times, const size_t length) { }
+      virtual void extend(const double *times, const size_t length)
+      {
+        (void)times ;     // Unused parameters
+        (void)length ;
+        }
       } ;
 
 
@@ -54,7 +58,11 @@ namespace bsml {
       TYPED_OBJECT(Signal, BSML::Signal)
 
      public:
-      virtual void extend(const double *points, const size_t length) { }
+      virtual void extend(const double *points, const size_t length)
+      {
+        (void)points ;    // Unused parameters
+        (void)length ;
+        }
       } ;
 
 
@@ -65,8 +73,16 @@ namespace bsml {
       static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
 
      public:
-      virtual void extend(const double *points, const size_t length) { }
-      virtual int index(const std::string &uri) const { return -1 ; }
+      virtual void extend(const double *points, const size_t length)
+      {
+        (void)points ;     // Unused parameters
+        (void)length ;
+        }
+      virtual int index(const std::string &uri) const
+      {
+        (void)uri ;        // Unused parameter
+        return -1 ;
+        }
       } ;
 
 
