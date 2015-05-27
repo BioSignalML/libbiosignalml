@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
             << "  Duration: "     << rec.duration()        << std::endl ;
 
   std::cout << std::endl << "Signals:" << std::endl ;
-  for (const auto &signal: rec.signals()) {
+  for (const auto &signal: rec.signal_set()) {
 //    std::cout << signal.to_string() << std::endl ;
     std::cout << "  Label: "       << signal->label()  << std::endl
               << "  Rate: "        << signal->rate()   << std::endl
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
 
   std::cout << std::endl << "Annotations:" << std::endl ;
-  for (const auto &note: rec.annotations()) {
+  for (const auto &note: rec.annotation_set()) {
     std::cout << "  Note: "        << note->comment()       << std::endl
               << "  Time: "        << note->time()->start() << std::endl ;
     }

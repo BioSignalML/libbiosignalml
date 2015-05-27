@@ -66,11 +66,11 @@ namespace bsml {
       } ;
 
 
-    template<class SIGNAL = Signal>
-    class BIOSIGNALML_EXPORT SignalArray : public std::vector<SIGNAL *>
-    /*---------------------------------------------------------------*/
+    template<class SIGNAL_TYPE = Signal>
+    class BIOSIGNALML_EXPORT SignalArray : public std::vector<SIGNAL_TYPE *>
+    /*--------------------------------------------------------------------*/
     {
-      static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
+      static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
 
      public:
       virtual void extend(const double *points, const size_t length)
@@ -92,43 +92,42 @@ namespace bsml {
       TYPED_OBJECT(Recording, BSML::Recording)
 
      public:
-      template<class SIGNAL=Signal, class CLOCK=Clock>
-      SignalArray<SIGNAL> *new_signalarray(const std::vector<const std::string> &uris,
-      /*----------------------------------------------------------------------------*/
-                                           const std::vector<const std::string> &units,
-                                           double rate)
+      template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
+      SignalArray<SIGNAL_TYPE> *new_signalarray(const std::vector<const std::string> &uris,
+      /*---------------------------------------------------------------------------------*/
+                                                const std::vector<const std::string> &units,
+                                                double rate)
       {
-        return create_signalarray<SignalArray<SIGNAL>, SIGNAL, CLOCK>(uris, units, rate, nullptr) ;
+        return create_signalarray<SignalArray<SIGNAL_TYPE>, SIGNAL_TYPE, CLOCK_TYPE>(uris, units, rate, nullptr) ;
         }
 
-      template<class SIGNAL=Signal, class CLOCK=Clock>
-      SignalArray<SIGNAL> *new_signalarray(const std::vector<const std::string> &uris,
-      /*----------------------------------------------------------------------------*/
-                                           const std::vector<const std::string> &units,
-                                           CLOCK *clock)
+      template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
+      SignalArray<SIGNAL_TYPE> *new_signalarray(const std::vector<const std::string> &uris,
+      /*---------------------------------------------------------------------------------*/
+                                                const std::vector<const std::string> &units,
+                                                CLOCK_TYPE *clock)
       {
-        return create_signalarray<SignalArray<SIGNAL>, SIGNAL, CLOCK>(uris, units, 0.0, clock) ;
+        return create_signalarray<SignalArray<SIGNAL_TYPE>, SIGNAL_TYPE, CLOCK_TYPE>(uris, units, 0.0, clock) ;
         }
 
 
      protected:
-      template<class SIGNALARRAY, class SIGNAL, class CLOCK>
-      SIGNALARRAY *create_signalarray(const std::vector<const std::string> &uris,
-      /*-----------------------------------------------------------------------*/
-                                      const std::vector<const std::string> &units,
-                                      double rate, CLOCK *clock)
+      template<class SIGNAL_ARRAY_TYPE, class SIGNAL_TYPE, class CLOCK_TYPE>
+      SIGNAL_ARRAY_TYPE *create_signalarray(const std::vector<const std::string> &uris,
+      /*-----------------------------------------------------------------------------*/
+                                            const std::vector<const std::string> &units,
+                                            double rate, CLOCK_TYPE *clock)
       {
         assert(uris.size() == units.size()) ;  // Lengths of `uris` and `units` are different
-        auto signals = new SIGNALARRAY() ;
-        for (int n = 0 ;  n < uris.size() ;  ++n) {
-          if (clock == nullptr) signals->push_back(this->new_signal<SIGNAL>(uris[n], units[n], rate)) ;
-          else                  signals->push_back(this->new_signal<SIGNAL, CLOCK>(uris[n], units[n], clock)) ;
+        auto sigs = new SIGNAL_ARRAY_TYPE() ;
+        for (size_t n = 0 ;  n < uris.size() ;  ++n) {
+          if (clock == nullptr) sigs->push_back(this->new_signal<SIGNAL_TYPE>(uris[n], units[n], rate)) ;
+          else                  sigs->push_back(this->new_signal<SIGNAL_TYPE, CLOCK_TYPE>(uris[n], units[n], clock)) ;
           }
-        return signals ;
+        return sigs ;
         }
 
       } ;
-
 
     } ;
 

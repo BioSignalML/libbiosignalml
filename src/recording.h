@@ -53,45 +53,45 @@ namespace bsml {
     PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
     PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
-    PROPERTY_OBJECT_RSET(clocks, BSML::recording, Clock)
-    PROPERTY_OBJECT_RSET(signals, BSML::recording, Signal)
-    PROPERTY_OBJECT_RSET(annotations, DCT::subject, Annotation)
+    PROPERTY_OBJECT_RSET(clock_set, BSML::recording, Clock)
+    PROPERTY_OBJECT_RSET(signal_set, BSML::recording, Signal)
+    PROPERTY_OBJECT_RSET(annotation_set, DCT::subject, Annotation)
 
    public:
-    template<class CLOCK=Clock>
-    CLOCK *new_clock(const std::string &uri, const std::string &units)
-    /*--------------------------------------------------------------*/
+    template<class CLOCK_TYPE=Clock>
+    CLOCK_TYPE *new_clock(const std::string &uri, const std::string &units)
+    /*-------------------------------------------------------------------*/
     {
-      static_assert(std::is_base_of<Clock, CLOCK>::value, "CLOCK must be derived from Clock") ;
-      CLOCK *clock = new CLOCK(uri, units) ;
+      static_assert(std::is_base_of<Clock, CLOCK_TYPE>::value, "CLOCK_TYPE must be derived from Clock") ;
+      CLOCK_TYPE *clock = new CLOCK_TYPE(rdf::URI(uri, m_base), units) ;
       clock->set_recording(this->uri()) ;
-      this->m_clocks.insert(clock) ;
+      this->m_clock_set.insert(clock) ;
       return clock ;
       }
 
-    template<class SIGNAL=Signal>
-    SIGNAL *new_signal(const std::string &uri, const std::string &units, double rate)
-    /*-----------------------------------------------------------------------------*/
+    template<class SIGNAL_TYPE=Signal>
+    SIGNAL_TYPE *new_signal(const std::string &uri, const std::string &units, double rate)
+    /*----------------------------------------------------------------------------------*/
     {
-      static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
-      return add_signal<SIGNAL>(new SIGNAL(uri, units, rate)) ;
+      static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
+      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(uri, units, rate)) ;
       }
 
-    template<class SIGNAL=Signal, class CLOCK=Clock>
-    SIGNAL *new_signal(const std::string &uri, const std::string &units, CLOCK *clock)
-    /*------------------------------------------------------------------------------*/
+    template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
+    SIGNAL_TYPE *new_signal(const std::string &uri, const std::string &units, CLOCK_TYPE *clock)
+    /*----------------------------------------------------------------------------------------*/
     {
-      static_assert(std::is_base_of<Signal, SIGNAL>::value, "SIGNAL must be derived from Signal") ;
-      return add_signal<SIGNAL>(new SIGNAL(uri, units, clock)) ;
+      static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
+      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(uri, units, clock)) ;
       }
 
    private:
-    template<class SIGNAL>
-    SIGNAL *add_signal(SIGNAL *signal)
-    /*------------------------------*/
+    template<class SIGNAL_TYPE>
+    SIGNAL_TYPE *add_signal(SIGNAL_TYPE *signal)
+    /*----------------------------------------*/
     {
       signal->set_recording(this->uri()) ;
-      this->m_signals.insert(signal) ;
+      this->m_signal_set.insert(signal) ;
       return signal ;
       }
 
