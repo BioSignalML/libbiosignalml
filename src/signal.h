@@ -55,8 +55,8 @@ namespace bsml {
     PROPERTY_DURATION(duration, DCT::extent)
 
    public:
-    Signal(const std::string &uri, const std::string &units, double rate) ;
-    Signal(const std::string &uri, const std::string &units, Clock *clock) ;
+    Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
+    Signal(const rdf::URI &uri, const rdf::URI &units, Clock *clock) ;
 
     } ;
 

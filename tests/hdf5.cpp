@@ -38,18 +38,18 @@ int main(int argc, char *argv[])
   bsml::HDF5::Recording hdf5(rdf::URI("http://ex.org/recording"), "test.h5") ;
   hdf5.set_description("testing 123...") ;
 
-  const std::vector<const std::string> uris{"http://ex.org/1",
-                                            "http://ex.org/2",
-                                            "http://ex.org/3"
+  const std::vector<const std::string> uris{"1",
+                                            "2",
+                                            "3"
                                            } ;
-  const std::vector<const std::string> units{"http://units.org/V",
-                                             "http://units.org/mV",
-                                             "http://units.org/mV"
-                                           } ;
+  const std::vector<const rdf::URI> units{rdf::URI("http://units.org/V"),
+                                          rdf::URI("http://units.org/mV"),
+                                          rdf::URI("http://units.org/mV")
+                                          } ;
 
 
 
-  auto *sig = hdf5.new_signal("http://ex.org/signal", units[1], 1000.0) ;
+  auto *sig = hdf5.new_signal("signal", units[1], 1000.0) ;
 
 
 
@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     times[t] = (double)t/((double)(NPOINTS - 1)) ;
     }
 
-  bsml::HDF5::Clock *clock = hdf5.new_clock("http://ex.org/clock",
-                                            "http://units.org/Second",
+  bsml::HDF5::Clock *clock = hdf5.new_clock("clock",
+                                            rdf::URI("http://units.org/Second"),
                                             times, NPOINTS) ;
   clock->set_label("A common clock") ;
 

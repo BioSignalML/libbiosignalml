@@ -80,7 +80,7 @@ namespace bsml {
     PROPERTY_URI(recording,      BSML::recording)
 
    public:
-    Clock(const std::string &uri, const std::string &units) ;
+    Clock(const rdf::URI &uri, const rdf::URI &units) ;
 
     } ;
 

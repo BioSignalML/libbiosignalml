@@ -59,8 +59,8 @@ namespace bsml {
 
    public:
     template<class CLOCK_TYPE=Clock>
-    CLOCK_TYPE *new_clock(const std::string &uri, const std::string &units)
-    /*-------------------------------------------------------------------*/
+    CLOCK_TYPE *new_clock(const std::string &uri, const rdf::URI &units)
+    /*----------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Clock, CLOCK_TYPE>::value, "CLOCK_TYPE must be derived from Clock") ;
       CLOCK_TYPE *clock = new CLOCK_TYPE(rdf::URI(uri, m_base), units) ;
@@ -70,15 +70,15 @@ namespace bsml {
       }
 
     template<class SIGNAL_TYPE=Signal>
-    SIGNAL_TYPE *new_signal(const std::string &uri, const std::string &units, double rate)
-    /*----------------------------------------------------------------------------------*/
+    SIGNAL_TYPE *new_signal(const std::string &uri, const rdf::URI &units, double rate)
+    /*-------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
       return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(rdf::URI(uri, m_base), units, rate)) ;
       }
 
     template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
-    SIGNAL_TYPE *new_signal(const std::string &uri, const std::string &units, CLOCK_TYPE *clock)
+    SIGNAL_TYPE *new_signal(const std::string &uri, const rdf::URI &units, CLOCK_TYPE *clock)
     /*----------------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
