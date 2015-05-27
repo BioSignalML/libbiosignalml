@@ -119,7 +119,7 @@ namespace bsml {
       PROPERTY_OBJECT_RSET(clock_set,  BSML::recording, Clock)  // Override...
 
      public:
-      Recording(const rdf::URI &uri, const std::string &filename) ;
+      Recording(const rdf::URI &uri, const std::string &filename, bool create=false) ;
 
       void close(void) ;
 

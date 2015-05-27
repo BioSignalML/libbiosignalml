@@ -76,16 +76,15 @@ int HDF5::SignalArray::index(const std::string &uri) const
   }
 
 
-HDF5::Recording::Recording(const rdf::URI &uri, const std::string &filename)
-/*------------------------------------------------------------------------*/
+HDF5::Recording::Recording(const rdf::URI &uri, const std::string &filename, bool create)
+/*-------------------------------------------------------------------------------------*/
 : HDF5::Recording(uri)
 {
-  m_file = nullptr ;
-  try {
+  if (create)
+    m_file = HDF5::File::create(uri.to_string(), filename, true) ;
+  else {
     m_file = HDF5::File::open(filename) ;
-    }
-  catch (HDF5::IOError e) {
-    m_file = HDF5::File::create(uri.to_string(), filename) ;
+    // Need to read metadata and create objects...
     }
   }
 
