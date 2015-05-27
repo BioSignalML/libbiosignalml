@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 /*----------------------------*/
 {
 
-  bsml::HDF5::Recording hdf5("http://ex.org/recording", "test.h5") ;
+  bsml::HDF5::Recording hdf5(rdf::URI("http://ex.org/recording"), "test.h5") ;
   hdf5.set_description("testing 123...") ;
 
   const std::vector<const std::string> uris{"http://ex.org/1",

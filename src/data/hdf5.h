@@ -72,7 +72,6 @@ namespace bsml {
 
      public:
       Clock(const rdf::URI &uri, const std::string &units) ;
-      Clock(const std::string &uri, const std::string &units) ;
       void extend(const double *times, const size_t length) ;
 
      private:
@@ -89,8 +88,6 @@ namespace bsml {
      public:
       Signal(const rdf::URI &uri, const std::string &units, double rate) ;
       Signal(const rdf::URI &uri, const std::string &units, Clock *clock) ;
-      Signal(const std::string &uri, const std::string &units, double rate) ;
-      Signal(const std::string &uri, const std::string &units, Clock *clock) ;
       void extend(const double *points, const size_t length) ;
 
      private:
@@ -122,7 +119,7 @@ namespace bsml {
       PROPERTY_OBJECT_RSET(clock_set,  BSML::recording, Clock)  // Override...
 
      public:
-      Recording(const std::string &uri, const std::string &filename) ;
+      Recording(const rdf::URI &uri, const std::string &filename) ;
 
       void close(void) ;
 

@@ -26,13 +26,7 @@ using namespace bsml ;
 
 
 HDF5::Clock::Clock(const rdf::URI &uri, const std::string &units)
-/*----------------------------------------------------------------*/
-: HDF5::Clock(uri.to_string(), units)
-{
-  }
-
-HDF5::Clock::Clock(const std::string &uri, const std::string &units)
-/*----------------------------------------------------------------*/
+/*-------------------------------------------------------------*/
 : HDF5::Clock(uri)
 {
   this->set_units(rdf::URI(units)) ;
@@ -46,13 +40,7 @@ void HDF5::Clock::extend(const double *times, const size_t length)
 
 
 HDF5::Signal::Signal(const rdf::URI &uri, const std::string &units, double rate)
-/*-------------------------------------------------------------------------------*/
-: HDF5::Signal(uri.to_string(), units, rate)
-{
-  }
-
-HDF5::Signal::Signal(const std::string &uri, const std::string &units, double rate)
-/*-------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 : HDF5::Signal(uri)
 {
   this->set_units(rdf::URI(units)) ;  // bsml::Units::get_units_uri(const std::string &u)
@@ -60,13 +48,7 @@ HDF5::Signal::Signal(const std::string &uri, const std::string &units, double ra
   }
 
 HDF5::Signal::Signal(const rdf::URI &uri, const std::string &units, HDF5::Clock *clock)
-/*--------------------------------------------------------------------------------------*/
-: HDF5::Signal(uri.to_string(), units, clock)
-{
-  }
-
-HDF5::Signal::Signal(const std::string &uri, const std::string &units, HDF5::Clock *clock)
-/*--------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
 : HDF5::Signal(uri)
 {
   this->set_units(rdf::URI(units)) ;  // bsml::Units::get_units_uri(const std::string &u)
@@ -94,8 +76,8 @@ int HDF5::SignalArray::index(const std::string &uri) const
   }
 
 
-HDF5::Recording::Recording(const std::string &uri, const std::string &filename)
-/*---------------------------------------------------------------------------*/
+HDF5::Recording::Recording(const rdf::URI &uri, const std::string &filename)
+/*------------------------------------------------------------------------*/
 : HDF5::Recording(uri)
 {
   m_file = nullptr ;
@@ -103,7 +85,7 @@ HDF5::Recording::Recording(const std::string &uri, const std::string &filename)
     m_file = HDF5::File::open(filename) ;
     }
   catch (HDF5::IOError e) {
-    m_file = HDF5::File::create(uri, filename) ;
+    m_file = HDF5::File::create(uri.to_string(), filename) ;
     }
   }
 
