@@ -90,18 +90,11 @@ HDF5::Recording::Recording(const rdf::URI &uri, const std::string &filename)
   }
 
 
-//HDF5::Recording::~Recording()  // Destructor is generated...
-/*-------------------------------*/
-//{
-//  this->close() ;
-//  }
-
-
 void HDF5::Recording::close(void)
 /*-----------------------------*/
 {
   if (m_file != nullptr) {
-    m_file->store_metadata(serialise_metadata(rdf::Graph::Format::TURTLE), "text/turtle") ; // ********************
+    m_file->store_metadata(serialise_metadata(rdf::Graph::Format::TURTLE, m_base), "text/turtle") ; // ********************
 
     for (auto ds : datasets) {
       ds->close() ;
@@ -137,7 +130,8 @@ HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::str
 /*----------------------------------------------------------------------------------------------------*/
 {
   auto signal = bsml::Recording::new_signal<HDF5::Signal>(uri, units, rate) ;
-  signal->m_data = m_file->create_signal(uri, units, nullptr, 0, std::vector<hsize_t>(),
+  signal->m_data = m_file->create_signal(uri, units,
+                                         nullptr, 0, std::vector<hsize_t>(),
                                          1.0, 0.0, rate, nullptr) ;
   datasets.insert(signal->m_data) ;
   return signal ;
@@ -147,7 +141,8 @@ HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const std::str
 /*-----------------------------------------------------------------------------------------------------------*/
 {
   auto signal = bsml::Recording::new_signal<HDF5::Signal, HDF5::Clock>(uri, units, clock) ;
-  signal->m_data = m_file->create_signal(uri, units, nullptr, 0, std::vector<hsize_t>(),
+  signal->m_data = m_file->create_signal(uri, units,
+                                         nullptr, 0, std::vector<hsize_t>(),
                                          1.0, 0.0, 0.0, clock->m_data) ;
   datasets.insert(signal->m_data) ;
   return signal ;
