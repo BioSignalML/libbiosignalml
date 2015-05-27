@@ -540,7 +540,7 @@ HDF5::SignalData *HDF5::File::create_signal(const std::string &uri, const std::s
     set_signal_attributes(dset, gain, offset, rate, "", clock) ;
     }
   catch (H5::AttributeIException e) {
-    throw HDF5::Exception("Cannot set signal's attributes") ;
+    throw HDF5::Exception("Cannot set signal's attributes: " + e.getDetailMsg()) ;
     }
 
   m_h5file.flush(H5F_SCOPE_GLOBAL) ;
@@ -611,7 +611,7 @@ HDF5::SignalData *HDF5::File::create_signal(const std::vector<const std::string>
     set_signal_attributes(dset, gain, offset, rate, "", clock) ;
     }
   catch (H5::AttributeIException e) {
-    throw HDF5::Exception("Cannot set signal's attributes") ;
+    throw HDF5::Exception("Cannot set signal's attributes: " + e.getDetailMsg()) ;
     }
 
   for (n = 0 ;  n < nsignals ;  ++n)
@@ -668,7 +668,7 @@ HDF5::ClockData *HDF5::File::create_clock(const std::string &uri, const std::str
       }
     }
   catch (H5::AttributeIException e) {
-    throw HDF5::Exception("Cannot set clocks's attributes") ;
+    throw HDF5::Exception("Cannot set clock's attributes: " + e.getDetailMsg()) ;
     }
 
   m_h5file.flush(H5F_SCOPE_GLOBAL) ;
