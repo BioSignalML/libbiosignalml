@@ -74,7 +74,7 @@ namespace bsml {
     /*----------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
-      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(uri, units, rate)) ;
+      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(rdf::URI(uri, m_base), units, rate)) ;
       }
 
     template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
@@ -82,8 +82,12 @@ namespace bsml {
     /*----------------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
-      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(uri, units, clock)) ;
+      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(rdf::URI(uri, m_base), units, clock)) ;
       }
+
+   protected:
+    std::string m_base ;
+    INITIALISE(m_base = this->uri().to_string() + "/" ;)
 
    private:
     template<class SIGNAL_TYPE>

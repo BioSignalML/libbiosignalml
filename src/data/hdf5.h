@@ -71,6 +71,7 @@ namespace bsml {
       TYPED_OBJECT(Clock, BSML::SampleClock)
 
      public:
+      Clock(const rdf::URI &uri, const std::string &units) ;
       Clock(const std::string &uri, const std::string &units) ;
       void extend(const double *times, const size_t length) ;
 
@@ -86,6 +87,8 @@ namespace bsml {
       TYPED_OBJECT(Signal, BSML::Signal)
 
      public:
+      Signal(const rdf::URI &uri, const std::string &units, double rate) ;
+      Signal(const rdf::URI &uri, const std::string &units, Clock *clock) ;
       Signal(const std::string &uri, const std::string &units, double rate) ;
       Signal(const std::string &uri, const std::string &units, Clock *clock) ;
       void extend(const double *points, const size_t length) ;
