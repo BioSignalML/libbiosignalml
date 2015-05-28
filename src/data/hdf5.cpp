@@ -93,7 +93,9 @@ void HDF5::Recording::close(void)
 /*-----------------------------*/
 {
   if (m_file != nullptr) {
-    m_file->store_metadata(serialise_metadata(rdf::Graph::Format::TURTLE, m_base), "text/turtle") ; // ********************
+    m_file->store_metadata(
+      serialise_metadata(rdf::Graph::Format::TURTLE, m_base, m_prefixes),
+      "text/turtle") ; // ********************
 
     for (auto ds : datasets) {
       ds->close() ;
