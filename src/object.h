@@ -46,6 +46,8 @@ namespace bsml {
     PROPERTY_URI(creator, DCT::creator)
     PROPERTY_DATETIME(created, DCT::created)
     //, XSD.dateTime,  utils::datetime_to_isoformat, utils::isoformat_to_datetime)
+
+    PREFIXES(BSML::NS, RDFS::NS, XSD::NS, DCT::NS, PRV::NS)
     } ;
 
   } ;

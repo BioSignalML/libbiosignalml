@@ -85,16 +85,10 @@ namespace bsml {
       return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(rdf::URI(uri, m_base), units, clock)) ;
       }
 
-   void add_namespace(const Namespace & prefix) ;
-
    protected:
     std::string m_base ;
-    std::list<Namespace> m_prefixes ;
-
     INITIALISE(                                 \
       m_base = this->uri().to_string() + "/" ;  \
-      m_prefixes.push_back(BSML::NS) ;          \
-      m_prefixes.push_back(rdf::Namespace("rdfs", "http://www.w3.org/2000/01/rdf-schema#")) ;  \
       )
 
    private:

@@ -19,10 +19,3 @@
  ******************************************************************************/
 
 #include "recording.h"
-
-
-void bsml::Recording::add_namespace(const rdf::Namespace & prefix)
-/*--------------------------------------------------------------*/
-{
-  m_prefixes.push_back(prefix) ;
-  }
