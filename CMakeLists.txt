@@ -46,10 +46,6 @@ add_library(biosignalml SHARED ${SOURCES})
 target_link_libraries(biosignalml PUBLIC ${LIBRARIES})
 target_include_directories(biosignalml PUBLIC ${INCLUDES})
 
-generate_export_header(biosignalml
-                       EXPORT_FILE_NAME
-                       ${CMAKE_BINARY_DIR}/include/biosignalml_export.h)
-
 enable_testing()
 add_subdirectory(tests)
 
@@ -82,15 +78,6 @@ install(
     src/data/hdf5.h
   DESTINATION include/biosignalml/data
   COMPONENT Devel
-  )
-
-install(
-  FILES
-    ${CMAKE_BINARY_DIR}/include/biosignalml_export.h
-  DESTINATION
-    include/biosignalml
-  COMPONENT
-    Devel
   )
 
 write_basic_package_version_file(
