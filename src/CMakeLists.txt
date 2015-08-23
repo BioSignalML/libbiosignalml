@@ -5,7 +5,6 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/object.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/timing.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/event.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/annotation.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/formats.cpp
             )
 
 add_subdirectory(data)
