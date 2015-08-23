@@ -38,8 +38,8 @@ namespace bsml {
 
     typedef std::pair<H5::DataSet, hobj_ref_t> DatasetRef ;
 
-    class Dataset
-    /*=========*/
+    class BIOSIGNALML_EXPORT Dataset
+    /*----------------------------*/
     {
      public:
 
@@ -65,8 +65,8 @@ namespace bsml {
       } ;
 
 
-    class ClockData : public Dataset
-    /*============================*/
+    class BIOSIGNALML_EXPORT ClockData : public Dataset
+    /*-----------------------------------------------*/
     {
      public:
       ClockData() ;
@@ -77,8 +77,8 @@ namespace bsml {
 
 
 
-    class SignalData : public Dataset
-    /*=============================*/
+    class BIOSIGNALML_EXPORT SignalData : public Dataset
+    /*------------------------------------------------*/
     {
      public:
       SignalData() ;
@@ -88,8 +88,8 @@ namespace bsml {
       } ;
 
 
-    class File
-    /*======*/
+    class BIOSIGNALML_EXPORT File
+    /*-------------------------*/
     {
      public:
       File(H5::H5File h5file) ;
