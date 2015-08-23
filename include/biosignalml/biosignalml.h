@@ -21,13 +21,13 @@
 #ifndef BIOSIGNALML_H
 #define BIOSIGNALML_H
 
-#include "ontology.h"
-#include "formats.h"
-#include "object.h"
-#include "timing.h"
-#include "signal.h"
-#include "event.h"
-#include "recording.h"
-#include "annotation.h"
+#include <biosignalml/ontology.h>
+#include <biosignalml/formats.h>
+#include <biosignalml/object.h>
+#include <biosignalml/timing.h>
+#include <biosignalml/signal.h>
+#include <biosignalml/event.h>
+#include <biosignalml/recording.h>
+#include <biosignalml/annotation.h>
 
 #endif

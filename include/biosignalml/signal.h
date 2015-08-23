@@ -18,26 +18,46 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_ANNOTATION_H
-#define BSML_ANNOTATION_H
+#ifndef BSML_SIGNAL_H
+#define BSML_SIGNAL_H
 
-#include "biosignalml_export.h"
-#include "object.h"
-#include "timing.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/timing.h>
+#include <biosignalml/object.h>
+
+#include <string>
+#include <vector>
+#include <type_traits>
 
 using namespace rdf ;
 
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Annotation : public Object
-  /*-----------------------------------------------*/
+  class BIOSIGNALML_EXPORT Signal : public Object
+  /*-------------------------------------------*/
   {
-    TYPED_OBJECT(Annotation, BSML::Annotation)
+    TYPED_OBJECT(Signal, BSML::Signal)
+    PROPERTY_URI(recording, BSML::recording)
+    PROPERTY_URI(units, BSML::units)
+    PROPERTY_NODE(sensor, BSML::sensor)
+    PROPERTY_NODE(filter, BSML::preFilter)
+    PROPERTY_DECIMAL(rate, BSML::rate)
+    PROPERTY_DECIMAL(period, BSML::period)
+    PROPERTY_URI(clock, BSML::clock)
+    PROPERTY_DECIMAL(minFrequency, BSML::minFrequency)
+    PROPERTY_DECIMAL(maxFrequency, BSML::maxFrequency)
+    PROPERTY_DECIMAL(minValue, BSML::minValue)
+    PROPERTY_DECIMAL(maxValue, BSML::maxValue)
+    PROPERTY_INTEGER(dataBits, BSML::dataBits)
+    PROPERTY_NODE(signaltype, BSML::signalType)
+    PROPERTY_DURATION(offset, BSML::offset)
+    PROPERTY_DURATION(duration, DCT::extent)
 
-    PROPERTY_URI(about, DCT::subject)
-    PROPERTY_NODE_SET(tags, BSML::tag)
-    PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
+   public:
+    Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
+    Signal(const rdf::URI &uri, const rdf::URI &units, Clock *clock) ;
+
     } ;
 
   } ;

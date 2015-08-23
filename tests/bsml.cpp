@@ -18,7 +18,7 @@
  *                                                                            *
  ******************************************************************************/
 
-#include "biosignalml.h"
+#include <biosignalml/biosignalml.h>
 
 #include <iostream>
 #include <string>

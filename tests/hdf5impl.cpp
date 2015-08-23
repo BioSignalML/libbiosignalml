@@ -21,7 +21,7 @@
 #include <iostream>
 #include <vector>
 
-#include "data/hdf5.h"
+#include <biosignalml/data/hdf5.h>
 #include "data/hdf5impl.h"
 
 

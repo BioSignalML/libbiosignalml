@@ -21,11 +21,11 @@
 #ifndef BSML_RECORDING_H
 #define BSML_RECORDING_H
 
-#include "biosignalml_export.h"
-#include "signal.h"
-#include "annotation.h"
-#include "timing.h"
-#include "object.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/signal.h>
+#include <biosignalml/annotation.h>
+#include <biosignalml/timing.h>
+#include <biosignalml/object.h>
 
 #include <string>
 #include <vector>

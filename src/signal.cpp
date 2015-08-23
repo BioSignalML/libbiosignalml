@@ -18,7 +18,7 @@
  *                                                                            *
  ******************************************************************************/
 
-#include "signal.h"
+#include <biosignalml/signal.h>
 
 
 bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, double rate)

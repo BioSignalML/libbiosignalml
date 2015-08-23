@@ -18,26 +18,27 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_EVENT_H
-#define BSML_EVENT_H
+#ifndef BSML_SEGMENT_H
+#define BSML_SEGMENT_H
 
-#include "biosignalml_export.h"
-#include "object.h"
-#include "timing.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/timing.h>
+#include <biosignalml/object.h>
+
+#include <string>
 
 using namespace rdf ;
 
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Event : public Object
-  /*------------------------------------------*/
+  class BIOSIGNALML_EXPORT Segment : public Object
+  /*--------------------------------------------*/
   {
-    TYPED_OBJECT(Event, BSML::Event)
+    TYPED_OBJECT(Segment, BSML::Segment)
 
-    PROPERTY_URI(recording, BSML::recording)
-    PROPERTY_URI(eventtype, BSML::eventType)
-    PROPERTY_OBJECT(time, BSML::time, TemporalEntity) // Instant or Interval
+    PROPERTY_URI(source, DCT::source)
+    PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
     } ;
 
   } ;

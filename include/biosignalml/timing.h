@@ -18,27 +18,70 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_SEGMENT_H
-#define BSML_SEGMENT_H
+#ifndef BSML_TIMING_H
+#define BSML_TIMING_H
 
-#include "biosignalml_export.h"
-#include "timing.h"
-#include "object.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/timing.h>
+#include <biosignalml/object.h>
 
 #include <string>
 
 using namespace rdf ;
 
-
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Segment : public Object
-  /*--------------------------------------------*/
+  class BIOSIGNALML_EXPORT RelativeTimeLine : public Object
+  /*-----------------------------------------------------*/
   {
-    TYPED_OBJECT(Segment, BSML::Segment)
+    TYPED_OBJECT(RelativeTimeLine, TL::RelativeTimeLine)
+    } ;
 
-    PROPERTY_URI(source, DCT::source)
-    PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
+
+  class BIOSIGNALML_EXPORT TemporalEntity : public Object
+  /*---------------------------------------------------*/
+  {
+    TYPED_OBJECT(TemporalEntity, TIME::TemporalEntity)
+
+    PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
+    PROPERTY_DURATION(start, NONE)
+    PROPERTY_DURATION(duration, NONE)
+    } ;
+
+
+  class BIOSIGNALML_EXPORT Interval : public TemporalEntity
+  /*-----------------------------------------------------*/
+  {
+    TYPED_OBJECT(Interval, BSML::Interval)
+
+    ASSIGN_DURATION(start, TL::start)
+    ASSIGN_DURATION(duration, TL::duration)
+    } ;
+
+
+  class BIOSIGNALML_EXPORT Instant : public TemporalEntity
+  /*----------------------------------------------------*/
+  {
+    TYPED_OBJECT(Instant, BSML::Instant)
+
+    ASSIGN_DURATION(start, TL::at)
+    } ;
+
+
+  class BIOSIGNALML_EXPORT Clock : public Object
+  /*------------------------------------------*/
+  {
+    TYPED_OBJECT(Clock, BSML::SampleClock)
+
+    // Also have 'frequency' ?? and/or 'period' ??
+    PROPERTY_URI(units,          BSML::units)
+    PROPERTY_DECIMAL(resolution, BSML::resolution)
+    PROPERTY_DECIMAL(rate,       BSML::rate)
+    PROPERTY_URI(recording,      BSML::recording)
+
+   public:
+    Clock(const rdf::URI &uri, const rdf::URI &units) ;
+
     } ;
 
   } ;

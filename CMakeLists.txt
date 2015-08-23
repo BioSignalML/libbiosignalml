@@ -23,11 +23,8 @@ elseif(WIN32)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS -wd4251)
 endif()
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
-
-set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
-             $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
-             )
+set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
+add_subdirectory(include/biosignalml)
 
 FIND_PACKAGE(typedobject REQUIRED)
 set(INCLUDES ${INCLUDES} ${typedobject_INCLUDE_DIR})
@@ -65,18 +62,8 @@ install(TARGETS biosignalml EXPORT biosignalmlTargets
   )
 
 install(
-  DIRECTORY src/
+  DIRECTORY include/biosignalml
   DESTINATION include/biosignalml
-  COMPONENT Devel
-  FILES_MATCHING PATTERN "*.h"
-  PATTERN "data/*" EXCLUDE
-  )
-
-install(
-  FILES
-    src/data/data.h
-    src/data/hdf5.h
-  DESTINATION include/biosignalml/data
   COMPONENT Devel
   )
 

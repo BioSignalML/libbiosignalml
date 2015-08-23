@@ -18,72 +18,46 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_TIMING_H
-#define BSML_TIMING_H
+#ifndef BSML_OBJECT_H
+#define BSML_OBJECT_H
 
-#include "biosignalml_export.h"
-#include "timing.h"
-#include "object.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/ontology.h>
+
+#include <typedobject/typedobject.h>
 
 #include <string>
 
 using namespace rdf ;
 
+
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT RelativeTimeLine : public Object
-  /*-----------------------------------------------------*/
+  class BIOSIGNALML_EXPORT Object : public TypedObject::TypedObject
+  /*-------------------------------------------------------------*/
   {
-    TYPED_OBJECT(RelativeTimeLine, TL::RelativeTimeLine)
-    } ;
+    TYPED_OBJECT(Object, OWL::Object)
 
+    // Generic attributes all resources have:
+    // http://dublincore.org/documents/dc-rdf/
+    PROPERTY_STRING(label, RDFS::label)  //!< A human-readable version of a resource's name.
+                                         //!< The target must be a literal.
+    PROPERTY_STRING(comment, RDFS::comment)  //!< A human-readable description of a resource.
+    PROPERTY_STRING(description, DCT::description)  //!< An account of a resource's content.
+    PROPERTY_NODE(precededBy, PRV::precededBy)
+    PROPERTY_URI(creator, DCT::creator)
+    PROPERTY_DATETIME(created, DCT::created)
+    //, XSD.dateTime,  utils::datetime_to_isoformat, utils::isoformat_to_datetime)
 
-  class BIOSIGNALML_EXPORT TemporalEntity : public Object
-  /*---------------------------------------------------*/
-  {
-    TYPED_OBJECT(TemporalEntity, TIME::TemporalEntity)
-
-    PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
-    PROPERTY_DURATION(start, NONE)
-    PROPERTY_DURATION(duration, NONE)
-    } ;
-
-
-  class BIOSIGNALML_EXPORT Interval : public TemporalEntity
-  /*-----------------------------------------------------*/
-  {
-    TYPED_OBJECT(Interval, BSML::Interval)
-
-    ASSIGN_DURATION(start, TL::start)
-    ASSIGN_DURATION(duration, TL::duration)
-    } ;
-
-
-  class BIOSIGNALML_EXPORT Instant : public TemporalEntity
-  /*----------------------------------------------------*/
-  {
-    TYPED_OBJECT(Instant, BSML::Instant)
-
-    ASSIGN_DURATION(start, TL::at)
-    } ;
-
-
-  class BIOSIGNALML_EXPORT Clock : public Object
-  /*------------------------------------------*/
-  {
-    TYPED_OBJECT(Clock, BSML::SampleClock)
-
-    // Also have 'frequency' ?? and/or 'period' ??
-    PROPERTY_URI(units,          BSML::units)
-    PROPERTY_DECIMAL(resolution, BSML::resolution)
-    PROPERTY_DECIMAL(rate,       BSML::rate)
-    PROPERTY_URI(recording,      BSML::recording)
-
-   public:
-    Clock(const rdf::URI &uri, const rdf::URI &units) ;
-
+    PREFIXES(BSML::NS, RDFS::NS, XSD::NS, DCT::NS, PRV::NS)
     } ;
 
   } ;
+
+/**
+              'created':     PropertyMap(DCT.created, datatype=XSD.dateTime,
+                                         to_rdf=utils.datetime_to_isoformat,
+                                         from_rdf=utils.isoformat_to_datetime),
+**/
 
 #endif

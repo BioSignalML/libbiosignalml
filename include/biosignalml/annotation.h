@@ -18,23 +18,27 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_FORMATS_H
-#define BSML_FORMATS_H
+#ifndef BSML_ANNOTATION_H
+#define BSML_ANNOTATION_H
 
-#include "biosignalml_export.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/object.h>
+#include <biosignalml/timing.h>
 
-#include <typedobject/rdf.h>
+using namespace rdf ;
+
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Format
-  /*---------------------------*/
+  class BIOSIGNALML_EXPORT Annotation : public Object
+  /*-----------------------------------------------*/
   {
-   public:
-    static const rdf::Literal EDF ;
-    static const rdf::Literal HDF5 ;
-    } ;
+    TYPED_OBJECT(Annotation, BSML::Annotation)
 
+    PROPERTY_URI(about, DCT::subject)
+    PROPERTY_NODE_SET(tags, BSML::tag)
+    PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
+    } ;
 
   } ;
 

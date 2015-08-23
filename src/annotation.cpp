@@ -18,5 +18,5 @@
  *                                                                            *
  ******************************************************************************/
 
-#include "annotation.h"
+#include <biosignalml/annotation.h>
 

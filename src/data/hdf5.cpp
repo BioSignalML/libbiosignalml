@@ -18,7 +18,7 @@
  *                                                                            *
  ******************************************************************************/
 
-#include "hdf5.h"
+#include <biosignalml/data/hdf5.h>
 #include "hdf5impl.h"
 
 

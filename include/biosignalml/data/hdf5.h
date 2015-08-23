@@ -21,9 +21,9 @@
 #ifndef BSML_HDF5_H
 #define BSML_HDF5_H
 
-#include "biosignalml_export.h"
-#include "data.h"
-#include "../biosignalml.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/data/data.h>
+#include <biosignalml/biosignalml.h>
 
 #include <string>
 

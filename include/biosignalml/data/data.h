@@ -21,8 +21,8 @@
 #ifndef BSML_DATA_H
 #define BSML_DATA_H
 
-#include "biosignalml_export.h"
-#include "../recording.h"
+#include <biosignalml/biosignalml_export.h>
+#include <biosignalml/recording.h>
 
 #include <stdexcept>
 

@@ -18,46 +18,24 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_OBJECT_H
-#define BSML_OBJECT_H
+#ifndef BSML_FORMATS_H
+#define BSML_FORMATS_H
 
-#include "biosignalml_export.h"
-#include "ontology.h"
+#include <biosignalml/biosignalml_export.h>
 
-#include <typedobject/typedobject.h>
-
-#include <string>
-
-using namespace rdf ;
-
+#include <typedobject/rdf.h>
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Object : public TypedObject::TypedObject
-  /*-------------------------------------------------------------*/
+  class BIOSIGNALML_EXPORT Format
+  /*---------------------------*/
   {
-    TYPED_OBJECT(Object, OWL::Object)
-
-    // Generic attributes all resources have:
-    // http://dublincore.org/documents/dc-rdf/
-    PROPERTY_STRING(label, RDFS::label)  //!< A human-readable version of a resource's name.
-                                         //!< The target must be a literal.
-    PROPERTY_STRING(comment, RDFS::comment)  //!< A human-readable description of a resource.
-    PROPERTY_STRING(description, DCT::description)  //!< An account of a resource's content.
-    PROPERTY_NODE(precededBy, PRV::precededBy)
-    PROPERTY_URI(creator, DCT::creator)
-    PROPERTY_DATETIME(created, DCT::created)
-    //, XSD.dateTime,  utils::datetime_to_isoformat, utils::isoformat_to_datetime)
-
-    PREFIXES(BSML::NS, RDFS::NS, XSD::NS, DCT::NS, PRV::NS)
+   public:
+    static const rdf::Literal EDF ;
+    static const rdf::Literal HDF5 ;
     } ;
 
-  } ;
 
-/**
-              'created':     PropertyMap(DCT.created, datatype=XSD.dateTime,
-                                         to_rdf=utils.datetime_to_isoformat,
-                                         from_rdf=utils.isoformat_to_datetime),
-**/
+  } ;
 
 #endif
