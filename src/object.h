@@ -39,9 +39,11 @@ namespace bsml {
     TYPED_OBJECT(Object, OWL::Object)
 
     // Generic attributes all resources have:
-    PROPERTY_STRING(label, RDFS::label)
-    PROPERTY_STRING(comment, RDFS::comment)
-    PROPERTY_STRING(description, DCT::description)
+    // http://dublincore.org/documents/dc-rdf/
+    PROPERTY_STRING(label, RDFS::label)  //!< A human-readable version of a resource's name.
+                                         //!< The target must be a literal.
+    PROPERTY_STRING(comment, RDFS::comment)  //!< A human-readable description of a resource.
+    PROPERTY_STRING(description, DCT::description)  //!< An account of a resource's content.
     PROPERTY_NODE(precededBy, PRV::precededBy)
     PROPERTY_URI(creator, DCT::creator)
     PROPERTY_DATETIME(created, DCT::created)
