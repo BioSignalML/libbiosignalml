@@ -73,6 +73,7 @@ install(
   DESTINATION include/biosignalml
   COMPONENT Devel
   FILES_MATCHING PATTERN "*.h"
+  PATTERN "data/*" EXCLUDE
   )
 
 install(
