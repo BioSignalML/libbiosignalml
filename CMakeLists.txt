@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 project("libBioSignalML")
-set(BioSignalML_VERSION 0.0.5)
+set(BioSignalML_VERSION 0.0.6)
 
 ### Build a package...
 if(WIN32)
