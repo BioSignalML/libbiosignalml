@@ -50,15 +50,15 @@ namespace bsml {
 
     class Recording ;   // VS2013 needs class visible for friendship...
 
-    class BIOSIGNALML_EXPORT IOError : public data::Exception
-    /*-----------------------------------------------------*/
+    class IOError : public data::Exception
+    /*----------------------------------*/
     {
      public:
       IOError(const std::string &msg) : bsml::data::Exception(msg) { }
       } ;
 
-    class BIOSIGNALML_EXPORT Exception : public data::Exception
-    /*-------------------------------------------------------*/
+    class Exception : public data::Exception
+    /*------------------------------------*/
     {
      public:
       Exception(const std::string &msg) : bsml::data::Exception(msg) { }
