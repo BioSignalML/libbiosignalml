@@ -31,9 +31,7 @@ set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
 
 FIND_PACKAGE(typedobject REQUIRED)
 set(INCLUDES ${INCLUDES} ${typedobject_INCLUDE_DIR})
-find_library(typedobject_LIB typedobject PATHS ${typedobject_LIBRARY_DIR})
-set(LIBRARIES ${typedobject_LIB})
-
+set(LIBRARIES ${typedobject_LIBRARY})
 include(${typedobject_DIR}/typedobject_generate.cmake)
 
 add_subdirectory(src)
@@ -45,7 +43,7 @@ set(SOURCES ${SOURCES} ${GENERATED_FILES})
 
 add_library(biosignalml SHARED ${SOURCES})
 
-target_link_libraries(biosignalml ${LIBRARIES})
+target_link_libraries(biosignalml PUBLIC ${LIBRARIES})
 target_include_directories(biosignalml PUBLIC ${INCLUDES})
 
 generate_export_header(biosignalml
