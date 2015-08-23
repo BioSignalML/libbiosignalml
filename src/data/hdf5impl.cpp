@@ -30,6 +30,8 @@
 #include "hdf5impl.h"
 
 
+/** New (HDF5 1.10 SWMR feature allows single writer, multiple readers... **/
+
 using namespace bsml ;
 
 
@@ -336,7 +338,7 @@ HDF5::File *HDF5::File::open(const std::string &fname, bool readonly)
     attr.read(varstr, version) ;
     if (version.compare(0, 5, BSML_H5_VERSION, 0, 5))
       throw HDF5::Exception("Invalid BiosignalML x HDF5 file: '" + fname + "'") ;
-    int dot = version.find('.', 5) ;
+    size_t dot = version.find('.', 5) ;
     int h5major, major, minor ;
     if (!(dot != std::string::npos
        && (std::stringstream(version.substr(5, dot)) >> major)
