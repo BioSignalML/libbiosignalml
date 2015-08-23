@@ -1,24 +1,24 @@
 # Specify HDF5 library/includes...
-
-
-#set(HDF5_USE_STATIC_LIBRARIES 1)
-
-
-add_definitions(-D_HDF5USEDLL_)
+set(HDF5_USE_STATIC_LIBRARIES 1)
 
 if(WIN32)
   FIND_PACKAGE(HDF5 "1.8" REQUIRED NO_MODULE COMPONENTS C CXX HL)
+  set(HDF5_LIBRARY_DIRS $ENV{HDF5_ROOT}/lib)
+  foreach(LIBRARY_NAME ${HDF5_LIBRARIES})
+    unset(LIBNAME CACHE)
+    find_library(LIBNAME ${LIBRARY_NAME} PATHS ${HDF5_LIBRARY_DIRS})
+    set(HDF5_LIBS ${HDF5_LIBS} ${LIBNAME})
+  endforeach()
 else()
   FIND_PACKAGE(HDF5 "1.8" REQUIRED           COMPONENTS C CXX HL)
+  set(HDF5_LIBS ${HDF5_LIBRARIES})
 endif()
 
 set(INCLUDES ${INCLUDES} ${HDF5_INCLUDE_DIR} PARENT_SCOPE)
 
-
 set(LIBRARIES ${LIBRARIES}
-              ${HDF5_LIBRARIES}
+              ${HDF5_LIBS}
               PARENT_SCOPE)
-
 
 set(SOURCES ${SOURCES}
             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5.cpp
