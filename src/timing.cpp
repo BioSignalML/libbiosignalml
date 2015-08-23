@@ -18,7 +18,7 @@
  *                                                                            *
  ******************************************************************************/
 
-#include "timing.h"
+#include <biosignalml/timing.h>
 
 
 bsml::Clock::Clock(const rdf::URI &uri, const rdf::URI &units)

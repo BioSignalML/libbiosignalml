@@ -18,8 +18,8 @@
  *                                                                            *
  ******************************************************************************/
 
-#include "data/hdf5.h"
-#include "biosignalml.h"
+#include <biosignalml/data/hdf5.h>
+#include <biosignalml/biosignalml.h>
 
 #include <iostream>
 #include <string>

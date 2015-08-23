@@ -24,9 +24,3 @@ set(SOURCES ${SOURCES}
             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5impl.cpp
             PARENT_SCOPE)
-
-set(HEADERS ${HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/data.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/hdf5.h
-            PARENT_SCOPE)
-

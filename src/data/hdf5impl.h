@@ -21,6 +21,7 @@
 #ifndef BSML_HDF5IMPL_H
 #define BSML_HDF5IMPL_H
 
+#include <biosignalml/biosignalml_export.h>
 
 #include <H5Cpp.h>
 
