@@ -29,8 +29,6 @@ Full documentation of the ontology is at http://www.biosignalml.org/ontologies/2
 #ifndef BSML_ONTOLOGY_H
 #define BSML_ONTOLOGY_H
 
-#include "biosignalml_export.h"
-
 #include <typedobject/rdf.h>
 #include <typedobject/rdfdefs.h>
 
