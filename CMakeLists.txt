@@ -23,14 +23,22 @@ elseif(WIN32)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS -wd4251)
 endif()
 
-set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
-add_subdirectory(include/biosignalml)
-
 FIND_PACKAGE(typedobject REQUIRED)
-set(INCLUDES ${INCLUDES} ${typedobject_INCLUDE_DIR})
+set(INCLUDES ${typedobject_INCLUDE_DIR})
 set(LIBRARIES ${typedobject_LIBRARY})
 include(${typedobject_DIR}/typedobject_generate.cmake)
 
+set(INCLUDES  ${INCLUDES} $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
+set(HEADERS ${CMAKE_SOURCE_DIR}/include/biosignalml/object.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/recording.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/signal.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/segment.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/timing.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/event.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/annotation.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/data/data.h
+            ${CMAKE_SOURCE_DIR}/include/biosignalml/data/hdf5.h
+            )
 add_subdirectory(src)
 
 foreach(file ${HEADERS})
