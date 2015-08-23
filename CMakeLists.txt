@@ -3,6 +3,14 @@ cmake_minimum_required(VERSION 3.0)
 project("libBioSignalML")
 set(BioSignalML_VERSION 0.0.5)
 
+### Build a package...
+if(WIN32)
+  set(CPACK_GENERATOR "ZIP")
+else()
+  set(CPACK_GENERATOR "TGZ")
+endif()
+include(CPack)
+
 ### CMake helpers...
 include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
