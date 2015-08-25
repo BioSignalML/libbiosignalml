@@ -124,9 +124,9 @@ HDF5::Clock *HDF5::Recording::new_clock(const std::string &uri, const rdf::URI &
   auto clock = bsml::Recording::new_clock<HDF5::Clock>(uri, units) ;
   try {
     std::string u = units.to_string() ;
-    size_t pos = u.find_last_of('#') ;
-    Unit::Converter seconds(u.substr(pos+1), "second") ;
-    clock->set_resolution(seconds.convert(1.0)) ;
+    size_t pos = u.find_last_of('#') ;  // NEED to work on full URI...
+    double resolution = Unit::Converter(u.substr(pos+1), "second").convert(1.0) ;
+    if (resolution != 1.0) clock->set_resolution(resolution) ;
     }
   catch (const std::exception &error) {
     }
