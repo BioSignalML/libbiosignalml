@@ -21,6 +21,10 @@
 #include <biosignalml/data/hdf5.h>
 #include "hdf5impl.h"
 
+#include <typedobject/units.h>
+
+#include <stdexcept>
+
 
 using namespace bsml ;
 
@@ -118,6 +122,14 @@ HDF5::Clock *HDF5::Recording::new_clock(const std::string &uri, const rdf::URI &
                                         double *data, size_t datasize)
 {
   auto clock = bsml::Recording::new_clock<HDF5::Clock>(uri, units) ;
+  try {
+    std::string u = units.to_string() ;
+    size_t pos = u.find_last_of('#') ;
+    Unit::Converter seconds(u.substr(pos+1), "second") ;
+    clock->set_resolution(seconds.convert(1.0)) ;
+    }
+  catch (const std::exception &error) {
+    }
   clock->m_data = m_file->create_clock(uri, units.to_string(), data, datasize) ;
   datasets.insert(clock->m_data) ;
   return clock ;
