@@ -93,18 +93,18 @@ namespace bsml {
 
      public:
       template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
-      SignalArray<SIGNAL_TYPE> *new_signalarray(const std::vector<const std::string> &uris,
-      /*---------------------------------------------------------------------------------*/
-                                                const std::vector<const rdf::URI> &units,
+      SignalArray<SIGNAL_TYPE> *new_signalarray(const std::vector<std::string> &uris,
+      /*---------------------------------------------------------------------------*/
+                                                const std::vector<rdf::URI> &units,
                                                 double rate)
       {
         return create_signalarray<SignalArray<SIGNAL_TYPE>, SIGNAL_TYPE, CLOCK_TYPE>(uris, units, rate, nullptr) ;
         }
 
       template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
-      SignalArray<SIGNAL_TYPE> *new_signalarray(const std::vector<const std::string> &uris,
-      /*---------------------------------------------------------------------------------*/
-                                                const std::vector<const rdf::URI> &units,
+      SignalArray<SIGNAL_TYPE> *new_signalarray(const std::vector<std::string> &uris,
+      /*---------------------------------------------------------------------------*/
+                                                const std::vector<rdf::URI> &units,
                                                 CLOCK_TYPE *clock)
       {
         return create_signalarray<SignalArray<SIGNAL_TYPE>, SIGNAL_TYPE, CLOCK_TYPE>(uris, units, 0.0, clock) ;
@@ -113,9 +113,9 @@ namespace bsml {
 
      protected:
       template<class SIGNAL_ARRAY_TYPE, class SIGNAL_TYPE, class CLOCK_TYPE>
-      SIGNAL_ARRAY_TYPE *create_signalarray(const std::vector<const std::string> &uris,
-      /*-----------------------------------------------------------------------------*/
-                                            const std::vector<const rdf::URI> &units,
+      SIGNAL_ARRAY_TYPE *create_signalarray(const std::vector<std::string> &uris,
+      /*-----------------------------------------------------------------------*/
+                                            const std::vector<rdf::URI> &units,
                                             double rate, CLOCK_TYPE *clock)
       {
         assert(uris.size() == units.size()) ;  // Lengths of `uris` and `units` are different

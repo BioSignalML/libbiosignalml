@@ -103,8 +103,8 @@ namespace bsml {
       SignalData *create_signal(const std::string &uri, const std::string &units,
         const double *data=nullptr, size_t datasize=0, std::vector<hsize_t> datashape=std::vector<hsize_t>(),
         double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
-      SignalData *create_signal(const std::vector<const std::string> &uris,
-        const std::vector<const std::string> &units,
+      SignalData *create_signal(const std::vector<std::string> &uris,
+        const std::vector<std::string> &units,
         const double *data=nullptr, size_t datasize=0,
         double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
 

@@ -38,11 +38,11 @@ int main(int argc, char *argv[])
   bsml::HDF5::Recording hdf5(rdf::URI("http://ex.org/recording"), "test.h5", true) ;
   hdf5.set_description("testing 123...") ;
 
-  const std::vector<const std::string> uris{"1",
-                                            "2",
-                                            "3"
-                                           } ;
-  const std::vector<const rdf::URI> units{rdf::URI("http://units.org/V"),
+  const std::vector<std::string> uris{"1",
+                                      "2",
+                                      "3"
+                                     } ;
+  const std::vector<rdf::URI> units{rdf::URI("http://units.org/V"),
                                           rdf::URI("http://units.org/mV"),
                                           rdf::URI("http://units.org/mV")
                                           } ;

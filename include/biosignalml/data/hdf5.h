@@ -129,11 +129,11 @@ namespace bsml {
       Signal *new_signal(const std::string &uri, const rdf::URI &units, double rate) ;
       Signal *new_signal(const std::string &uri, const rdf::URI &units, Clock *clock) ;
 
-      SignalArray *new_signalarray(const std::vector<const std::string> &uris,
-                                   const std::vector<const rdf::URI> &units,
+      SignalArray *new_signalarray(const std::vector<std::string> &uris,
+                                   const std::vector<rdf::URI> &units,
                                    double rate) ;
-      SignalArray *new_signalarray(const std::vector<const std::string> &uris,
-                                   const std::vector<const rdf::URI> &units,
+      SignalArray *new_signalarray(const std::vector<std::string> &uris,
+                                   const std::vector<rdf::URI> &units,
                                    Clock *clock) ;
 
 // Variants of new_signal() with rate/period (== regular Clock)

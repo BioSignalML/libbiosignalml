@@ -159,28 +159,28 @@ HDF5::Signal *HDF5::Recording::new_signal(const std::string &uri, const rdf::URI
   }
 
 
-HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<const std::string> &uris,
-/*-------------------------------------------------------------------------------------------*/
-                                                    const std::vector<const rdf::URI> &units,
+HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<std::string> &uris,
+/*-------------------------------------------------------------------------------------*/
+                                                    const std::vector<rdf::URI> &units,
                                                     double rate)
 {
   auto signals =
     data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, rate, nullptr) ;
-  std::vector<const std::string> unit_strings ;
+  std::vector<std::string> unit_strings ;
   for (auto const &unit : units) unit_strings.push_back(unit.to_string()) ;
   signals->m_data = m_file->create_signal(uris, unit_strings, nullptr, 0, 1.0, 0.0, rate, nullptr) ;
   datasets.insert(signals->m_data) ;
   return signals ;
   }
 
-HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<const std::string> &uris,
-/*-------------------------------------------------------------------------------------------*/
-                                                    const std::vector<const rdf::URI> &units,
+HDF5::SignalArray *HDF5::Recording::new_signalarray(const std::vector<std::string> &uris,
+/*-------------------------------------------------------------------------------------*/
+                                                    const std::vector<rdf::URI> &units,
                                                     HDF5::Clock *clock)
 {
   auto signals =
     data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, 0.0, clock) ;
-  std::vector<const std::string> unit_strings ;
+  std::vector<std::string> unit_strings ;
   for (auto const &unit : units) unit_strings.push_back(unit.to_string()) ;
   signals->m_data = m_file->create_signal(uris, unit_strings, nullptr, 0, 1.0, 0.0, 0.0, clock->m_data) ;
   datasets.insert(signals->m_data) ;
