@@ -25,6 +25,7 @@
 #include <vector>
 #include <string>
 #include <list>
+#include <string.h>    // For memcpy() and strcmp()
 
 #include <biosignalml/data/hdf5.h>
 #include "hdf5impl.h"
