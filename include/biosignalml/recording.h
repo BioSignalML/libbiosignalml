@@ -59,30 +59,30 @@ namespace bsml {
 
    public:
     template<class CLOCK_TYPE=Clock>
-    CLOCK_TYPE *new_clock(const std::string &uri, const rdf::URI &units)
-    /*----------------------------------------------------------------*/
+    std::shared_ptr<CLOCK_TYPE> new_clock(const std::string &uri, const rdf::URI &units)
+    /*--------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Clock, CLOCK_TYPE>::value, "CLOCK_TYPE must be derived from Clock") ;
-      CLOCK_TYPE *clock = new CLOCK_TYPE(rdf::URI(uri, m_base), units) ;
+      std::shared_ptr<CLOCK_TYPE> clock = std::make_shared<CLOCK_TYPE>(rdf::URI(uri, m_base), units) ;
       clock->set_recording(this->uri()) ;
       this->m_clock_set.insert(clock) ;
       return clock ;
       }
 
     template<class SIGNAL_TYPE=Signal>
-    SIGNAL_TYPE *new_signal(const std::string &uri, const rdf::URI &units, double rate)
-    /*-------------------------------------------------------------------------------*/
+    std::shared_ptr<SIGNAL_TYPE> new_signal(const std::string &uri, const rdf::URI &units, double rate)
+    /*-----------------------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
-      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(rdf::URI(uri, m_base), units, rate)) ;
+      return add_signal<SIGNAL_TYPE>(std::make_shared<SIGNAL_TYPE>(rdf::URI(uri, m_base), units, rate)) ;
       }
 
     template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
-    SIGNAL_TYPE *new_signal(const std::string &uri, const rdf::URI &units, CLOCK_TYPE *clock)
-    /*----------------------------------------------------------------------------------------*/
+    std::shared_ptr<SIGNAL_TYPE> new_signal(const std::string &uri, const rdf::URI &units, std::shared_ptr<CLOCK_TYPE> clock)
+    /*---------------------------------------------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
-      return add_signal<SIGNAL_TYPE>(new SIGNAL_TYPE(rdf::URI(uri, m_base), units, clock)) ;
+      return add_signal<SIGNAL_TYPE>(std::make_shared<SIGNAL_TYPE>(rdf::URI(uri, m_base), units, clock)) ;
       }
 
    protected:
@@ -93,8 +93,8 @@ namespace bsml {
 
    private:
     template<class SIGNAL_TYPE>
-    SIGNAL_TYPE *add_signal(SIGNAL_TYPE *signal)
-    /*----------------------------------------*/
+    std::shared_ptr<SIGNAL_TYPE> add_signal(std::shared_ptr<SIGNAL_TYPE> signal)
+    /*------------------------------------------------------------------------*/
     {
       signal->set_recording(this->uri()) ;
       this->m_signal_set.insert(signal) ;

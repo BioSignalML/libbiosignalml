@@ -26,7 +26,7 @@
 #include <biosignalml/biosignalml.h>
 
 #include <string>
-
+#include <memory>
 
 namespace bsml {
 
@@ -87,7 +87,7 @@ namespace bsml {
 
      public:
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
-      Signal(const rdf::URI &uri, const rdf::URI &units, Clock *clock) ;
+      Signal(const rdf::URI &uri, const rdf::URI &units, std::shared_ptr<Clock> clock) ;
       void extend(const double *points, const size_t length) ;
 
      private:
@@ -123,18 +123,20 @@ namespace bsml {
 
       void close(void) ;
 
-      Clock *new_clock(const std::string &uri, const rdf::URI &units,
-                       double *times = nullptr, size_t datasize=0) ;
+      std::shared_ptr<Clock> new_clock(const std::string &uri, const rdf::URI &units,
+                                       double *times = nullptr, size_t datasize=0) ;
 
-      Signal *new_signal(const std::string &uri, const rdf::URI &units, double rate) ;
-      Signal *new_signal(const std::string &uri, const rdf::URI &units, Clock *clock) ;
+      std::shared_ptr<Signal> new_signal(const std::string &uri, const rdf::URI &units,
+                                         double rate) ;
+      std::shared_ptr<Signal> new_signal(const std::string &uri, const rdf::URI &units,
+                                         std::shared_ptr<Clock> clock) ;
 
-      SignalArray *new_signalarray(const std::vector<std::string> &uris,
-                                   const std::vector<rdf::URI> &units,
-                                   double rate) ;
-      SignalArray *new_signalarray(const std::vector<std::string> &uris,
-                                   const std::vector<rdf::URI> &units,
-                                   Clock *clock) ;
+      std::shared_ptr<SignalArray> new_signalarray(const std::vector<std::string> &uris,
+                                                   const std::vector<rdf::URI> &units,
+                                                   double rate) ;
+      std::shared_ptr<SignalArray> new_signalarray(const std::vector<std::string> &uris,
+                                                   const std::vector<rdf::URI> &units,
+                                                   std::shared_ptr<Clock> clock) ;
 
 // Variants of new_signal() with rate/period (== regular Clock)
 
