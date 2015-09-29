@@ -85,6 +85,24 @@ namespace bsml {
       return add_signal<SIGNAL_TYPE>(std::make_shared<SIGNAL_TYPE>(rdf::URI(uri, m_base), units, clock)) ;
       }
 
+    template<class CLOCK_TYPE=Clock>
+    std::shared_ptr<CLOCK_TYPE> get_clock(const std::string &uri)
+    /*---------------------------------------------------------*/
+    {
+      for (auto const &e : this->m_clock_set)
+        if (e->uri().to_string() == uri) return e ;
+      return std::shared_ptr<CLOCK_TYPE>() ;
+      }
+
+    template<class SIGNAL_TYPE=Signal>
+    std::shared_ptr<SIGNAL_TYPE> get_signal(const std::string &uri)
+    /*-----------------------------------------------------------*/
+    {
+      for (auto const &e : this->m_signal_set)
+        if (e->uri().to_string() == uri) return e ;
+      return std::shared_ptr<SIGNAL_TYPE>() ;
+      }
+
    protected:
     std::string m_base ;
     INITIALISE(                                 \
