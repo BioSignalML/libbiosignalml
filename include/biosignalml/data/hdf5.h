@@ -65,7 +65,7 @@ namespace bsml {
       } ;
 
 
-    class BIOSIGNALML_EXPORT Clock : public data::Clock
+    class BIOSIGNALML_EXPORT Clock : public bsml::Clock
     /*-----------------------------------------------*/
     {
       TYPED_OBJECT(Clock, BSML::SampleClock)
@@ -80,7 +80,7 @@ namespace bsml {
       } ;
 
 
-    class BIOSIGNALML_EXPORT Signal : public data::Signal
+    class BIOSIGNALML_EXPORT Signal : public bsml::Signal
     /*-------------------------------------------------*/
     {
       TYPED_OBJECT(Signal, BSML::Signal)

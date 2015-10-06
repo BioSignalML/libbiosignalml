@@ -37,3 +37,28 @@ bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, bsml::Clock::Po
   this->set_clock(clock) ;
   }
 
+
+void bsml::Signal::extend(const double *points, const size_t length)
+/*----------------------------------------------------------------*/
+{
+  (void)points ;    // Unused parameters
+  (void)length ;
+  }
+
+void bsml::Signal::extend(const std::vector<double> &points)
+/*--------------------------------------------------------*/
+{
+  extend(points.data(), points.size()) ;
+  }
+
+std::vector<double> bsml::Signal::read(const bsml::Interval &interval)    // Time based
+/*------------------------------------------------------------------*/
+{
+  return std::vector<double>() ;
+  }
+
+std::vector<double> bsml::Signal::read(size_t, intmax_t)                  // Point based
+/*----------------------------------------------------*/
+{
+  return std::vector<double>() ;
+  }

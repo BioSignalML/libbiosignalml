@@ -23,6 +23,7 @@
 
 #include <biosignalml/biosignalml_export.h>
 #include <biosignalml/recording.h>
+#include <biosignalml/signal.h>
 
 #include <stdexcept>
 
@@ -38,43 +39,21 @@ namespace bsml {
       Exception(const std::string &msg) : std::runtime_error(msg) { }
       } ;
 
-    class BIOSIGNALML_EXPORT Clock : public bsml::Clock
-    /*-----------------------------------------------*/
-    {
-      TYPED_OBJECT(Clock, BSML::SampleClock)
-  
-     public:
-      virtual void extend(const double *times, const size_t length)
-      {
-        (void)times ;     // Unused parameters
-        (void)length ;
-        }
-      } ;
 
-
-    class BIOSIGNALML_EXPORT Signal : public bsml::Signal
-    /*-------------------------------------------------*/
     template<class SIGNAL_TYPE = bsml::Signal>
     class BIOSIGNALML_EXPORT SignalArray : public std::vector<typename SIGNAL_TYPE::Pointer>
     /*------------------------------------------------------------------------------------*/
     {
-      TYPED_OBJECT(Signal, BSML::Signal)
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
 
      public:
-      virtual void extend(const double *points, const size_t length)
       typedef std::shared_ptr<SignalArray> Pointer ;                                  \
 
       template<typename... Args>                                                \
       inline static Pointer new_pointer(Args... args)                           \
       {
-        (void)points ;    // Unused parameters
-        (void)length ;
         return std::make_shared<SignalArray>(args...) ;
         }
-      } ;
-
-
 
       virtual void extend(const double *points, const size_t length)
       {

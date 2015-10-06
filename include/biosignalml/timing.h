@@ -26,6 +26,8 @@
 #include <biosignalml/object.h>
 
 #include <string>
+#include <vector>
+
 
 using namespace rdf ;
 
@@ -56,6 +58,9 @@ namespace bsml {
 
     ASSIGN_DURATION(start, TL::start)
     ASSIGN_DURATION(duration, TL::duration)
+
+   public:
+    Interval(const double start, const double duration, const std::string & units = "seconds") ;
     } ;
 
 
@@ -65,6 +70,7 @@ namespace bsml {
     TYPED_OBJECT(Instant, BSML::Instant)
 
     ASSIGN_DURATION(start, TL::at)
+    Instant(const double start, const std::string & units = "seconds") ;
     } ;
 
 
@@ -82,6 +88,9 @@ namespace bsml {
    public:
     Clock(const rdf::URI &uri, const rdf::URI &units) ;
 
+    virtual void extend(const double *times, const size_t length) ;
+    void extend(const std::vector<double> &points) ;
+    std::vector<double> read(size_t pos=0, intmax_t length=-1) ;
     } ;
 
   } ;
