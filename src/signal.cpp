@@ -29,11 +29,11 @@ bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, double rate)
   this->set_rate(rate) ;
   }
 
-bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, bsml::Clock *clock)
-/*--------------------------------------------------------------------------------*/
+bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, bsml::Clock::Pointer clock)
+/*----------------------------------------------------------------------------------------*/
 : bsml::Signal(uri)
 {
   this->set_units(units) ;  // bsml::Units::get_units_uri(const std::string &u)
-  this->set_clock(clock->uri()) ;
+  this->set_clock(clock) ;
   }
 
