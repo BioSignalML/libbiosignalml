@@ -145,7 +145,7 @@ hobj_ref_t HDF5::Dataset::get_reference(void) const
 size_t HDF5::Dataset::length(void) const
 /*------------------------------------*/
 {
-  if (m_dataset.getId() == 0) return 0 ;
+  if (m_dataset.getId() < 0) return 0 ;
   else {
     H5::DataSpace dspace = m_dataset.getSpace() ;
     hsize_t *shape = (hsize_t *)calloc(dspace.getSimpleExtentNdims(), sizeof(hsize_t)) ;
@@ -189,8 +189,9 @@ int64_t HDF5::Dataset::clock_size(void)
   return -1 ;
   }
 
-void HDF5::Dataset::extend(const double *data, size_t size, int nsignals)
-/*---------------------------------------------------------------------*/
+
+void HDF5::Dataset::extend(const double *data, intmax_t size, int nsignals)
+/*-----------------------------------------------------------------------*/
 {
 
   int64_t clocksize = this->clock_size() ;
@@ -224,7 +225,7 @@ void HDF5::Dataset::extend(const double *data, size_t size, int nsignals)
       throw HDF5::Exception("Clock for '" + m_uri + "' doesn't have sufficient times") ;
     m_dataset.extend(newshape) ;
     dspace = m_dataset.getSpace() ;
-    dspace.selectHyperslab(H5S_SELECT_SET, count, start) ; // Starting at 'shape' for 'count'
+    dspace.selectHyperslab(H5S_SELECT_SET, count, start) ; // Starting at 'start' for 'count'
     H5::DataSpace mspace(ndims, count, count) ;
     m_dataset.write(data, H5::PredType::NATIVE_DOUBLE, mspace, dspace) ;
     }
@@ -238,11 +239,56 @@ void HDF5::Dataset::extend(const double *data, size_t size, int nsignals)
   }
 
 
+std::vector<double> HDF5::Dataset::read(size_t pos, intmax_t size)
+/*--------------------------------------------------------------*/
+{
+  std::vector<double> points(0) ;
+
+  H5::DataSpace dspace = m_dataset.getSpace() ;
+  int ndims = dspace.getSimpleExtentNdims() ;
+  hsize_t
+    *shape = (hsize_t *)calloc(ndims, sizeof(hsize_t)),
+    *count = (hsize_t *)calloc(ndims, sizeof(hsize_t)),
+    *start = (hsize_t *)calloc(ndims, sizeof(hsize_t)) ;
+  try {
+    dspace.getSimpleExtentDims(shape) ;
+    if (size < 0 || (size + pos) > shape[0]) size = shape[0] - pos ;
+    start[0] = pos ;
+    if (m_index >= 0) {         // compound dataset
+      if (ndims != 2) throw HDF5::Exception("Compound dataset has wrong shape: " + m_uri) ;
+      count[0] = size ;
+      count[1] = 1 ;
+      start[1] = m_index ;
+      }
+    else {                      // simple dataset
+      count[0] = size ;
+      for (int n = 1 ;  n < ndims ;  ++n) {
+        size *= shape[n] ;
+        count[n] = shape[n] ;
+        start[n] = 0 ;
+        }
+      }
+    dspace = m_dataset.getSpace() ;
+    dspace.selectHyperslab(H5S_SELECT_SET, count, start) ;
+    H5::DataSpace mspace(ndims, count, count) ;
+
+    points = std::vector<double>(size) ;
+    m_dataset.read((void *)points.data(), H5::PredType::NATIVE_DOUBLE, mspace, dspace) ;
+    }
+  catch (H5::DataSetIException e) {
+    throw HDF5::Exception("Cannot read dataset '" + m_uri + "': " + e.getDetailMsg()) ;
+    }
+  free(shape) ;
+  free(count) ;
+  free(start) ;
+
+  return points ;
+  }
 
 
-HDF5::File::File(H5::H5File h5file)
-/*-------------------------------*/
-: m_h5file(h5file), m_closed(false)
+HDF5::File::File(H5::H5File h5file, const std::string &uri)
+/*-------------------------------------------------------*/
+: m_h5file(h5file), m_uri(uri), m_closed(false)
 {
   }
 
@@ -257,6 +303,13 @@ void HDF5::File::close(void)
 {
   m_h5file.close() ;
   m_closed = true ;
+  }
+
+
+const std::string HDF5::File::get_uri(void) const
+/*---------------------------------------------*/
+{
+  return m_uri ;
   }
 
 
@@ -300,7 +353,7 @@ HDF5::File *HDF5::File::create(const std::string &uri, const std::string &fname,
     attr.close() ;
 
     h5file.flush(H5F_SCOPE_GLOBAL) ;
-    return new HDF5::File(h5file) ;
+    return new HDF5::File(h5file, uri) ;
     }
   catch (H5::FileIException e) {
   // Need to remove any file... (only if replace ??)
@@ -338,7 +391,7 @@ HDF5::File *HDF5::File::open(const std::string &fname, bool readonly)
     attr = root.openAttribute("version") ;
     attr.read(varstr, version) ;
     if (version.compare(0, 5, BSML_H5_VERSION, 0, 5))
-      throw HDF5::Exception("Invalid BiosignalML x HDF5 file: '" + fname + "'") ;
+      throw HDF5::Exception("Invalid BiosignalML HDF5 file: '" + fname + "'") ;
     size_t dot = version.find('.', 5) ;
     int h5major, major, minor ;
     if (!(dot != std::string::npos
@@ -366,8 +419,7 @@ HDF5::File *HDF5::File::open(const std::string &fname, bool readonly)
     attr.close() ;
     if (uriref != recref)
       throw HDF5::Exception("Internal error in BioSignalML HDF5 file: '" + fname + "'") ;
-// But what about the URI we've just read from the file...???  
-    return new HDF5::File(h5file) ;
+    return new HDF5::File(h5file, std::string(uri)) ;
     }
   catch (H5::Exception e) {
     throw HDF5::Exception("Invalid BioSignalML HDF5 file: '" + fname + "': " + e.getDetailMsg()) ;
@@ -697,6 +749,7 @@ HDF5::DatasetRef HDF5::File::get_dataref(const std::string &uri, const std::stri
 
     H5::DataSet dset = H5::DataSet(m_h5file, &ref) ;
     hid_t id = dset.getId() ;
+
     char buf[8] ;                                         // HDF5 bug, must be at least 2 long
     int len = H5Rget_name(id, H5R_OBJECT, &ref, buf, 8) ; // HDF5 bug, cannot have NULL name
     char *name = (char *)malloc(len + 1) ;
@@ -707,11 +760,11 @@ HDF5::DatasetRef HDF5::File::get_dataref(const std::string &uri, const std::stri
     if (matched) return HDF5::DatasetRef(dset, ref) ;
     }
   catch (H5::AttributeIException e) { }
+
   return HDF5::DatasetRef() ;
   }
 
 
-#ifdef TODO_READ_HDF5
 
 std::shared_ptr<HDF5::SignalData> HDF5::File::get_signal(const std::string &uri)
 /*----------------------------------------------------------------------------*/
@@ -722,8 +775,8 @@ std::shared_ptr<HDF5::SignalData> HDF5::File::get_signal(const std::string &uri)
 //:return: A :class:`HDF5::SignalData` containing the signal, or None if
 //         the URI is unknown or the dataset is not that for a signal.
   HDF5::DatasetRef dataref = get_dataref(uri, "/recording/signal/") ;
-  if (dataref.first.getId() != 0) return HDF5::SignalData(uri, dataref) ;
-  throw HDF5::Exception("Cannot find signal:" + uri) ;
+  if (!dataref.valid()) throw HDF5::Exception("Cannot find signal: " + uri) ;
+  return HDF5::SignalData::get_signal(uri, dataref) ;
   }
 
 
@@ -777,7 +830,6 @@ std::list<std::shared_ptr<HDF5::SignalData>> HDF5::File::get_signals(void)
   m_h5file.iterateElems(name, nullptr, save_signal, (void *)&signals) ;
   return signals ;
   }
-#endif  // TODO
 
 
 std::shared_ptr<HDF5::ClockData> HDF5::File::get_clock(const std::string &uri)
@@ -789,13 +841,13 @@ std::shared_ptr<HDF5::ClockData> HDF5::File::get_clock(const std::string &uri)
 //:return: A :class:`HDF5::ClockData` or None if the URI is unknown or
 //         the dataset is not that for a clock.
   HDF5::DatasetRef dataref = get_dataref(uri, "/recording/clock/") ;
-  if (dataref.first.getId() == 0) throw HDF5::Exception("Cannot find clock:" + uri) ;
+  if (!dataref.valid()) throw HDF5::Exception("Cannot find clock: " + uri) ;
   return HDF5::ClockData::get_clock(uri, dataref) ;
   }
 
 
 static herr_t save_clock(hid_t id, const char *name, void *op_data)
-/*--------------------------------------------------------------*/
+/*---------------------------------------------------------------*/
 {
   SaveInfo *info = (SaveInfo *)op_data ;
   std::list<std::shared_ptr<HDF5::ClockData>> clk
@@ -908,7 +960,7 @@ std::shared_ptr<HDF5::ClockData> HDF5::ClockData::get_clock(const std::string &u
 
   double rate = 0.0 ;
   try {
-    attr = dataref.first.openAttribute("rate") ;
+    attr = dset.openAttribute("rate") ;
     attr.read(H5::PredType::NATIVE_DOUBLE, &rate) ;
     attr.close() ;
     }
@@ -940,6 +992,31 @@ HDF5::SignalData::SignalData(const std::string &uri, const HDF5::DatasetRef &ds)
 {
   }
 
+
+std::shared_ptr<HDF5::SignalData> HDF5::SignalData::get_signal(const std::string &uri, const HDF5::DatasetRef &dataref)
+/*---------------------------------------------------------------------------------------------------*/
+{
+  H5::DataSet dset = dataref.first ;
+  H5::StrType varstr(H5::PredType::C_S1, H5T_VARIABLE) ;
+
+  std::string units ;
+  double rate = 0.0 ;
+
+  try {
+    H5::Attribute attr = dset.openAttribute("units") ;
+    attr.read(varstr, units) ;
+    attr.close() ;
+
+    attr = dset.openAttribute("rate") ;
+    attr.read(H5::PredType::NATIVE_DOUBLE, &rate) ;
+    attr.close() ;
+    }
+  catch (H5::AttributeIException e) { }
+  // Could have a `clock` attribute instead of `rate`.
+
+  if (rate != 0.0) return std::make_shared<HDF5::SignalData>(uri, dataref) ;
+  return std::make_shared<HDF5::SignalData>(uri, dataref) ;
+  }
 
 
 int HDF5::SignalData::signal_count(void)

@@ -26,6 +26,7 @@
 #include <H5Cpp.h>
 
 #include <list>
+#include <vector>
 
 
 namespace bsml {
@@ -37,7 +38,17 @@ namespace bsml {
 #define BSML_H5_CHUNK_BYTES         (128*1024)
 
 
-    typedef std::pair<H5::DataSet, hobj_ref_t> DatasetRef ;
+    class DatasetRef : public std::pair<H5::DataSet, hobj_ref_t>
+    /*--------------------------------------------------------*/
+    {
+     public:
+      DatasetRef() = default ;
+      DatasetRef(H5::DataSet ds, hobj_ref_t t) : std::pair<H5::DataSet, hobj_ref_t>(ds, t) { }
+      inline bool valid(void) {
+        return this->first.getId() >= 0 ;
+        }
+      } ;
+
 
     class BIOSIGNALML_EXPORT Dataset
     /*----------------------------*/
@@ -53,7 +64,8 @@ namespace bsml {
       hobj_ref_t get_reference(void) const ;
       size_t length(void) const ;
       std::string name(void) ;
-      void extend(const double *data, size_t length, int nsignals) ;
+      void extend(const double *data, intmax_t length, int nsignals) ;
+      std::vector<double> read(size_t pos, intmax_t length) ;
 
      protected:
       std::string m_uri ;
@@ -94,12 +106,13 @@ namespace bsml {
     /*-------------------------*/
     {
      public:
-      File(H5::H5File h5file) ;
+      File(H5::H5File h5file, const std::string &uri) ;
       ~File(void) ;
 
       static File *create(const std::string &uri, const std::string &fname, bool replace=false) ;
       static File *open(const std::string &fname, bool readonly=false) ;
       void close(void) ;
+      const std::string get_uri(void) const ;
 
       std::shared_ptr<SignalData> create_signal(const std::string &uri, const std::string &units,
         const double *data=nullptr, size_t datasize=0, std::vector<hsize_t> datashape=std::vector<hsize_t>(),
@@ -109,10 +122,6 @@ namespace bsml {
         const double *data=nullptr, size_t datasize=0,
         double gain=1.0, double offset=0.0, double rate=0.0, std::shared_ptr<ClockData> clock=nullptr) ;
 
-#ifdef TODO_READ_HDF5
-      SignalData get_signal(const std::string &uri) ;
-      std::list<SignalData> get_signals(void) ;
-#endif
       std::shared_ptr<SignalData> get_signal(const std::string &uri) ;
       std::list<std::shared_ptr<SignalData>> get_signals(void) ;
 
@@ -137,6 +146,7 @@ namespace bsml {
       std::shared_ptr<ClockData> check_timing(double rate, const std::string &uri, size_t npoints) ;
 
       H5::H5File m_h5file ;
+      std::string m_uri ;
       bool m_closed ;
       } ;
 

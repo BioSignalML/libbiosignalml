@@ -43,6 +43,13 @@ void HDF5::Clock::extend(const double *times, const size_t length)
   }
 
 
+std::vector<double> HDF5::Clock::read(size_t pos, intmax_t length)
+/*--------------------------------------------------------------*/
+{
+  return m_data->read(pos, length) ;
+  }
+
+
 HDF5::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, double rate)
 /*-------------------------------------------------------------------------*/
 : HDF5::Signal(uri)
@@ -66,6 +73,13 @@ void HDF5::Signal::extend(const double *points, const size_t length)
   }
 
 
+std::vector<double> HDF5::Signal::read(size_t pos, intmax_t length)    // Point based
+/*---------------------------------------------------------------*/
+{
+  return m_data->read(pos, length) ;
+  }
+
+
 void HDF5::SignalArray::extend(const double *points, const size_t length)
 /*----------------------------------------------------------------------*/
 {
@@ -84,11 +98,42 @@ HDF5::Recording::Recording(const rdf::URI &uri, const std::string &filename, boo
 /*-------------------------------------------------------------------------------------*/
 : HDF5::Recording(uri)
 {
-  if (create)
+  m_readonly = false ;
+  if (create) {
     m_file = HDF5::File::create(uri.to_string(), filename, true) ;
+    }
   else {
     m_file = HDF5::File::open(filename) ;
     // Need to read metadata and create objects...
+    // And ensure URI is as expected.... (as below...)
+    }
+  }
+
+
+HDF5::Recording::Recording(const std::string &filename, bool readonly)
+/*------------------------------------------------------------------*/
+: HDF5::Recording(rdf::URI())
+{
+  m_file = HDF5::File::open(filename, readonly) ;
+  m_readonly = readonly ;
+
+  this->set_uri(rdf::URI(m_file->get_uri())) ;
+
+  auto metadata = m_file->get_metadata() ;
+  rdf::Graph graph ;
+  graph.parse_string(metadata.first, rdf::Graph::mimetype_to_format(metadata.second)) ;
+
+  this->add_metadata(graph) ;
+  for (auto const & c : clock_set()) {
+    c->m_data = m_file->get_clock(c->uri().to_string()) ;
+    datasets.insert(c->m_data) ;
+    }
+  for (auto const & s : signal_set()) {
+    s->m_data = m_file->get_signal(s->uri().to_string()) ;
+    datasets.insert(s->m_data) ;
+    if (s->m_clock) {
+      s->m_clock->m_data = m_file->get_clock(s->m_clock->uri().to_string()) ;
+      }
     }
   }
 
@@ -97,21 +142,31 @@ void HDF5::Recording::close(void)
 /*-----------------------------*/
 {
   if (m_file != nullptr) {
-    m_file->store_metadata(serialise_metadata(rdf::Graph::Format::TURTLE, m_base), "text/turtle") ;
+    if (!m_readonly) {
+      rdf::Graph::Format format = rdf::Graph::Format::TURTLE ;
+// Prefixes are duplicated in file...  (serd bug ??)
+      m_file->store_metadata(serialise_metadata(format, m_base),
+                             rdf::Graph::format_to_mimetype(format)) ;
       }
-    // First close and delete all signal and clock `m_data` objects.
-    // Iterate through the `signals` and `clocks` sets???
-
-    // But isn't `clocks` now just a set of URI strings?
-
-    // Clocks allocated via `new_clock` (below) need to be deleted.
-    // This is the time to close/delete `m_data` members.
-
     for (auto ds : datasets) ds->close() ;
     m_file->close() ;
     delete m_file ;
     m_file = nullptr ;
     }
+  }
+
+
+HDF5::Clock::Pointer HDF5::Recording::get_clock(const std::string &uri)
+/*-------------------------------------------------------------------*/
+{
+  return get_object<HDF5::Clock>(uri, this->clock_set()) ;
+  }
+
+
+HDF5::Signal::Pointer HDF5::Recording::get_signal(const std::string &uri)
+/*---------------------------------------------------------------------*/
+{
+  return get_object<HDF5::Signal>(uri, this->signal_set()) ;
   }
 
 

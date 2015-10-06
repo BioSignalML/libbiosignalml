@@ -73,6 +73,7 @@ namespace bsml {
      public:
       Clock(const rdf::URI &uri, const rdf::URI &units) ;
       void extend(const double *times, const size_t length) ;
+      std::vector<double> read(size_t pos=0, intmax_t length=-1) ;
 
      private:
       std::shared_ptr<ClockData> m_data ;
@@ -84,11 +85,13 @@ namespace bsml {
     /*-------------------------------------------------*/
     {
       TYPED_OBJECT(Signal, BSML::Signal)
+      PROPERTY_POINTER(clock, BSML::clock, Clock)                   // Override class
 
      public:
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
       Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Pointer clock) ;
       void extend(const double *points, const size_t length) ;
+      std::vector<double> read(size_t pos=0, intmax_t length=-1) ;  // Point based
 
      private:
       std::shared_ptr<SignalData> m_data ;
@@ -128,9 +131,12 @@ namespace bsml {
 
      public:
       Recording(const rdf::URI &uri, const std::string &filename, bool create=false) ;
+      Recording(const std::string &filename, bool readonly=false) ;
 
       void close(void) ;
 
+      Clock::Pointer get_clock(const std::string &uri) ;
+      Signal::Pointer get_signal(const std::string &uri) ;
 
       Clock::Pointer new_clock(const std::string &uri, const rdf::URI &units,
                                double *times = nullptr, size_t datasize=0) ;
@@ -150,6 +156,7 @@ namespace bsml {
 
      private:
       File *m_file ;
+      bool m_readonly ;
       std::set<std::shared_ptr<Dataset>> datasets ;
       } ;
 
