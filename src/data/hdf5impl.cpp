@@ -375,11 +375,10 @@ HDF5::File *HDF5::File::open(const std::string &fname, bool readonly)
   }
 
 
-
-HDF5::ClockData *HDF5::File::check_timing(double rate, const std::string &uri, size_t npoints)
-/*------------------------------------------------------------------------------------------*/
+std::shared_ptr<HDF5::ClockData> HDF5::File::check_timing(double rate, const std::string &uri, size_t npoints)
+/*----------------------------------------------------------------------------------------------------------*/
 {
-  HDF5::ClockData *dataset = nullptr ;
+  std::shared_ptr<HDF5::ClockData> dataset = nullptr ;
   if (rate != 0.0) {
     if (uri != "") throw HDF5::Exception("Only one of 'rate' or 'clock' can be specified") ;
     }
@@ -447,7 +446,7 @@ HDF5::DatasetRef HDF5::File::create_dataset(const std::string &group,
 
 void HDF5::File::set_signal_attributes(const H5::DataSet &dset, double gain, double offset,
 /*---------------------------------------------------------------------------------------*/
- double rate, const std::string &timeunits, const HDF5::ClockData *clock)
+ double rate, const std::string &timeunits, const std::shared_ptr<HDF5::ClockData> clock)
 {
   H5::Attribute attr ;
   H5::DataSpace scalar(H5S_SCALAR) ;
@@ -483,10 +482,10 @@ void HDF5::File::set_signal_attributes(const H5::DataSet &dset, double gain, dou
   }
 
 
-HDF5::SignalData *HDF5::File::create_signal(const std::string &uri, const std::string &units,
-/*-----------------------------------------------------------------------------------------*/
+std::shared_ptr<HDF5::SignalData> HDF5::File::create_signal(const std::string &uri, const std::string &units,
+/*---------------------------------------------------------------------------------------------------------*/
  const double *data, size_t datasize, std::vector<hsize_t> datashape,
- double gain, double offset, double rate, HDF5::ClockData *clock)
+ double gain, double offset, double rate, std::shared_ptr<HDF5::ClockData> clock)
 {
 #if !H5_DEBUG
   H5::Exception::dontPrint() ;
@@ -547,14 +546,14 @@ HDF5::SignalData *HDF5::File::create_signal(const std::string &uri, const std::s
     }
 
   m_h5file.flush(H5F_SCOPE_GLOBAL) ;
-  return new HDF5::SignalData(uri, sigdata) ;
+  return std::make_shared<HDF5::SignalData>(uri, sigdata) ;
   }
 
 
-HDF5::SignalData *HDF5::File::create_signal(const std::vector<std::string> &uris,
-/*-----------------------------------------------------------------------------*/
+std::shared_ptr<HDF5::SignalData> HDF5::File::create_signal(const std::vector<std::string> &uris,
+/*---------------------------------------------------------------------------------------------*/
  const std::vector<std::string> &units, const double *data, size_t datasize,
- double gain, double offset, double rate, HDF5::ClockData *clock)
+ double gain, double offset, double rate, std::shared_ptr<HDF5::ClockData> clock)
 {
 #if !H5_DEBUG
   H5::Exception::dontPrint() ;
@@ -622,11 +621,11 @@ HDF5::SignalData *HDF5::File::create_signal(const std::vector<std::string> &uris
   free(values) ;
 
   m_h5file.flush(H5F_SCOPE_GLOBAL) ;
-  return new HDF5::SignalData("", sigdata) ;
+  return std::make_shared<HDF5::SignalData>("", sigdata) ;
   }
 
 
-HDF5::ClockData *HDF5::File::create_clock(const std::string &uri, const std::string &units,
+std::shared_ptr<HDF5::ClockData> HDF5::File::create_clock(const std::string &uri, const std::string &units,
 /*--------------------------------------------------------------------------------------*/
                                           double rate, const double *data, size_t datasize)
 {
@@ -675,10 +674,10 @@ HDF5::ClockData *HDF5::File::create_clock(const std::string &uri, const std::str
     }
 
   m_h5file.flush(H5F_SCOPE_GLOBAL) ;
-  return new HDF5::ClockData(uri, clkdata) ;
+  return std::make_shared<HDF5::ClockData>(uri, clkdata) ;
   }
 
-HDF5::ClockData *HDF5::File::create_clock(const std::string &uri, const std::string &units,
+std::shared_ptr<HDF5::ClockData> HDF5::File::create_clock(const std::string &uri, const std::string &units,
 /*--------------------------------------------------------------------------------------*/
                                           const double *data, size_t datasize)
 {
@@ -713,8 +712,9 @@ HDF5::DatasetRef HDF5::File::get_dataref(const std::string &uri, const std::stri
 
 
 #ifdef TODO_READ_HDF5
-HDF5::SignalData HDF5::File::get_signal(const std::string &uri)
-/*-----------------------------------------------------------*/
+
+std::shared_ptr<HDF5::SignalData> HDF5::File::get_signal(const std::string &uri)
+/*----------------------------------------------------------------------------*/
 {
 //Find a signal from its URI.
 //
@@ -731,7 +731,8 @@ static herr_t save_signal(hid_t id, const char *name, void *op_data)
 /*---------------------------------------------------------------*/
 {
   SaveInfo *info = (SaveInfo *)op_data ;
-  std::list<HDF5::SignalData> &sig = reinterpret_cast<std::list<HDF5::SignalData> &>(info->listp) ;
+  std::list<std::shared_ptr<HDF5::SignalData>> &sig
+   = reinterpret_cast<std::list<std::shared_ptr<HDF5::SignalData>> &>(info->listp) ;
   try {
     H5::DataSet dset = H5::DataSet(info->h5file.openDataSet(name)) ;
 
@@ -744,14 +745,14 @@ static herr_t save_signal(hid_t id, const char *name, void *op_data)
     if (nsignals == 1) {
       std::string uri ;
       attr.read(varstr, uri) ;
-      sig.push_back(HDF5::SignalData(uri, dataref)) ;
+      sig.push_back(HDF5::SignalData::get_signal(uri, dataref)) ;
       }
     else if (nsignals > 1) {
       char *uris[nsignals] ;
       attr.read(varstr, uris) ;
       int n = 0 ;
       while (n < nsignals) {
-        sig.push_back(HDF5::SignalData(std::string(uris[n]), dataref)) ;
+        sig.push_back(HDF5::SignalData::get_signal(std::string(uris[n]), dataref)) ;
         free(uris[n]) ;
         ++n ;
         }
@@ -762,8 +763,8 @@ static herr_t save_signal(hid_t id, const char *name, void *op_data)
   }
 
 
-std::list<HDF5::SignalData> HDF5::File::get_signals(void)
-/*-----------------------------------------------------*/
+std::list<std::shared_ptr<HDF5::SignalData>> HDF5::File::get_signals(void)
+/*----------------------------------------------------------------------*/
 {
 //Return all signals in the recording.
 //
@@ -771,7 +772,7 @@ std::list<HDF5::SignalData> HDF5::File::get_signals(void)
 #if !H5_DEBUG
   H5::Exception::dontPrint() ;
 #endif
-  std::list<HDF5::SignalData> signals ;
+  std::list<std::shared_ptr<HDF5::SignalData>> signals ;
   const std::string name = "/recording/signal" ;
   m_h5file.iterateElems(name, nullptr, save_signal, (void *)&signals) ;
   return signals ;
@@ -779,8 +780,8 @@ std::list<HDF5::SignalData> HDF5::File::get_signals(void)
 #endif  // TODO
 
 
-HDF5::ClockData *HDF5::File::get_clock(const std::string &uri)
-/*----------------------------------------------------------*/
+std::shared_ptr<HDF5::ClockData> HDF5::File::get_clock(const std::string &uri)
+/*--------------------------------------------------------------------------*/
 {
 //Find a clock dataset from its URI.
 //
@@ -797,7 +798,8 @@ static herr_t save_clock(hid_t id, const char *name, void *op_data)
 /*--------------------------------------------------------------*/
 {
   SaveInfo *info = (SaveInfo *)op_data ;
-  std::list<HDF5::ClockData *> clk = reinterpret_cast<std::list<HDF5::ClockData *> &>(info->listp) ;
+  std::list<std::shared_ptr<HDF5::ClockData>> clk
+   = reinterpret_cast<std::list<std::shared_ptr<HDF5::ClockData>> &>(info->listp) ;
   try {
     H5::DataSet dset = H5::DataSet(info->h5file.openDataSet(name)) ;
 
@@ -814,8 +816,8 @@ static herr_t save_clock(hid_t id, const char *name, void *op_data)
   }
 
 
-std::list<HDF5::ClockData *> HDF5::File::get_clocks(void)
-/*-----------------------------------------------------*/
+std::list<std::shared_ptr<HDF5::ClockData>> HDF5::File::get_clocks(void)
+/*--------------------------------------------------------------------*/
 {
 //Return all clocks in the recording.
 //
@@ -823,7 +825,7 @@ std::list<HDF5::ClockData *> HDF5::File::get_clocks(void)
 #if !H5_DEBUG
   H5::Exception::dontPrint() ;
 #endif
-  std::list<HDF5::ClockData *> clocks ;
+  std::list<std::shared_ptr<HDF5::ClockData>> clocks ;
   const std::string name = "/recording/clock" ;
   m_h5file.iterateElems(name, nullptr, save_clock, (void *)&clocks) ;
   return clocks ;
@@ -895,7 +897,7 @@ HDF5::ClockData::ClockData(const std::string &uri, const HDF5::DatasetRef &ds)
 {
   }
 
-HDF5::ClockData *HDF5::ClockData::get_clock(const std::string &uri, const HDF5::DatasetRef &dataref)
+std::shared_ptr<HDF5::ClockData> HDF5::ClockData::get_clock(const std::string &uri, const HDF5::DatasetRef &dataref)
 /*------------------------------------------------------------------------------------------------*/
 {
   H5::DataSet dset = dataref.first ;
@@ -912,14 +914,14 @@ HDF5::ClockData *HDF5::ClockData::get_clock(const std::string &uri, const HDF5::
     }
   catch (H5::AttributeIException e) { }
 
-  if (rate != 0.0) return new HDF5::ClockData(uri, dataref) ;
+  if (rate != 0.0) return std::make_shared<HDF5::ClockData>(uri, dataref) ;
 
 // Actually reading data points needs to be a separate method... 
 //  size_t size = dset.getSpace().getSimpleExtentNpoints() ;
 //  std::vector<double> times(size) ;
 //  dset.read((void *)(times.data()), H5DataTypes(&rate).mtype) ;
 
-  return new HDF5::ClockData(uri, dataref) ;
+  return std::make_shared<HDF5::ClockData>(uri, dataref) ;
   }
 
 

@@ -73,7 +73,7 @@ namespace bsml {
       ClockData() ;
       ClockData(const std::string &uri, const DatasetRef &ds) ;
 
-      static ClockData *get_clock(const std::string &uri, const DatasetRef &ds) ;
+      static std::shared_ptr<ClockData> get_clock(const std::string &uri, const DatasetRef &ds) ;
       } ;
 
 
@@ -85,6 +85,7 @@ namespace bsml {
       SignalData() ;
       SignalData(const std::string &uri, const DatasetRef &ds) ;
 
+      static std::shared_ptr<SignalData> get_signal(const std::string &uri, const DatasetRef &ds) ;
       int signal_count(void) ;
       } ;
 
@@ -100,26 +101,28 @@ namespace bsml {
       static File *open(const std::string &fname, bool readonly=false) ;
       void close(void) ;
 
-      SignalData *create_signal(const std::string &uri, const std::string &units,
+      std::shared_ptr<SignalData> create_signal(const std::string &uri, const std::string &units,
         const double *data=nullptr, size_t datasize=0, std::vector<hsize_t> datashape=std::vector<hsize_t>(),
-        double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
-      SignalData *create_signal(const std::vector<std::string> &uris,
+        double gain=1.0, double offset=0.0, double rate=0.0, std::shared_ptr<ClockData> clock=nullptr) ;
+      std::shared_ptr<SignalData> create_signal(const std::vector<std::string> &uris,
         const std::vector<std::string> &units,
         const double *data=nullptr, size_t datasize=0,
-        double gain=1.0, double offset=0.0, double rate=0.0, ClockData *clock=nullptr) ;
+        double gain=1.0, double offset=0.0, double rate=0.0, std::shared_ptr<ClockData> clock=nullptr) ;
 
 #ifdef TODO_READ_HDF5
       SignalData get_signal(const std::string &uri) ;
       std::list<SignalData> get_signals(void) ;
 #endif
+      std::shared_ptr<SignalData> get_signal(const std::string &uri) ;
+      std::list<std::shared_ptr<SignalData>> get_signals(void) ;
 
-      ClockData *create_clock(const std::string &uri, const std::string &units,
+      std::shared_ptr<ClockData> create_clock(const std::string &uri, const std::string &units,
         double rate, const double *data=nullptr, size_t datasize=0) ;
-      ClockData *create_clock(const std::string &uri, const std::string &units,
+      std::shared_ptr<ClockData> create_clock(const std::string &uri, const std::string &units,
         const double *data, size_t datasize) ;
 
-      ClockData *get_clock(const std::string &uri) ;
-      std::list<ClockData *> get_clocks(void) ;
+      std::shared_ptr<ClockData> get_clock(const std::string &uri) ;
+      std::list<std::shared_ptr<ClockData>> get_clocks(void) ;
 
       void store_metadata(const std::string &, const std::string &) ;
       std::pair<std::string, std::string> get_metadata(void) ;
@@ -130,8 +133,8 @@ namespace bsml {
         hsize_t *shape, hsize_t *maxshape, const double *data) ;
 
       void set_signal_attributes(const H5::DataSet &dset, double gain=1.0, double offset=0.0,
-        double rate=0.0, const std::string &timeunits="", const ClockData *clock=nullptr) ;
-      ClockData *check_timing(double rate, const std::string &uri, size_t npoints) ;
+        double rate=0.0, const std::string &timeunits="", const std::shared_ptr<ClockData> clock=nullptr) ;
+      std::shared_ptr<ClockData> check_timing(double rate, const std::string &uri, size_t npoints) ;
 
       H5::H5File m_h5file ;
       bool m_closed ;

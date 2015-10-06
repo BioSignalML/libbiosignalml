@@ -75,7 +75,7 @@ namespace bsml {
       void extend(const double *times, const size_t length) ;
 
      private:
-      ClockData *m_data ;
+      std::shared_ptr<ClockData> m_data ;
       friend class Recording ;
       } ;
 
@@ -87,11 +87,11 @@ namespace bsml {
 
      public:
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
-      Signal(const rdf::URI &uri, const rdf::URI &units, std::shared_ptr<Clock> clock) ;
+      Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Pointer clock) ;
       void extend(const double *points, const size_t length) ;
 
      private:
-      SignalData *m_data ;
+      std::shared_ptr<SignalData> m_data ;
       friend class Recording ;
       } ;
 
@@ -100,11 +100,19 @@ namespace bsml {
     /*-------------------------------------------------------------------------*/
     {
      public:
+      typedef std::shared_ptr<SignalArray> Pointer ;
+
+      template<typename... Args>
+      inline static Pointer new_pointer(Args... args)
+      {
+        return std::make_shared<SignalArray>(args...) ;
+        }
+
       void extend(const double *points, const size_t length) ;
       int index(const std::string &uri) const ;
 
      private:
-      SignalData *m_data ;
+      std::shared_ptr<SignalData> m_data ;
       friend class Recording ;
       } ;
 
@@ -123,26 +131,26 @@ namespace bsml {
 
       void close(void) ;
 
-      std::shared_ptr<Clock> new_clock(const std::string &uri, const rdf::URI &units,
-                                       double *times = nullptr, size_t datasize=0) ;
 
-      std::shared_ptr<Signal> new_signal(const std::string &uri, const rdf::URI &units,
-                                         double rate) ;
-      std::shared_ptr<Signal> new_signal(const std::string &uri, const rdf::URI &units,
-                                         std::shared_ptr<Clock> clock) ;
+      Clock::Pointer new_clock(const std::string &uri, const rdf::URI &units,
+                               double *times = nullptr, size_t datasize=0) ;
 
-      std::shared_ptr<SignalArray> new_signalarray(const std::vector<std::string> &uris,
-                                                   const std::vector<rdf::URI> &units,
-                                                   double rate) ;
-      std::shared_ptr<SignalArray> new_signalarray(const std::vector<std::string> &uris,
-                                                   const std::vector<rdf::URI> &units,
-                                                   std::shared_ptr<Clock> clock) ;
+      Signal::Pointer new_signal(const std::string &uri, const rdf::URI &units,
+                                 double rate) ;
+      Signal::Pointer new_signal(const std::string &uri, const rdf::URI &units,
+                                 Clock::Pointer clock) ;
 
+      SignalArray::Pointer new_signalarray(const std::vector<std::string> &uris,
+                                           const std::vector<rdf::URI> &units,
+                                           double rate) ;
+      SignalArray::Pointer new_signalarray(const std::vector<std::string> &uris,
+                                           const std::vector<rdf::URI> &units,
+                                           Clock::Pointer clock) ;
 // Variants of new_signal() with rate/period (== regular Clock)
 
      private:
       File *m_file ;
-      std::set<Dataset *> datasets ;
+      std::set<std::shared_ptr<Dataset>> datasets ;
       } ;
 
     } ;
