@@ -41,16 +41,16 @@ namespace bsml {
 
 
     template<class SIGNAL_TYPE = bsml::Signal>
-    class BIOSIGNALML_EXPORT SignalArray : public std::vector<typename SIGNAL_TYPE::Pointer>
-    /*------------------------------------------------------------------------------------*/
+    class BIOSIGNALML_EXPORT SignalArray : public std::vector<typename SIGNAL_TYPE::Reference>
+    /*--------------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
 
      public:
-      typedef std::shared_ptr<SignalArray> Pointer ;                                  \
+      typedef std::shared_ptr<SignalArray> Reference ;                                  \
 
       template<typename... Args>                                                \
-      inline static Pointer new_pointer(Args... args)                           \
+      inline static Reference new_reference(Args... args)                           \
       {
         return std::make_shared<SignalArray>(args...) ;
         }
@@ -76,8 +76,8 @@ namespace bsml {
 
      public:
       template<class SIGNAL_TYPE=bsml::Signal, class CLOCK_TYPE=bsml::Clock>
-      SignalArray<typename SIGNAL_TYPE::Pointer> new_signalarray(const std::vector<std::string> &uris,
-      /*--------------------------------------------------------------------------------------------*/
+      SignalArray<typename SIGNAL_TYPE::Reference> new_signalarray(const std::vector<std::string> &uris,
+      /*----------------------------------------------------------------------------------------------*/
                                                         const std::vector<rdf::URI> &units,
                                                         double rate)
       {
@@ -85,10 +85,10 @@ namespace bsml {
         }
 
       template<class SIGNAL_TYPE=bsml::Signal, class CLOCK_TYPE=bsml::Clock>
-      SignalArray<typename SIGNAL_TYPE::Pointer> new_signalarray(const std::vector<std::string> &uris,
-      /*--------------------------------------------------------------------------------------------*/
+      SignalArray<typename SIGNAL_TYPE::Reference> new_signalarray(const std::vector<std::string> &uris,
+      /*----------------------------------------------------------------------------------------------*/
                                                         const std::vector<rdf::URI> &units,
-                                                        typename CLOCK_TYPE::Pointer clock)
+                                                        typename CLOCK_TYPE::Reference clock)
       {
         return create_signalarray<SignalArray<SIGNAL_TYPE>, SIGNAL_TYPE, CLOCK_TYPE>(uris, units, 0.0, clock) ;
         }
@@ -96,13 +96,13 @@ namespace bsml {
 
      protected:
       template<class SIGNAL_ARRAY_TYPE, class SIGNAL_TYPE, class CLOCK_TYPE>
-      typename SIGNAL_ARRAY_TYPE::Pointer create_signalarray(const std::vector<std::string> &uris,
-      /*----------------------------------------------------------------------------------------*/
+      typename SIGNAL_ARRAY_TYPE::Reference create_signalarray(const std::vector<std::string> &uris,
+      /*------------------------------------------------------------------------------------------*/
                                                     const std::vector<rdf::URI> &units,
-                                                    double rate, typename CLOCK_TYPE::Pointer clock)
+                                                    double rate, typename CLOCK_TYPE::Reference clock)
       {
         assert(uris.size() == units.size()) ;  // Lengths of `uris` and `units` are different
-        auto sigs = SIGNAL_ARRAY_TYPE::new_pointer() ;
+        auto sigs = SIGNAL_ARRAY_TYPE::new_reference() ;
         for (size_t n = 0 ;  n < uris.size() ;  ++n) {
           if (clock == nullptr) sigs->push_back(this->new_signal<SIGNAL_TYPE>(uris[n], units[n], rate)) ;
           else                  sigs->push_back(this->new_signal<SIGNAL_TYPE, CLOCK_TYPE>(uris[n], units[n], clock)) ;

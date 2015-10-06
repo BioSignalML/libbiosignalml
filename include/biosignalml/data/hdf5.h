@@ -85,11 +85,11 @@ namespace bsml {
     /*-------------------------------------------------*/
     {
       TYPED_OBJECT(Signal, BSML::Signal)
-      PROPERTY_POINTER(clock, BSML::clock, Clock)                   // Override class
+      PROPERTY_REFERENCE(clock, BSML::clock, Clock)                   // Override class
 
      public:
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
-      Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Pointer clock) ;
+      Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Reference clock) ;
       void extend(const double *points, const size_t length) ;
       std::vector<double> read(size_t pos=0, intmax_t length=-1) ;  // Point based
 
@@ -103,10 +103,10 @@ namespace bsml {
     /*-------------------------------------------------------------------------*/
     {
      public:
-      typedef std::shared_ptr<SignalArray> Pointer ;
+      typedef std::shared_ptr<SignalArray> Reference ;
 
       template<typename... Args>
-      inline static Pointer new_pointer(Args... args)
+      inline static Reference new_reference(Args... args)
       {
         return std::make_shared<SignalArray>(args...) ;
         }
@@ -135,23 +135,23 @@ namespace bsml {
 
       void close(void) ;
 
-      Clock::Pointer get_clock(const std::string &uri) ;
-      Signal::Pointer get_signal(const std::string &uri) ;
+      Clock::Reference get_clock(const std::string &uri) ;
+      Signal::Reference get_signal(const std::string &uri) ;
 
-      Clock::Pointer new_clock(const std::string &uri, const rdf::URI &units,
-                               double *times = nullptr, size_t datasize=0) ;
+      Clock::Reference new_clock(const std::string &uri, const rdf::URI &units,
+                                 double *times = nullptr, size_t datasize=0) ;
 
-      Signal::Pointer new_signal(const std::string &uri, const rdf::URI &units,
-                                 double rate) ;
-      Signal::Pointer new_signal(const std::string &uri, const rdf::URI &units,
-                                 Clock::Pointer clock) ;
+      Signal::Reference new_signal(const std::string &uri, const rdf::URI &units,
+                                   double rate) ;
+      Signal::Reference new_signal(const std::string &uri, const rdf::URI &units,
+                                   Clock::Reference clock) ;
 
-      SignalArray::Pointer new_signalarray(const std::vector<std::string> &uris,
-                                           const std::vector<rdf::URI> &units,
-                                           double rate) ;
-      SignalArray::Pointer new_signalarray(const std::vector<std::string> &uris,
-                                           const std::vector<rdf::URI> &units,
-                                           Clock::Pointer clock) ;
+      SignalArray::Reference new_signalarray(const std::vector<std::string> &uris,
+                                             const std::vector<rdf::URI> &units,
+                                             double rate) ;
+      SignalArray::Reference new_signalarray(const std::vector<std::string> &uris,
+                                             const std::vector<rdf::URI> &units,
+                                             Clock::Reference clock) ;
 // Variants of new_signal() with rate/period (== regular Clock)
 
      private:

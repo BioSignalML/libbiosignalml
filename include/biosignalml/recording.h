@@ -58,34 +58,34 @@ namespace bsml {
     PROPERTY_OBJECT_RSET(annotation_set, DCT::subject, Annotation)
 
    public:
-    Clock::Pointer get_clock(const std::string &uri) ;
-    Signal::Pointer get_signal(const std::string &uri) ;
+    Clock::Reference get_clock(const std::string &uri) ;
+    Signal::Reference get_signal(const std::string &uri) ;
 
     template<class CLOCK_TYPE=Clock>
-    typename CLOCK_TYPE::Pointer new_clock(const std::string &uri, const rdf::URI &units)
-    /*---------------------------------------------------------------------------------*/
+    typename CLOCK_TYPE::Reference new_clock(const std::string &uri, const rdf::URI &units)
+    /*-----------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Clock, CLOCK_TYPE>::value, "CLOCK_TYPE must be derived from Clock") ;
-      auto clock = CLOCK_TYPE::new_pointer(rdf::URI(uri, m_base), units) ;
+      auto clock = CLOCK_TYPE::new_reference(rdf::URI(uri, m_base), units) ;
       clock->set_recording(this->uri()) ;
       this->m_clock_set.insert(clock) ;
       return clock ;
       }
 
     template<class SIGNAL_TYPE=Signal>
-    typename SIGNAL_TYPE::Pointer new_signal(const std::string &uri, const rdf::URI &units, double rate)
-    /*------------------------------------------------------------------------------------------------*/
+    typename SIGNAL_TYPE::Reference new_signal(const std::string &uri, const rdf::URI &units, double rate)
+    /*--------------------------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
-      return add_signal<SIGNAL_TYPE>(SIGNAL_TYPE::new_pointer(rdf::URI(uri, m_base), units, rate)) ;
+      return add_signal<SIGNAL_TYPE>(SIGNAL_TYPE::new_reference(rdf::URI(uri, m_base), units, rate)) ;
       }
 
     template<class SIGNAL_TYPE=Signal, class CLOCK_TYPE=Clock>
-    typename SIGNAL_TYPE::Pointer new_signal(const std::string &uri, const rdf::URI &units, typename CLOCK_TYPE::Pointer clock)
-    /*-----------------------------------------------------------------------------------------------------------------------*/
+    typename SIGNAL_TYPE::Reference new_signal(const std::string &uri, const rdf::URI &units, typename CLOCK_TYPE::Reference clock)
+    /*---------------------------------------------------------------------------------------------------------------------------*/
     {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
-      return add_signal<SIGNAL_TYPE>(SIGNAL_TYPE::new_pointer(rdf::URI(uri, m_base), units, clock)) ;
+      return add_signal<SIGNAL_TYPE>(SIGNAL_TYPE::new_reference(rdf::URI(uri, m_base), units, clock)) ;
       }
 
 
@@ -95,9 +95,10 @@ namespace bsml {
       m_base = this->uri().to_string() + "/" ;  \
       )
 
+
    private:
     template<class SIGNAL_TYPE>
-    typename SIGNAL_TYPE::Pointer add_signal(typename SIGNAL_TYPE::Pointer signal)
+    typename SIGNAL_TYPE::Reference add_signal(typename SIGNAL_TYPE::Reference signal)
     /*--------------------------------------------------------------------------*/
     {
       signal->set_recording(this->uri()) ;

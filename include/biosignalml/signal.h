@@ -44,7 +44,7 @@ namespace bsml {
     PROPERTY_NODE(filter, BSML::preFilter)
     PROPERTY_DECIMAL(rate, BSML::rate)
     PROPERTY_DECIMAL(period, BSML::period)
-    PROPERTY_POINTER(clock, BSML::clock, Clock)
+    PROPERTY_REFERENCE(clock, BSML::clock, Clock)
     PROPERTY_DECIMAL(minFrequency, BSML::minFrequency)
     PROPERTY_DECIMAL(maxFrequency, BSML::maxFrequency)
     PROPERTY_DECIMAL(minValue, BSML::minValue)
@@ -56,7 +56,7 @@ namespace bsml {
 
    public:
     Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
-    Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Pointer clock) ;
+    Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Reference clock) ;
 
     virtual void extend(const double *points, const size_t length) ;
     void extend(const std::vector<double> &points) ;

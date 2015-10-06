@@ -21,15 +21,15 @@
 #include <biosignalml/recording.h>
 
 
-bsml::Clock::Pointer bsml::Recording::get_clock(const std::string &uri)
-/*-------------------------------------------------------------------*/
+bsml::Clock::Reference bsml::Recording::get_clock(const std::string &uri)
+/*---------------------------------------------------------------------*/
 {
   return get_object<bsml::Clock>(uri, this->clock_set()) ;
   }
 
 
-bsml::Signal::Pointer bsml::Recording::get_signal(const std::string &uri)
-/*---------------------------------------------------------------------*/
+bsml::Signal::Reference bsml::Recording::get_signal(const std::string &uri)
+/*-----------------------------------------------------------------------*/
 {
   return get_object<bsml::Signal>(uri, this->signal_set()) ;
   }
