@@ -1,5 +1,5 @@
-libbsml
-=======
+libbiosignalml
+==============
 
 BioSignalML C++ library.
 
