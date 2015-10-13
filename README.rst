@@ -4,7 +4,7 @@ libbsml
 BioSignalML C++ library.
 
 The ``typedobject`` library (https://github.com/dbrnz/typedobject) is used for
-RDF.
+RDF processing.
 
 
 WARNING
