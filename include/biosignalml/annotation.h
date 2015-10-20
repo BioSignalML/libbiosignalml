@@ -40,6 +40,10 @@ namespace bsml {
     PROPERTY_OBJECT(annotation_time, BSML::time, TemporalEntity)
 
    public:
+    Annotation(const rdf::URI &uri, bsml::Object::Reference about, const std::string &text="",
+               const std::set<rdf::Node> &tags=std::set<rdf::Node>(),
+               const bsml::Annotation &predecessor=bsml::Annotation()) ;
+
     //!< The time, if any, associated with the resource that is annotated.
     TemporalEntity time(void) const ;
     } ;

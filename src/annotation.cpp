@@ -24,6 +24,18 @@
 using namespace bsml ;
 
 
+Annotation::Annotation(const rdf::URI &uri, bsml::Object::Reference about, const std::string &text,
+/*-------------------------------------------------------------------------------------------*/
+                       const std::set<rdf::Node> &tags, const bsml::Annotation &predecessor)
+: Annotation(uri)
+{
+  set_about(about) ;
+  if (text != "") set_comment(text) ;
+  for (auto const &t : tags) add_tags(t) ;
+
+  if (predecessor.is_valid()) set_precededBy(predecessor.uri()) ;
+  }
+
 TemporalEntity Annotation::time(void) const
 /*---------------------------------------*/
 {
