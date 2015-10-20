@@ -19,4 +19,15 @@
  ******************************************************************************/
 
 #include <biosignalml/annotation.h>
+#include <biosignalml/segment.h>
 
+using namespace bsml ;
+
+
+TemporalEntity Annotation::time(void) const
+/*---------------------------------------*/
+{
+  if (type() == BSML::Segment)
+    return *std::static_pointer_cast<Segment>(about())->time() ;
+  return *annotation_time() ;
+  }

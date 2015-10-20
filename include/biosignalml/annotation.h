@@ -37,7 +37,11 @@ namespace bsml {
 
     PROPERTY_URI(about, DCT::subject)
     PROPERTY_NODE_SET(tags, BSML::tag)
-    PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
+    PROPERTY_OBJECT(annotation_time, BSML::time, TemporalEntity)
+
+   public:
+    //!< The time, if any, associated with the resource that is annotated.
+    TemporalEntity time(void) const ;
     } ;
 
   } ;
