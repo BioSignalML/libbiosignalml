@@ -33,8 +33,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Object : public TypedObject::TypedObject
-  /*-------------------------------------------------------------*/
+  class BIOSIGNALML_EXPORT Object : public tobj::TypedObject
+  /*------------------------------------------------------*/
   {
     TYPED_OBJECT(Object, OWL::Object)
 
