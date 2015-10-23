@@ -72,9 +72,12 @@ install(TARGETS biosignalml EXPORT biosignalmlTargets
   )
 
 install(
-  DIRECTORY include/biosignalml
-  DESTINATION include/biosignalml
-  COMPONENT Devel
+  DIRECTORY
+    ${CMAKE_SOURCE_DIR}/include/biosignalml
+  DESTINATION
+    include
+  COMPONENT
+    Devel
   )
 
 write_basic_package_version_file(

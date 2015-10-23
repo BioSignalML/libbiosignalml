@@ -7,6 +7,6 @@ if (NOT WIN32)
   GET_FILENAME_COMPONENT(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
 endif (NOT WIN32)
 
-set(biosignalml_INCLUDE_DIR "${_IMPORT_PREFIX}/include/biosignalml")
+set(biosignalml_INCLUDE_DIR "${_IMPORT_PREFIX}/include")
 set(biosignalml_LIBRARY_DIR "${_IMPORT_PREFIX}/lib")
 
