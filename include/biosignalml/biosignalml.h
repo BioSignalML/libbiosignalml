@@ -28,6 +28,7 @@
 #include <biosignalml/signal.h>
 #include <biosignalml/event.h>
 #include <biosignalml/recording.h>
+#include <biosignalml/segment.h>
 #include <biosignalml/annotation.h>
 
 #endif
