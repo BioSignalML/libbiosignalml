@@ -85,7 +85,7 @@ namespace bsml {
     /*-------------------------------------------------*/
     {
       TYPED_OBJECT(Signal, BSML::Signal)
-      PROPERTY_REFERENCE(clock, BSML::clock, Clock)                   // Override class
+      PROPERTY_OBJECT(clock, BSML::clock, Clock)                     // Override class
 
      public:
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;

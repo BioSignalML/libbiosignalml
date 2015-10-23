@@ -44,7 +44,7 @@ namespace bsml {
     PROPERTY_NODE(filter, BSML::preFilter)
     PROPERTY_DECIMAL(rate, BSML::rate)
     PROPERTY_DECIMAL(period, BSML::period)
-    PROPERTY_REFERENCE(clock, BSML::clock, Clock)
+    PROPERTY_OBJECT(clock, BSML::clock, Clock)
     PROPERTY_DECIMAL(minFrequency, BSML::minFrequency)
     PROPERTY_DECIMAL(maxFrequency, BSML::maxFrequency)
     PROPERTY_DECIMAL(minValue, BSML::minValue)

@@ -35,7 +35,7 @@ namespace bsml {
   {
     TYPED_OBJECT(Annotation, BSML::Annotation)
 
-    PROPERTY_REFERENCE(about, DCT::subject, Object)
+    PROPERTY_OBJECT(about, DCT::subject, Object)
     PROPERTY_NODE_SET(tags, BSML::tag)
     PROPERTY_OBJECT(annotation_time, BSML::time, TemporalEntity)
 
