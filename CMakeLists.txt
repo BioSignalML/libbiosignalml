@@ -23,12 +23,14 @@ elseif(WIN32)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS -wd4251)
 endif()
 
+set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
+
 FIND_PACKAGE(typedobject REQUIRED)
-set(INCLUDES ${typedobject_INCLUDE_DIR})
+set(INCLUDES ${INCLUDES} ${typedobject_INCLUDE_DIR})
 set(LIBRARIES ${typedobject_LIBRARY})
+
 include(${typedobject_DIR}/typedobject_generate.cmake)
 
-set(INCLUDES  ${INCLUDES} $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
 set(HEADERS ${CMAKE_SOURCE_DIR}/include/biosignalml/object.h
             ${CMAKE_SOURCE_DIR}/include/biosignalml/recording.h
             ${CMAKE_SOURCE_DIR}/include/biosignalml/signal.h
