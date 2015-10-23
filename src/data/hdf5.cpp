@@ -73,10 +73,13 @@ void HDF5::Signal::extend(const double *points, const size_t length)
   }
 
 
-std::vector<double> HDF5::Signal::read(size_t pos, intmax_t length)    // Point based
-/*---------------------------------------------------------------*/
+data::TimeSeries::Reference HDF5::Signal::read(size_t pos, intmax_t length)    // Point based
+/*-----------------------------------------------------------------------*/
 {
-  return m_data->read(pos, length) ;
+  if (m_clock)
+    return data::TimeSeries::new_reference(m_clock->m_data->read(pos, length), m_data->read(pos, length)) ;
+  else
+    return data::UniformTimeSeries::new_reference(m_rate, m_data->read(pos, length)) ;
   }
 
 

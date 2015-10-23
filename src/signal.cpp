@@ -57,8 +57,8 @@ std::vector<double> bsml::Signal::read(const bsml::Interval &interval)    // Tim
   return std::vector<double>() ;
   }
 
-std::vector<double> bsml::Signal::read(size_t, intmax_t)                  // Point based
+bsml::data::TimeSeries::Reference bsml::Signal::read(size_t, intmax_t)                  // Point based
 /*----------------------------------------------------*/
 {
-  return std::vector<double>() ;
+  return data::TimeSeries::new_reference() ;
   }

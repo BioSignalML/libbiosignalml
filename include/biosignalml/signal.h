@@ -24,6 +24,7 @@
 #include <biosignalml/biosignalml_export.h>
 #include <biosignalml/timing.h>
 #include <biosignalml/object.h>
+#include <biosignalml/data/timeseries.h>
 
 #include <string>
 #include <vector>
@@ -61,7 +62,7 @@ namespace bsml {
     virtual void extend(const double *points, const size_t length) ;
     void extend(const std::vector<double> &points) ;
     virtual std::vector<double> read(const bsml::Interval &interval) ;   // Time based
-    virtual std::vector<double> read(size_t pos=0, intmax_t length=0) ;  // Point based
+    virtual data::TimeSeries::Reference read(size_t pos=0, intmax_t length=0) ;  // Point based
 
     } ;
 
