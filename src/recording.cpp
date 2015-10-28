@@ -20,16 +20,18 @@
 
 #include <biosignalml/recording.h>
 
+using namespace bsml ;
 
-bsml::Clock::Reference bsml::Recording::get_clock(const std::string &uri)
-/*---------------------------------------------------------------------*/
+
+Clock::Reference Recording::get_clock(const std::string &uri)
+/*---------------------------------------------------------*/
 {
-  return get_object<bsml::Clock>(uri, this->clock_set()) ;
+  return get_resource<Clock>(rdf::URI(uri)) ;
   }
 
 
-bsml::Signal::Reference bsml::Recording::get_signal(const std::string &uri)
-/*-----------------------------------------------------------------------*/
+Signal::Reference Recording::get_signal(const std::string &uri)
+/*------------------------------------------------------------*/
 {
-  return get_object<bsml::Signal>(uri, this->signal_set()) ;
+  return get_resource<Signal>(rdf::URI(uri)) ;
   }

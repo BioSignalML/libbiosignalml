@@ -162,14 +162,14 @@ void HDF5::Recording::close(void)
 HDF5::Clock::Reference HDF5::Recording::get_clock(const std::string &uri)
 /*---------------------------------------------------------------------*/
 {
-  return get_object<HDF5::Clock>(uri, this->clock_set()) ;
+  return get_resource<HDF5::Clock>(rdf::URI(uri)) ;
   }
 
 
 HDF5::Signal::Reference HDF5::Recording::get_signal(const std::string &uri)
 /*-----------------------------------------------------------------------*/
 {
-  return get_object<HDF5::Signal>(uri, this->signal_set()) ;
+  return get_resource<HDF5::Signal>(rdf::URI(uri)) ;
   }
 
 

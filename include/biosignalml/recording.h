@@ -23,7 +23,9 @@
 
 #include <biosignalml/biosignalml_export.h>
 #include <biosignalml/signal.h>
+#include <biosignalml/event.h>
 #include <biosignalml/annotation.h>
+#include <biosignalml/segment.h>
 #include <biosignalml/timing.h>
 #include <biosignalml/object.h>
 
@@ -53,9 +55,12 @@ namespace bsml {
     PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
     PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
-    PROPERTY_OBJECT_RSET(clock_set, BSML::recording, Clock)
-    PROPERTY_OBJECT_RSET(signal_set, BSML::recording, Signal)
-    PROPERTY_OBJECT_RSET(annotation_set, DCT::subject, Annotation)
+    // Other reources that directly reference a Recording
+    RESOURCE(BSML::recording, Clock)
+    RESOURCE(BSML::recording, Signal)
+    RESOURCE(BSML::recording, Event)
+    RESOURCE(DCT::source,     Segment)
+    RESOURCE(DCT::subject,    Annotation)
 
    public:
     Clock::Reference get_clock(const std::string &uri) ;
@@ -68,7 +73,7 @@ namespace bsml {
       static_assert(std::is_base_of<Clock, CLOCK_TYPE>::value, "CLOCK_TYPE must be derived from Clock") ;
       auto clock = CLOCK_TYPE::new_reference(rdf::URI(uri, m_base), units) ;
       clock->set_recording(this->uri()) ;
-      this->m_clock_set.insert(clock) ;
+      this->add_resource(clock) ;
       return clock ;
       }
 
@@ -102,7 +107,7 @@ namespace bsml {
     /*--------------------------------------------------------------------------*/
     {
       signal->set_recording(this->uri()) ;
-      this->m_signal_set.insert(signal) ;
+      add_resource(signal) ;
       return signal ;
       }
 
