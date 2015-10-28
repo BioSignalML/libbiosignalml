@@ -44,27 +44,27 @@ Instant::Instant(const rdf::URI &uri, const double start, const std::string &uni
 
 
 Clock::Clock(const rdf::URI &uri, const rdf::URI &units)
-/*----------------------------------------------------------*/
+/*----------------------------------------------------*/
 : Clock(uri)
 {
   set_units(units) ;   // Units::get_units_uri(const std::string &u)
   }
 
 void Clock::extend(const double *points, const size_t length)
-/*---------------------------------------------------------------*/
+/*---------------------------------------------------------*/
 {
   (void)points ;    // Unused parameters
   (void)length ;
   }
 
 void Clock::extend(const std::vector<double> &points)
-/*-------------------------------------------------------*/
+/*-------------------------------------------------*/
 {
   extend(points.data(), points.size()) ;
   }
 
 std::vector<double> Clock::read(size_t pos, intmax_t length)
-/*--------------------------------------------------------------*/
+/*--------------------------------------------------------*/
 {
   return std::vector<double>() ;
   }

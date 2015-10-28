@@ -117,7 +117,7 @@ namespace bsml {
    private:
     template<class SIGNAL_TYPE>
     typename SIGNAL_TYPE::Reference add_signal(typename SIGNAL_TYPE::Reference signal)
-    /*--------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------*/
     {
       signal->set_recording(this->uri()) ;
       add_resource(signal) ;
