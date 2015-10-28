@@ -27,6 +27,8 @@
 
 #include <string>
 #include <memory>
+#include <list>
+
 
 namespace bsml {
 
@@ -133,7 +135,9 @@ namespace bsml {
       void close(void) ;
 
       Clock::Reference get_clock(const std::string &uri) ;
+      std::list<Clock::Reference> get_clocks(void) ;
       Signal::Reference get_signal(const std::string &uri) ;
+      std::list<Signal::Reference> get_signals(void) ;
 
       Clock::Reference new_clock(const std::string &uri, const rdf::URI &units,
                                  double *times = nullptr, size_t datasize=0) ;

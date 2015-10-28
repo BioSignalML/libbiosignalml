@@ -32,6 +32,7 @@
 #include <string>
 #include <vector>
 #include <cassert>
+#include <list>
 
 using namespace rdf ;
 
@@ -64,7 +65,16 @@ namespace bsml {
 
    public:
     Clock::Reference get_clock(const std::string &uri) ;
+    std::list<Clock::Reference> get_clocks(void) ;
+
     Signal::Reference get_signal(const std::string &uri) ;
+    std::list<Signal::Reference> get_signals(void) ;
+
+    Event::Reference get_event(const std::string &uri) ;
+    std::list<Event::Reference> get_events(const rdf::URI &type=rdf::URI()) ;
+
+    Annotation::Reference get_annotation(const std::string &uri) ;
+    std::list<Annotation::Reference> get_annotations(void) ;
 
     template<class CLOCK_TYPE=Clock>
     typename CLOCK_TYPE::Reference new_clock(const std::string &uri, const rdf::URI &units)

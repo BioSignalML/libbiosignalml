@@ -127,11 +127,11 @@ HDF5::Recording::Recording(const std::string &filename, bool readonly)
   graph.parse_string(metadata.first, rdf::Graph::mimetype_to_format(metadata.second)) ;
 
   this->add_metadata(graph) ;
-  for (auto const & c : clock_set()) {
+  for (auto const & c : get_clocks()) {
     c->m_data = m_file->get_clock(c->uri().to_string()) ;
     datasets.insert(c->m_data) ;
     }
-  for (auto const & s : signal_set()) {
+  for (auto const & s : get_signals()) {
     s->m_data = m_file->get_signal(s->uri().to_string()) ;
     datasets.insert(s->m_data) ;
     if (s->m_clock) {
@@ -165,11 +165,23 @@ HDF5::Clock::Reference HDF5::Recording::get_clock(const std::string &uri)
   return get_resource<HDF5::Clock>(rdf::URI(uri)) ;
   }
 
+std::list<HDF5::Clock::Reference> HDF5::Recording::get_clocks(void)
+/*---------------------------------------------------------------*/
+{
+  return get_resources<HDF5::Clock>() ;
+  }
+
 
 HDF5::Signal::Reference HDF5::Recording::get_signal(const std::string &uri)
 /*-----------------------------------------------------------------------*/
 {
   return get_resource<HDF5::Signal>(rdf::URI(uri)) ;
+  }
+
+std::list<HDF5::Signal::Reference> HDF5::Recording::get_signals(void)
+/*-----------------------------------------------------------------*/
+{
+  return get_resources<HDF5::Signal>() ;
   }
 
 

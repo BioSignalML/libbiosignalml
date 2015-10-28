@@ -29,9 +29,47 @@ Clock::Reference Recording::get_clock(const std::string &uri)
   return get_resource<Clock>(rdf::URI(uri)) ;
   }
 
+std::list<Clock::Reference> Recording::get_clocks(void)
+/*---------------------------------------------------*/
+{
+  return get_resources<Clock>() ;
+  }
+
 
 Signal::Reference Recording::get_signal(const std::string &uri)
 /*------------------------------------------------------------*/
 {
   return get_resource<Signal>(rdf::URI(uri)) ;
+  }
+
+std::list<Signal::Reference> Recording::get_signals(void)
+/*-----------------------------------------------------*/
+{
+  return get_resources<Signal>() ;
+  }
+
+
+Event::Reference Recording::get_event(const std::string &uri)
+/*---------------------------------------------------------*/
+{
+  return get_resource<Event>(rdf::URI(uri)) ;
+  }
+
+std::list<Event::Reference> Recording::get_events(const rdf::URI &type)
+/*-------------------------------------------------------------------*/
+{
+  return get_resources<Event>() ;  // lambda returning bool
+  }
+
+
+Annotation::Reference Recording::get_annotation(const std::string &uri)
+/*-------------------------------------------------------------------*/
+{
+  return get_resource<Annotation>(rdf::URI(uri)) ;
+  }
+
+std::list<Annotation::Reference> Recording::get_annotations(void)
+/*-------------------------------------------------------------*/
+{
+  return get_resources<Annotation>() ;
   }
