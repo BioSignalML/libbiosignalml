@@ -54,10 +54,4 @@ namespace bsml {
 
   } ;
 
-/**
-              'created':     PropertyMap(DCT.created, datatype=XSD.dateTime,
-                                         to_rdf=utils.datetime_to_isoformat,
-                                         from_rdf=utils.isoformat_to_datetime),
-**/
-
 #endif
