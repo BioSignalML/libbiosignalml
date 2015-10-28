@@ -39,6 +39,9 @@ namespace bsml {
 
     PROPERTY_URI(source, DCT::source)
     PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
+
+   public:
+    Segment(const rdf::URI &uri, const rdf::URI &source, Interval::Reference interval) ;
     } ;
 
   } ;

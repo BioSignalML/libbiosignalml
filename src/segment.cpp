@@ -19,3 +19,14 @@
  ******************************************************************************/
 
 #include <biosignalml/segment.h>
+
+
+bsml::Segment::Segment(const rdf::URI &uri, const rdf::URI &source,
+/*===============================================================*/
+                       bsml::Interval::Reference interval)
+: Segment(uri)
+{
+  set_source(source) ;
+  set_time(interval) ;
+  }
+
