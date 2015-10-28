@@ -62,8 +62,8 @@ namespace bsml {
       void close(void) ;
       H5::DataSet get_dataset(void) const ;
       hobj_ref_t get_reference(void) const ;
-      size_t length(void) const ;
       std::string name(void) ;
+      size_t size(void) const ;
       void extend(const double *data, intmax_t length, int nsignals) ;
       std::vector<double> read(size_t pos, intmax_t length) ;
 

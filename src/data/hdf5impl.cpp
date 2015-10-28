@@ -142,8 +142,8 @@ hobj_ref_t HDF5::Dataset::get_reference(void) const
   }
 
 
-size_t HDF5::Dataset::length(void) const
-/*------------------------------------*/
+size_t HDF5::Dataset::size(void) const
+/*----------------------------------*/
 {
   if (m_dataset.getId() < 0) return 0 ;
   else {
@@ -438,7 +438,7 @@ std::shared_ptr<HDF5::ClockData> HDF5::File::check_timing(double rate, const std
     dataset = get_clock(uri) ;
     if (dataset == nullptr)
       throw HDF5::Exception("Clock doesn't exist") ;
-    else if (dataset->length() < npoints)
+    else if (dataset->size() < npoints)
       throw HDF5::Exception("Clock either doesn't have sufficient times") ;
     }
   else {
