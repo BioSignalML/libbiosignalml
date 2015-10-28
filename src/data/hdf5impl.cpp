@@ -242,7 +242,7 @@ void HDF5::Dataset::extend(const double *data, intmax_t size, int nsignals)
 std::vector<double> HDF5::Dataset::read(size_t pos, intmax_t size)
 /*--------------------------------------------------------------*/
 {
-  std::vector<double> points(0) ;
+  std::vector<double> points ;
 
   H5::DataSpace dspace = m_dataset.getSpace() ;
   int ndims = dspace.getSimpleExtentNdims() ;
@@ -253,6 +253,7 @@ std::vector<double> HDF5::Dataset::read(size_t pos, intmax_t size)
   try {
     dspace.getSimpleExtentDims(shape) ;
     if (size < 0 || (size + pos) > shape[0]) size = shape[0] - pos ;
+    points.resize(size) ;
     start[0] = pos ;
     if (m_index >= 0) {         // compound dataset
       if (ndims != 2) throw HDF5::Exception("Compound dataset has wrong shape: " + m_uri) ;
