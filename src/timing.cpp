@@ -20,18 +20,25 @@
 
 #include <biosignalml/timing.h>
 
-bsml::Interval::Interval(const double start, const double duration, const std::string & units)
-/*------------------------------------------------------------------------------------------*/
 using namespace bsml ;
 
+
+Interval::Interval(const rdf::URI &uri, const double start, const double duration,
+/*------------------------------------------------------------------------------*/
+                   const std::string &units, RelativeTimeLine::Reference timeline)
+: Interval(uri)
 {
+  set_timeline(timeline) ;
   set_start(xsd::Duration(start, units)) ;
   set_duration(xsd::Duration(duration, units)) ;
   }
 
-bsml::Instant::Instant(const double start, const std::string & units)
-/*-----------------------------------------------------------------*/
+Instant::Instant(const rdf::URI &uri, const double start, const std::string &units,
+/*-------------------------------------------------------------------------------*/
+                 RelativeTimeLine::Reference timeline)
+: Instant(uri)
 {
+  set_timeline(timeline) ;
   set_start(xsd::Duration(start, units)) ;
   }
 

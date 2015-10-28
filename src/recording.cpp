@@ -23,6 +23,24 @@
 using namespace bsml ;
 
 
+Interval::Reference Recording::new_interval(const double start, const double duration,
+/*----------------------------------------------------------------------------------*/
+                                            const std::string &units)
+{
+  auto tm = Interval::new_reference(timeline()->uri().make_URI(), start, duration, units, timeline()) ;
+  add_resource(tm) ;
+  return tm ;
+  }
+
+Instant::Reference Recording::new_instant(const double start, const std::string &units)
+/*-----------------------------------------------------------------------------------*/
+{
+  auto tm = Instant::new_reference(timeline()->uri().make_URI(), start, units, timeline()) ;
+  add_resource(tm) ;
+  return tm ;
+  }
+
+
 Clock::Reference Recording::get_clock(const std::string &uri)
 /*---------------------------------------------------------*/
 {

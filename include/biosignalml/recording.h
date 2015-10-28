@@ -64,6 +64,9 @@ namespace bsml {
     RESOURCE(DCT::subject,    Annotation)
 
    public:
+    Interval::Reference new_interval(const double start, const double duration, const std::string & units = "second") ;
+    Instant::Reference new_instant(const double start, const std::string & units = "second") ;
+
     Clock::Reference get_clock(const std::string &uri) ;
     std::list<Clock::Reference> get_clocks(void) ;
 

@@ -22,7 +22,6 @@
 #define BSML_TIMING_H
 
 #include <biosignalml/biosignalml_export.h>
-#include <biosignalml/timing.h>
 #include <biosignalml/object.h>
 
 #include <string>
@@ -32,6 +31,9 @@
 using namespace rdf ;
 
 namespace bsml {
+
+  class Interval ;
+  class Instant ;
 
   class BIOSIGNALML_EXPORT RelativeTimeLine : public Object
   /*-----------------------------------------------------*/
@@ -60,7 +62,8 @@ namespace bsml {
     ASSIGN_DURATION(duration, TL::duration)
 
    public:
-    Interval(const double start, const double duration, const std::string & units = "seconds") ;
+    Interval(const rdf::URI &uri, const double start, const double duration,
+             const std::string & units = "second", RelativeTimeLine::Reference timeline=nullptr) ;
     } ;
 
 
@@ -70,7 +73,9 @@ namespace bsml {
     TYPED_OBJECT(Instant, BSML::Instant)
 
     ASSIGN_DURATION(start, TL::at)
-    Instant(const double start, const std::string & units = "seconds") ;
+    Instant(const rdf::URI &uri, const double start, const std::string & units = "second",
+            RelativeTimeLine::Reference timeline=nullptr) ;
+
     } ;
 
 
