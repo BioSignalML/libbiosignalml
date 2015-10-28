@@ -42,15 +42,24 @@ int main(int argc, char *argv[])
   std::string recording(argv[2]) ;
   bsml::Recording rec(recording, g) ;
 
-  std::cout << rec.to_string() << std::endl ;
+  std::cout << rec.to_string() << std::endl << std::endl ;
   std::cout << "  Label: "        << rec.label()  << std::endl
             << "  Format: "       << rec.format() << std::endl
             << "  Investigation: "<< rec.investigation() << std::endl
             << "  Timeline: "     << rec.timeline()->uri() << std::endl
             << "  Duration: "     << rec.duration()        << std::endl ;
 
+
+  auto s = rec.get_signal("http://demo.biosignalml.org/examples/sinewave/signal/0") ;
+  if (s) {
+    std::cout << "  Label: "       << s->label()  << std::endl
+              << "  Rate: "        << s->rate()   << std::endl
+              << "  Units: "       << s->units()  << std::endl ;
+    }
+  else std::cout << "NULL" << std::endl ;
+
   std::cout << std::endl << "Signals:" << std::endl ;
-  for (const auto &signal: rec.signal_set()) {
+  for (const auto &signal: rec.get_signals()) {
 //    std::cout << signal.to_string() << std::endl ;
     std::cout << "  Label: "       << signal->label()  << std::endl
               << "  Rate: "        << signal->rate()   << std::endl
@@ -59,9 +68,9 @@ int main(int argc, char *argv[])
 
 
   std::cout << std::endl << "Annotations:" << std::endl ;
-  for (const auto &note: rec.annotation_set()) {
+  for (const auto &note: rec.get_annotations()) {
     std::cout << "  Note: "        << note->comment()       << std::endl
-              << "  Time: "        << note->time()->start() << std::endl ;
+              << "  Time: "        << note->time().start() << std::endl ;
     }
 
   }
