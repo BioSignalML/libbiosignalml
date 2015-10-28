@@ -28,7 +28,6 @@
 
 #include <string>
 #include <vector>
-#include <type_traits>
 
 using namespace rdf ;
 
