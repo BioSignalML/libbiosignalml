@@ -156,8 +156,8 @@ size_t HDF5::Dataset::size(void) const
     }
   }
 
-std::string HDF5::Dataset::name(void)
-/*---------------------------------*/
+std::string HDF5::Dataset::name(void) const
+/*---------------------------------------*/
 {
   int n = H5Iget_name(m_dataset.getId(), NULL, 0) ;
   if (n == 0) return std::string("") ;
