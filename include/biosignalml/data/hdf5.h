@@ -79,6 +79,7 @@ namespace bsml {
 
      private:
       std::shared_ptr<ClockData> m_data ;
+      friend class Signal ;
       friend class Recording ;
       } ;
 

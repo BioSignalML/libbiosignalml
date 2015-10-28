@@ -76,10 +76,10 @@ void HDF5::Signal::extend(const double *points, const size_t length)
 data::TimeSeries::Reference HDF5::Signal::read(size_t pos, intmax_t length)    // Point based
 /*-----------------------------------------------------------------------*/
 {
-  if (m_clock)
-    return data::TimeSeries::new_reference(m_clock->m_data->read(pos, length), m_data->read(pos, length)) ;
+  if (clock())
+    return data::TimeSeries::new_reference(clock()->m_data->read(pos, length), m_data->read(pos, length)) ;
   else
-    return data::UniformTimeSeries::new_reference(m_rate, m_data->read(pos, length)) ;
+    return data::UniformTimeSeries::new_reference(rate(), m_data->read(pos, length)) ;
   }
 
 
@@ -134,8 +134,8 @@ HDF5::Recording::Recording(const std::string &filename, bool readonly)
   for (auto const & s : get_signals()) {
     s->m_data = m_file->get_signal(s->uri().to_string()) ;
     datasets.insert(s->m_data) ;
-    if (s->m_clock) {
-      s->m_clock->m_data = m_file->get_clock(s->m_clock->uri().to_string()) ;
+    if (s->clock()) {
+      s->clock()->m_data = m_file->get_clock(s->clock()->uri().to_string()) ;
       }
     }
   }
