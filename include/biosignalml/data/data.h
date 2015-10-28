@@ -47,14 +47,7 @@ namespace bsml {
       static_assert(std::is_base_of<Signal, SIGNAL_TYPE>::value, "SIGNAL_TYPE must be derived from Signal") ;
 
      public:
-      typedef std::shared_ptr<SignalArray> Reference ;                                  \
-
-      template<typename... Args>                                                \
-      inline static Reference new_reference(Args... args)                           \
-      {
-        return std::make_shared<SignalArray>(args...) ;
-        }
-
+      REFERENCE(SignalArray)
       virtual void extend(const double *points, const size_t length)
       {
         (void)points ;     // Unused parameters
