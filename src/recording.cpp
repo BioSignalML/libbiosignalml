@@ -28,7 +28,7 @@ Interval::Reference Recording::new_interval(const double start, const double dur
                                             const std::string &units)
 {
   auto tm = Interval::new_reference(timeline()->uri().make_URI(), start, duration, units, timeline()) ;
-  add_resource(tm) ;
+  add_resource<Interval>(tm) ;
   return tm ;
   }
 
@@ -36,7 +36,7 @@ Instant::Reference Recording::new_instant(const double start, const std::string 
 /*-----------------------------------------------------------------------------------*/
 {
   auto tm = Instant::new_reference(timeline()->uri().make_URI(), start, units, timeline()) ;
-  add_resource(tm) ;
+  add_resource<Instant>(tm) ;
   return tm ;
   }
 

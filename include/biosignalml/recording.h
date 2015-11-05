@@ -86,7 +86,7 @@ namespace bsml {
       static_assert(std::is_base_of<Clock, CLOCK_TYPE>::value, "CLOCK_TYPE must be derived from Clock") ;
       auto clock = CLOCK_TYPE::new_reference(rdf::URI(uri, m_base), units) ;
       clock->set_recording(this->uri()) ;
-      this->add_resource(clock) ;
+      this->add_resource<CLOCK_TYPE>(clock) ;
       return clock ;
       }
 
@@ -120,7 +120,7 @@ namespace bsml {
     /*------------------------------------------------------------------------------*/
     {
       signal->set_recording(this->uri()) ;
-      add_resource(signal) ;
+      add_resource<SIGNAL_TYPE>(signal) ;
       return signal ;
       }
 
