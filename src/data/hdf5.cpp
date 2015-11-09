@@ -36,6 +36,12 @@ HDF5::Clock::Clock(const rdf::URI &uri, const rdf::URI &units)
   this->set_units(units) ;
   }
 
+double HDF5::Clock::time(const size_t n) const
+/*------------------------------------------*/
+{
+  return 0.0 ;
+  }
+
 void HDF5::Clock::extend(const double *times, const size_t length)
 /*--------------------------------------------------------------*/
 {

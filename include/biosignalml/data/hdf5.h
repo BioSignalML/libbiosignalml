@@ -76,6 +76,7 @@ namespace bsml {
       Clock(const rdf::URI &uri, const rdf::URI &units) ;
       void extend(const double *times, const size_t length) ;
       std::vector<double> read(size_t pos=0, intmax_t length=-1) ;
+      double time(const size_t n) const override ;
 
      private:
       std::shared_ptr<ClockData> m_data ;

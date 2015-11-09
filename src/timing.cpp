@@ -50,6 +50,12 @@ Clock::Clock(const rdf::URI &uri, const rdf::URI &units)
   set_units(units) ;   // Units::get_units_uri(const std::string &u)
   }
 
+double Clock::time(const size_t n) const
+/*------------------------------------*/
+{
+  return 0.0 ;
+  }
+
 void Clock::extend(const double *points, const size_t length)
 /*---------------------------------------------------------*/
 {
