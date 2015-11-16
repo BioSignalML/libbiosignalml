@@ -63,7 +63,7 @@ namespace bsml {
 
    public:
     Interval(const rdf::URI &uri, const double start, const double duration,
-             const std::string & units = "second", RelativeTimeLine::Reference timeline=nullptr) ;
+             const std::string & units = "second", RelativeTimeLine::Ptr timeline=nullptr) ;
     } ;
 
 
@@ -74,7 +74,7 @@ namespace bsml {
 
     ASSIGN_DURATION(start, TL::at)
     Instant(const rdf::URI &uri, const double start, const std::string & units = "second",
-            RelativeTimeLine::Reference timeline=nullptr) ;
+            RelativeTimeLine::Ptr timeline=nullptr) ;
 
     } ;
 

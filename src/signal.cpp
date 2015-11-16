@@ -29,8 +29,8 @@ bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, double rate)
   this->set_rate(rate) ;
   }
 
-bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, bsml::Clock::Reference clock)
-/*------------------------------------------------------------------------------------------*/
+bsml::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, bsml::Clock::Ptr clock)
+/*------------------------------------------------------------------------------------*/
 : bsml::Signal(uri)
 {
   this->set_units(units) ;  // bsml::Units::get_units_uri(const std::string &u)
@@ -51,14 +51,15 @@ void bsml::Signal::extend(const std::vector<double> &points)
   extend(points.data(), points.size()) ;
   }
 
-std::vector<double> bsml::Signal::read(const bsml::Interval &interval)    // Time based
-/*------------------------------------------------------------------*/
+#include <iostream>
+bsml::data::TimeSeries::Ptr bsml::Signal::read(bsml::Interval::Ptr interval, intmax_t maxpoints)
+/*--------------------------------------------------------------------------------------------*/
 {
   return std::vector<double>() ;
   }
 
-bsml::data::TimeSeries::Reference bsml::Signal::read(size_t, intmax_t)                  // Point based
-/*----------------------------------------------------*/
+bsml::data::TimeSeries::Ptr bsml::Signal::read(size_t pos, intmax_t length)
+/*-----------------------------------------------------------------------*/
 {
-  return data::TimeSeries::new_reference() ;
+  return data::TimeSeries::create() ;
   }

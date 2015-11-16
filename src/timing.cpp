@@ -25,7 +25,7 @@ using namespace bsml ;
 
 Interval::Interval(const rdf::URI &uri, const double start, const double duration,
 /*------------------------------------------------------------------------------*/
-                   const std::string &units, RelativeTimeLine::Reference timeline)
+                   const std::string &units, RelativeTimeLine::Ptr timeline)
 : Interval(uri)
 {
   set_timeline(timeline) ;
@@ -35,7 +35,7 @@ Interval::Interval(const rdf::URI &uri, const double start, const double duratio
 
 Instant::Instant(const rdf::URI &uri, const double start, const std::string &units,
 /*-------------------------------------------------------------------------------*/
-                 RelativeTimeLine::Reference timeline)
+                 RelativeTimeLine::Ptr timeline)
 : Instant(uri)
 {
   set_timeline(timeline) ;

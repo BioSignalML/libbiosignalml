@@ -93,9 +93,9 @@ namespace bsml {
 
      public:
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
-      Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Reference clock) ;
       void extend(const double *points, const size_t length) ;
       data::TimeSeries::Reference read(size_t pos=0, intmax_t length=-1) ;  // Point based
+      Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Ptr clock) ;
 
      private:
       std::shared_ptr<SignalData> m_data ;
@@ -107,10 +107,10 @@ namespace bsml {
     /*-------------------------------------------------------------------------*/
     {
      public:
-      typedef std::shared_ptr<SignalArray> Reference ;
+      typedef std::shared_ptr<SignalArray> Ptr ;
 
       template<typename... Args>
-      inline static Reference new_reference(Args... args)
+      inline static Ptr new_reference(Args... args)
       {
         return std::make_shared<SignalArray>(args...) ;
         }
@@ -136,25 +136,23 @@ namespace bsml {
 
       void close(void) ;
 
-      Clock::Reference get_clock(const std::string &uri) ;
       std::list<Clock::Reference> get_clocks(void) ;
-      Signal::Reference get_signal(const std::string &uri) ;
       std::list<Signal::Reference> get_signals(void) ;
+      Clock::Ptr get_clock(const rdf::URI &uri) ;
+      Clock::Ptr get_clock(const std::string &uri) ;
 
-      Clock::Reference new_clock(const std::string &uri, const rdf::URI &units,
+      Signal::Ptr get_signal(const rdf::URI &uri) override ;
+      Signal::Ptr get_signal(const std::string &uri) override ;
+      Clock::Ptr new_clock(const std::string &uri, const rdf::URI &units,
                                  double *times = nullptr, size_t datasize=0) ;
 
-      Signal::Reference new_signal(const std::string &uri, const rdf::URI &units,
-                                   double rate) ;
-      Signal::Reference new_signal(const std::string &uri, const rdf::URI &units,
-                                   Clock::Reference clock) ;
+      Signal::Ptr new_signal(const std::string &uri, const rdf::URI &units, double rate) ;
+      Signal::Ptr new_signal(const std::string &uri, const rdf::URI &units, Clock::Ptr clock) ;
 
-      SignalArray::Reference new_signalarray(const std::vector<std::string> &uris,
-                                             const std::vector<rdf::URI> &units,
-                                             double rate) ;
-      SignalArray::Reference new_signalarray(const std::vector<std::string> &uris,
-                                             const std::vector<rdf::URI> &units,
-                                             Clock::Reference clock) ;
+      SignalArray::Ptr new_signalarray(const std::vector<std::string> &uris,
+                                       const std::vector<rdf::URI> &units, double rate) ;
+      SignalArray::Ptr new_signalarray(const std::vector<std::string> &uris,
+                                       const std::vector<rdf::URI> &units, Clock::Ptr clock) ;
 // Variants of new_signal() with rate/period (== regular Clock)
 
      private:

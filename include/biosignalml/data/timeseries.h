@@ -52,7 +52,7 @@ namespace bsml {
     /*-------------------------------*/
     {
      public:
-      REFERENCE(TimeSeries)
+      SHARED_PTR(TimeSeries)
       TimeSeries() ;
       TimeSeries(const size_t size) ;
       TimeSeries(const std::vector<double> &times, const std::vector<double> &data) ;
@@ -76,7 +76,7 @@ namespace bsml {
     /*----------------------------------------------------------*/
     {
      public:
-      REFERENCE(UniformTimeSeries)
+      SHARED_PTR(UniformTimeSeries)
       UniformTimeSeries() ;
       UniformTimeSeries(const double rate, const size_t size) ;
       UniformTimeSeries(const double rate, const std::vector<double> &data) ;

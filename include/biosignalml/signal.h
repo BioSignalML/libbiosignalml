@@ -56,12 +56,15 @@ namespace bsml {
 
    public:
     Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
-    Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Reference clock) ;
+    Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Ptr clock) ;
 
     virtual void extend(const double *points, const size_t length) ;
     void extend(const std::vector<double> &points) ;
-    virtual std::vector<double> read(const bsml::Interval &interval) ;   // Time based
-    virtual data::TimeSeries::Reference read(size_t pos=0, intmax_t length=0) ;  // Point based
+    
+    //! Time based
+    virtual bsml::data::TimeSeries::Ptr read(bsml::Interval::Ptr interval, intmax_t maxpoints=-1) ;
+    //! Point based
+    virtual data::TimeSeries::Ptr read(size_t pos=0, intmax_t length=0) ;
 
     } ;
 

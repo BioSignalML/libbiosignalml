@@ -24,9 +24,9 @@
 using namespace bsml ;
 
 
-Annotation::Annotation(const rdf::URI &uri, bsml::Object::Reference about, const std::string &text,
-/*-------------------------------------------------------------------------------------------*/
-                       const std::set<rdf::Node> &tags, const bsml::Annotation &predecessor)
+Annotation::Annotation(const rdf::URI &uri, Object::Ptr about, const std::string &text,
+/*-----------------------------------------------------------------------------------*/
+                       const std::set<rdf::Node> &tags, const Annotation::Ptr &predecessor)
 : Annotation(uri)
 {
   set_about(about) ;
@@ -36,8 +36,8 @@ Annotation::Annotation(const rdf::URI &uri, bsml::Object::Reference about, const
   if (predecessor.is_valid()) set_precededBy(predecessor.uri()) ;
   }
 
-TemporalEntity Annotation::time(void) const
-/*---------------------------------------*/
+TemporalEntity::Ptr Annotation::time(void) const
+/*--------------------------------------------*/
 {
   if (type() == BSML::Segment)
     return *std::static_pointer_cast<Segment>(about())->time() ;

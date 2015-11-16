@@ -64,8 +64,8 @@ HDF5::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, double rate)
   this->set_rate(rate) ;
   }
 
-HDF5::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, HDF5::Clock::Reference clock)
-/*------------------------------------------------------------------------------------------*/
+HDF5::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, HDF5::Clock::Ptr clock)
+/*------------------------------------------------------------------------------------*/
 : HDF5::Signal(uri)
 {
   this->set_units(units) ;  // bsml::Units::get_units_uri(const std::string &u)
@@ -79,8 +79,8 @@ void HDF5::Signal::extend(const double *points, const size_t length)
   }
 
 
-data::TimeSeries::Reference HDF5::Signal::read(size_t pos, intmax_t length)    // Point based
-/*-----------------------------------------------------------------------*/
+data::TimeSeries::Ptr HDF5::Signal::read(Interval::Ptr interval, intmax_t maxpoints)
+/*--------------------------------------------------------------------------------*/
 {
   if (clock())
     return data::TimeSeries::new_reference(clock()->m_data->read(pos, length), m_data->read(pos, length)) ;
@@ -165,36 +165,43 @@ void HDF5::Recording::close(void)
   }
 
 
-HDF5::Clock::Reference HDF5::Recording::get_clock(const std::string &uri)
-/*---------------------------------------------------------------------*/
+HDF5::Clock::Ptr HDF5::Recording::get_clock(const rdf::URI &uri)
+/*------------------------------------------------------------*/
 {
   return get_resource<HDF5::Clock>(rdf::URI(uri)) ;
   }
 
 std::list<HDF5::Clock::Reference> HDF5::Recording::get_clocks(void)
+HDF5::Clock::Ptr HDF5::Recording::get_clock(const std::string &uri)
 /*---------------------------------------------------------------*/
 {
   return get_resources<HDF5::Clock>() ;
+  return get_clock(rdf::URI(uri)) ;
   }
 
 
-HDF5::Signal::Reference HDF5::Recording::get_signal(const std::string &uri)
-/*-----------------------------------------------------------------------*/
+
+HDF5::Signal::Ptr HDF5::Recording::get_signal(const rdf::URI &uri)
+/*--------------------------------------------------------------*/
 {
   return get_resource<HDF5::Signal>(rdf::URI(uri)) ;
   }
 
 std::list<HDF5::Signal::Reference> HDF5::Recording::get_signals(void)
+HDF5::Signal::Ptr HDF5::Recording::get_signal(const std::string &uri)
 /*-----------------------------------------------------------------*/
 {
   return get_resources<HDF5::Signal>() ;
+  return get_signal(rdf::URI(uri)) ;
+  }
+
   }
 
 
-HDF5::Clock::Reference HDF5::Recording::new_clock(const std::string &uri,
-/*---------------------------------------------------------------------*/
-                                                const rdf::URI &units,
-                                                double *data, size_t datasize)
+HDF5::Clock::Ptr HDF5::Recording::new_clock(const std::string &uri,
+/*---------------------------------------------------------------*/
+                                            const rdf::URI &units,
+                                            double *data, size_t datasize)
 {
   auto clock = bsml::Recording::new_clock<HDF5::Clock>(uri, units) ;
   try {
@@ -211,10 +218,10 @@ HDF5::Clock::Reference HDF5::Recording::new_clock(const std::string &uri,
   }
 
 
-HDF5::Signal::Reference HDF5::Recording::new_signal(const std::string &uri,
-/*-----------------------------------------------------------------------*/
-                                                  const rdf::URI &units,
-                                                  double rate)
+HDF5::Signal::Ptr HDF5::Recording::new_signal(const std::string &uri,
+/*-----------------------------------------------------------------*/
+                                              const rdf::URI &units,
+                                              double rate)
 {
   auto signal = bsml::Recording::new_signal<HDF5::Signal>(uri, units, rate) ;
   signal->m_data = m_file->create_signal(signal->uri().to_string(), units.to_string(),
@@ -224,10 +231,10 @@ HDF5::Signal::Reference HDF5::Recording::new_signal(const std::string &uri,
   return signal ;
   }
 
-HDF5::Signal::Reference HDF5::Recording::new_signal(const std::string &uri,
-/*-----------------------------------------------------------------------*/
-                                                  const rdf::URI &units,
-                                                  HDF5::Clock::Reference clock)
+HDF5::Signal::Ptr HDF5::Recording::new_signal(const std::string &uri,
+/*-----------------------------------------------------------------*/
+                                              const rdf::URI &units,
+                                              HDF5::Clock::Ptr clock)
 {
   auto signal = bsml::Recording::new_signal<HDF5::Signal, HDF5::Clock>(uri, units, clock) ;
   signal->m_data = m_file->create_signal(signal->uri().to_string(), units.to_string(),
@@ -238,10 +245,10 @@ HDF5::Signal::Reference HDF5::Recording::new_signal(const std::string &uri,
   }
 
 
-HDF5::SignalArray::Reference HDF5::Recording::new_signalarray(const std::vector<std::string> &uris,
-/*-----------------------------------------------------------------------------------------------*/
-                                                            const std::vector<rdf::URI> &units,
-                                                            double rate)
+HDF5::SignalArray::Ptr HDF5::Recording::new_signalarray(const std::vector<std::string> &uris,
+/*-----------------------------------------------------------------------------------------*/
+                                                        const std::vector<rdf::URI> &units,
+                                                        double rate)
 {
   auto signals =
     data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, rate, nullptr) ;
@@ -254,10 +261,10 @@ HDF5::SignalArray::Reference HDF5::Recording::new_signalarray(const std::vector<
   return signals ;
   }
 
-HDF5::SignalArray::Reference HDF5::Recording::new_signalarray(const std::vector<std::string> &uris,
-/*-----------------------------------------------------------------------------------------------*/
-                                                            const std::vector<rdf::URI> &units,
-                                                            HDF5::Clock::Reference clock)
+HDF5::SignalArray::Ptr HDF5::Recording::new_signalarray(const std::vector<std::string> &uris,
+/*-----------------------------------------------------------------------------------------*/
+                                                        const std::vector<rdf::URI> &units,
+                                                        HDF5::Clock::Ptr clock)
 {
   auto signals =
     data::Recording::create_signalarray<HDF5::SignalArray, HDF5::Signal, HDF5::Clock>(uris, units, 0.0, clock) ;

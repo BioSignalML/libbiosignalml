@@ -41,7 +41,7 @@ namespace bsml {
     PROPERTY_OBJECT(time, BSML::time, TemporalEntity)
 
    public:
-    Segment(const rdf::URI &uri, const rdf::URI &source, Interval::Reference interval) ;
+    Segment(const rdf::URI &uri, const rdf::URI &source, Interval::Ptr interval) ;
     } ;
 
   } ;

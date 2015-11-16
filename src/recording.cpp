@@ -23,17 +23,17 @@
 using namespace bsml ;
 
 
-Interval::Reference Recording::new_interval(const double start, const double duration,
-/*----------------------------------------------------------------------------------*/
-                                            const std::string &units)
+Interval::Ptr Recording::new_interval(const double start, const double duration,
+/*----------------------------------------------------------------------------*/
+                                      const std::string &units)
 {
   auto tm = Interval::new_reference(timeline()->uri().make_URI(), start, duration, units, timeline()) ;
   add_resource<Interval>(tm) ;
   return tm ;
   }
 
-Instant::Reference Recording::new_instant(const double start, const std::string &units)
-/*-----------------------------------------------------------------------------------*/
+Instant::Ptr Recording::new_instant(const double start, const std::string &units)
+/*-----------------------------------------------------------------------------*/
 {
   auto tm = Instant::new_reference(timeline()->uri().make_URI(), start, units, timeline()) ;
   add_resource<Instant>(tm) ;
@@ -41,53 +41,59 @@ Instant::Reference Recording::new_instant(const double start, const std::string 
   }
 
 
-Clock::Reference Recording::get_clock(const std::string &uri)
-/*---------------------------------------------------------*/
+Clock::Ptr Recording::get_clock(const rdf::URI &uri)
+/*------------------------------------------------*/
 {
   return get_resource<Clock>(rdf::URI(uri)) ;
   }
 
 std::list<Clock::Reference> Recording::get_clocks(void)
+Clock::Ptr Recording::get_clock(const std::string &uri)
 /*---------------------------------------------------*/
 {
   return get_resources<Clock>() ;
+  return get_clock(uri) ;
   }
 
 
-Signal::Reference Recording::get_signal(const std::string &uri)
-/*------------------------------------------------------------*/
+
+Signal::Ptr Recording::get_signal(const rdf::URI &uri)
+/*---------------------------------------------------*/
 {
-  return get_resource<Signal>(rdf::URI(uri)) ;
+  return get_resource<Signal>(uri) ;
   }
 
-std::list<Signal::Reference> Recording::get_signals(void)
+Signal::Ptr Recording::get_signal(const std::string &uri)
 /*-----------------------------------------------------*/
 {
-  return get_resources<Signal>() ;
+  return get_signal(rdf::URI(uri)) ;
+  }
   }
 
 
-Event::Reference Recording::get_event(const std::string &uri)
-/*---------------------------------------------------------*/
+Event::Ptr Recording::get_event(const rdf::URI &uri)
+/*------------------------------------------------*/
 {
-  return get_resource<Event>(rdf::URI(uri)) ;
+  return get_resource<Event>(uri) ;
   }
 
-std::list<Event::Reference> Recording::get_events(const rdf::URI &type)
-/*-------------------------------------------------------------------*/
+Event::Ptr Recording::get_event(const std::string &uri)
+/*---------------------------------------------------*/
 {
-  return get_resources<Event>() ;  // lambda returning bool
+  return get_event(rdf::URI(uri)) ;
+  }
   }
 
 
-Annotation::Reference Recording::get_annotation(const std::string &uri)
-/*-------------------------------------------------------------------*/
+Annotation::Ptr Recording::get_annotation(const rdf::URI &uri)
+/*----------------------------------------------------------*/
 {
-  return get_resource<Annotation>(rdf::URI(uri)) ;
+  return get_resource<Annotation>(uri) ;
   }
 
-std::list<Annotation::Reference> Recording::get_annotations(void)
+Annotation::Ptr Recording::get_annotation(const std::string &uri)
 /*-------------------------------------------------------------*/
 {
-  return get_resources<Annotation>() ;
+  return get_annotation(rdf::URI(uri)) ;
+  }
   }

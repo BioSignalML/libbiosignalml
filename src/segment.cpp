@@ -23,7 +23,7 @@
 
 bsml::Segment::Segment(const rdf::URI &uri, const rdf::URI &source,
 /*===============================================================*/
-                       bsml::Interval::Reference interval)
+                       bsml::Interval::Ptr interval)
 : Segment(uri)
 {
   set_source(source) ;
