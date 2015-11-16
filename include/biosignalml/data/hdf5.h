@@ -74,9 +74,9 @@ namespace bsml {
 
      public:
       Clock(const rdf::URI &uri, const rdf::URI &units) ;
-      void extend(const double *times, const size_t length) ;
-      std::vector<double> read(size_t pos=0, intmax_t length=-1) ;
       double time(const size_t n) const override ;
+      void extend(const double *times, const size_t length) override ;
+      std::vector<double> read(size_t pos=0, intmax_t length=-1) override ;
 
      private:
       std::shared_ptr<ClockData> m_data ;
@@ -93,9 +93,9 @@ namespace bsml {
 
      public:
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
-      void extend(const double *points, const size_t length) ;
-      data::TimeSeries::Reference read(size_t pos=0, intmax_t length=-1) ;  // Point based
       Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Ptr clock) ;
+      void extend(const double *points, const size_t length) override ;
+      data::TimeSeries::Ptr read(size_t pos=0, intmax_t length=-1) override ;
 
      private:
       std::shared_ptr<SignalData> m_data ;
@@ -134,7 +134,7 @@ namespace bsml {
       Recording(const rdf::URI &uri, const std::string &filename, bool create=false) ;
       Recording(const std::string &filename, bool readonly=false) ;
 
-      void close(void) ;
+      void close(void) override ;
 
       std::list<Clock::Reference> get_clocks(void) ;
       std::list<Signal::Reference> get_signals(void) ;
