@@ -33,7 +33,7 @@ Annotation::Annotation(const rdf::URI &uri, Object::Ptr about, const std::string
   if (text != "") set_comment(text) ;
   for (auto const &t : tags) add_tags(t) ;
 
-  if (predecessor.is_valid()) set_precededBy(predecessor.uri()) ;
+  if (predecessor && predecessor->is_valid()) set_precededBy(predecessor->uri()) ;
   }
 
 TemporalEntity::Ptr Annotation::time(void) const
