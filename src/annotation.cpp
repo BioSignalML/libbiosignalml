@@ -39,7 +39,7 @@ Annotation::Annotation(const rdf::URI &uri, Object::Ptr about, const std::string
 TemporalEntity::Ptr Annotation::time(void) const
 /*--------------------------------------------*/
 {
-  if (type() == BSML::Segment)
-    return *std::static_pointer_cast<Segment>(about())->time() ;
-  return *annotation_time() ;
+  if (about() && about()->rdf_type() == BSML::Segment)
+    return std::static_pointer_cast<Segment>(about())->time() ;
+  return annotation_time() ;  // This may not be valid...
   }
