@@ -69,13 +69,47 @@ namespace bsml {
     Interval::Ptr new_interval(const double start, const double duration, const std::string & units = "second") ;
     Instant::Ptr new_instant(const double start, const std::string & units = "second") ;
 
-    Clock::Ptr get_clock(const rdf::URI &uri) ;
-    Clock::Ptr get_clock(const std::string &uri) ;
-    virtual std::list<rdf::URI> get_clock_uris(void) ;
+    template<typename CLOCK=Clock>
+    std::list<rdf::URI> get_clock_uris(void)
+    /*------------------------------------*/
+    {
+      return get_resource_uris<CLOCK>() ;
+      }
 
-    virtual Signal::Ptr get_signal(const rdf::URI &uri) ;
-    virtual Signal::Ptr get_signal(const std::string &uri) ;
-    virtual std::list<rdf::URI> get_signal_uris(void) ;
+    template<typename CLOCK=Clock>
+    typename CLOCK::Ptr get_clock(const rdf::URI &uri)
+    /*----------------------------------------------*/
+    {
+      return get_resource<CLOCK>(rdf::URI(uri)) ;
+      }
+
+    template<typename CLOCK=Clock>
+    typename CLOCK::Ptr get_clock(const std::string &uri)
+    /*-------------------------------------------------*/
+    {
+      return get_clock<CLOCK>(uri) ;
+      }
+
+    template<typename SIGNAL=Signal>
+    std::list<rdf::URI> get_signal_uris(void)
+    /*-------------------------------------*/
+    {
+      return get_resource_uris<SIGNAL>() ;
+      }
+
+    template<typename SIGNAL=Signal>
+    typename SIGNAL::Ptr get_signal(const rdf::URI &uri)
+    /*------------------------------------------------*/
+    {
+      return get_resource<SIGNAL>(uri) ;
+      }
+
+    template<typename SIGNAL=Signal>
+    typename SIGNAL::Ptr get_signal(const std::string &uri)
+    /*---------------------------------------------------*/
+    {
+      return get_signal<SIGNAL>(rdf::URI(uri)) ;
+      }
 
     Event::Ptr get_event(const rdf::URI &uri) ;
     Event::Ptr get_event(const std::string &uri) ;

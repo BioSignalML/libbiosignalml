@@ -175,10 +175,16 @@ void HDF5::Recording::close(void)
   }
 
 
+std::list<rdf::URI> HDF5::Recording::get_clock_uris(void)
+/*-----------------------------------------------------*/
+{
+  return bsml::Recording::get_clock_uris<HDF5::Clock>() ;
+  }
+
 HDF5::Clock::Ptr HDF5::Recording::get_clock(const rdf::URI &uri)
 /*------------------------------------------------------------*/
 {
-  auto clk = get_resource<HDF5::Clock>(uri) ;
+  auto clk = bsml::Recording::get_clock<HDF5::Clock>(uri) ;
   if (clk) return clk ;
   else throw HDF5::Exception("Unknown signal '" + uri.to_string() + "' in recording") ;
   }
@@ -189,17 +195,17 @@ HDF5::Clock::Ptr HDF5::Recording::get_clock(const std::string &uri)
   return get_clock(rdf::URI(uri)) ;
   }
 
-std::list<rdf::URI> HDF5::Recording::get_clock_uris(void)
-/*-----------------------------------------------------*/
-{
-  return get_resource_uris<HDF5::Clock>() ;
-  }
 
+std::list<rdf::URI> HDF5::Recording::get_signal_uris(void)
+/*------------------------------------------------------*/
+{
+  return bsml::Recording::get_signal_uris<HDF5::Signal>() ;
+  }
 
 HDF5::Signal::Ptr HDF5::Recording::get_signal(const rdf::URI &uri)
 /*--------------------------------------------------------------*/
 {
-  auto sig = get_resource<HDF5::Signal>(uri) ;
+  auto sig = bsml::Recording::get_signal<HDF5::Signal>(uri) ;
   if (sig) return sig ;
   else throw HDF5::Exception("Unknown signal '" + uri.to_string() + "' in recording") ;
   }
@@ -208,12 +214,6 @@ HDF5::Signal::Ptr HDF5::Recording::get_signal(const std::string &uri)
 /*-----------------------------------------------------------------*/
 {
   return get_signal(rdf::URI(uri)) ;
-  }
-
-std::list<rdf::URI> HDF5::Recording::get_signal_uris(void)
-/*------------------------------------------------------*/
-{
-  return get_resource_uris<HDF5::Signal>() ;
   }
 
 

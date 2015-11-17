@@ -45,44 +45,6 @@ Instant::Ptr Recording::new_instant(const double start, const std::string &units
   }
 
 
-Clock::Ptr Recording::get_clock(const rdf::URI &uri)
-/*------------------------------------------------*/
-{
-  return get_resource<Clock>(rdf::URI(uri)) ;
-  }
-
-Clock::Ptr Recording::get_clock(const std::string &uri)
-/*---------------------------------------------------*/
-{
-  return get_clock(uri) ;
-  }
-
-std::list<rdf::URI> Recording::get_clock_uris(void)
-/*-----------------------------------------------*/
-{
-  return get_resource_uris<Clock>() ;
-  }
-
-
-Signal::Ptr Recording::get_signal(const rdf::URI &uri)
-/*---------------------------------------------------*/
-{
-  return get_resource<Signal>(uri) ;
-  }
-
-Signal::Ptr Recording::get_signal(const std::string &uri)
-/*-----------------------------------------------------*/
-{
-  return get_signal(rdf::URI(uri)) ;
-  }
-
-std::list<rdf::URI> Recording::get_signal_uris(void)
-/*------------------------------------------------*/
-{
-  return get_resource_uris<Signal>() ;
-  }
-
-
 Event::Ptr Recording::get_event(const rdf::URI &uri)
 /*------------------------------------------------*/
 {
