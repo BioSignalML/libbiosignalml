@@ -132,21 +132,26 @@ HDF5::Recording::Recording(const std::string &filename, bool readonly)
   m_readonly = readonly ;
 
   this->set_uri(rdf::URI(m_file->get_uri())) ;
+  this->m_base = uri().to_string() + "/" ;
 
   auto metadata = m_file->get_metadata() ;
-  rdf::Graph graph ;
-  graph.parse_string(metadata.first, rdf::Graph::mimetype_to_format(metadata.second)) ;
+  m_graph = rdf::Graph::create(uri()) ;
+  m_graph->parse_string(metadata.first, rdf::Graph::mimetype_to_format(metadata.second)) ;
+  this->template add_metadata<HDF5::Recording>(m_graph) ;
 
-  this->add_metadata(graph) ;
-  for (auto const & c : get_clocks()) {
+  for (auto const & u : get_clock_uris()) {
+    auto c = get_clock(u) ;
     c->m_data = m_file->get_clock(c->uri().to_string()) ;
     datasets.insert(c->m_data) ;
     }
-  for (auto const & s : get_signals()) {
+  for (auto const & u : get_signal_uris()) {
+    auto s = get_signal(u) ;
     s->m_data = m_file->get_signal(s->uri().to_string()) ;
     datasets.insert(s->m_data) ;
-    if (s->clock()) {
-      s->clock()->m_data = m_file->get_clock(s->clock()->uri().to_string()) ;
+    auto clk = s->clock() ;
+    if (s->rate() <= 0) {
+      if (clk && clk->is_valid()) clk->m_data = m_file->get_clock(clk->uri().to_string()) ;
+      else throw HDF5::Exception("Signal with no rate doesn't have a clock") ;
       }
     }
   }
