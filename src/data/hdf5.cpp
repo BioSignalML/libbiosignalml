@@ -178,7 +178,9 @@ void HDF5::Recording::close(void)
 HDF5::Clock::Ptr HDF5::Recording::get_clock(const rdf::URI &uri)
 /*------------------------------------------------------------*/
 {
-  return get_resource<HDF5::Clock>(rdf::URI(uri)) ;
+  auto clk = get_resource<HDF5::Clock>(uri) ;
+  if (clk) return clk ;
+  else throw HDF5::Exception("Unknown signal '" + uri.to_string() + "' in recording") ;
   }
 
 HDF5::Clock::Ptr HDF5::Recording::get_clock(const std::string &uri)
@@ -197,7 +199,9 @@ std::list<rdf::URI> HDF5::Recording::get_clock_uris(void)
 HDF5::Signal::Ptr HDF5::Recording::get_signal(const rdf::URI &uri)
 /*--------------------------------------------------------------*/
 {
-  return get_resource<HDF5::Signal>(rdf::URI(uri)) ;
+  auto sig = get_resource<HDF5::Signal>(uri) ;
+  if (sig) return sig ;
+  else throw HDF5::Exception("Unknown signal '" + uri.to_string() + "' in recording") ;
   }
 
 HDF5::Signal::Ptr HDF5::Recording::get_signal(const std::string &uri)
