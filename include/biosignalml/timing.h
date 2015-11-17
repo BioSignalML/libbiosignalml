@@ -73,6 +73,8 @@ namespace bsml {
     TYPED_OBJECT(Instant, BSML::Instant)
 
     ASSIGN_DURATION(start, TL::at)
+
+   public:
     Instant(const rdf::URI &uri, const double start, const std::string & units = "second",
             RelativeTimeLine::Ptr timeline=nullptr) ;
 
