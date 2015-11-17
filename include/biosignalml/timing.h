@@ -95,8 +95,8 @@ namespace bsml {
 
     virtual double time(const size_t n) const ;
     virtual void extend(const double *times, const size_t length) ;
+    virtual std::vector<double> read(size_t pos=0, intmax_t length=-1) ;
     void extend(const std::vector<double> &points) ;
-    std::vector<double> read(size_t pos=0, intmax_t length=-1) ;
     } ;
 
   } ;

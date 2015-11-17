@@ -95,6 +95,7 @@ namespace bsml {
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
       Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Ptr clock) ;
       void extend(const double *points, const size_t length) override ;
+      data::TimeSeries::Ptr read(Interval::Ptr interval, intmax_t maxpoints=-1) override ;
       data::TimeSeries::Ptr read(size_t pos=0, intmax_t length=-1) override ;
 
      private:
