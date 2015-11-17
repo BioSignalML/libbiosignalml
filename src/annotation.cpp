@@ -24,8 +24,8 @@
 using namespace bsml ;
 
 
-Annotation::Annotation(const rdf::URI &uri, Object::Ptr about, const std::string &text,
-/*-----------------------------------------------------------------------------------*/
+Annotation::Annotation(const rdf::URI &uri, Resource::Ptr about, const std::string &text,
+/*-------------------------------------------------------------------------------------*/
                        const std::set<rdf::Node> &tags, const Annotation::Ptr &predecessor)
 : Annotation(uri)
 {

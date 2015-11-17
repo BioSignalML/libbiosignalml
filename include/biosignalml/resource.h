@@ -18,8 +18,8 @@
  *                                                                            *
  ******************************************************************************/
 
-#ifndef BSML_OBJECT_H
-#define BSML_OBJECT_H
+#ifndef BSML_RESOURCE_H
+#define BSML_RESOURCE_H
 
 #include <biosignalml/biosignalml_export.h>
 #include <biosignalml/ontology.h>
@@ -33,10 +33,10 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Object : public tobj::TypedObject
-  /*------------------------------------------------------*/
+  class BIOSIGNALML_EXPORT Resource : public tobj::TypedObject
+  /*--------------------------------------------------------*/
   {
-    TYPED_OBJECT(Object, OWL::Object)
+    TYPED_OBJECT(Resource, OWL::Object)
 
     // Generic attributes all resources have:
     // http://dublincore.org/documents/dc-rdf/

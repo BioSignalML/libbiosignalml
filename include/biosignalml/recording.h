@@ -27,7 +27,7 @@
 #include <biosignalml/annotation.h>
 #include <biosignalml/segment.h>
 #include <biosignalml/timing.h>
-#include <biosignalml/object.h>
+#include <biosignalml/resource.h>
 
 #include <string>
 #include <vector>
@@ -39,8 +39,9 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Recording : public Object
-  /*----------------------------------------------*/
+//  template<typename SIGNAL=bsml::Signal, typename CLOCK=bsml::Clock>
+  class BIOSIGNALML_EXPORT Recording : public Resource
+  /*------------------------------------------------*/
   {
     TYPED_OBJECT(Recording, BSML::Recording)
 

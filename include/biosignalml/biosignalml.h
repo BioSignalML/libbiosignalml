@@ -23,7 +23,7 @@
 
 #include <biosignalml/ontology.h>
 #include <biosignalml/formats.h>
-#include <biosignalml/object.h>
+#include <biosignalml/resource.h>
 #include <biosignalml/timing.h>
 #include <biosignalml/signal.h>
 #include <biosignalml/event.h>

@@ -23,7 +23,7 @@
 
 #include <biosignalml/biosignalml_export.h>
 #include <biosignalml/timing.h>
-#include <biosignalml/object.h>
+#include <biosignalml/resource.h>
 #include <biosignalml/data/timeseries.h>
 
 #include <string>
@@ -34,8 +34,8 @@ using namespace rdf ;
 
 namespace bsml {
 
-  class BIOSIGNALML_EXPORT Signal : public Object
-  /*-------------------------------------------*/
+  class BIOSIGNALML_EXPORT Signal : public Resource
+  /*---------------------------------------------*/
   {
     TYPED_OBJECT(Signal, BSML::Signal)
     PROPERTY_URI(recording, BSML::recording)

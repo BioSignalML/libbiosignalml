@@ -31,7 +31,7 @@ set(LIBRARIES ${typedobject_LIBRARY})
 
 include(${typedobject_DIR}/typedobject_generate.cmake)
 
-set(HEADERS ${CMAKE_SOURCE_DIR}/include/biosignalml/object.h
+set(HEADERS ${CMAKE_SOURCE_DIR}/include/biosignalml/resource.h
             ${CMAKE_SOURCE_DIR}/include/biosignalml/recording.h
             ${CMAKE_SOURCE_DIR}/include/biosignalml/signal.h
             ${CMAKE_SOURCE_DIR}/include/biosignalml/segment.h
