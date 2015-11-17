@@ -113,4 +113,28 @@ Annotation::Ptr Recording::get_annotation(const std::string &uri)
 {
   return get_annotation(rdf::URI(uri)) ;
   }
+
+std::list<rdf::URI> Recording::get_annotation_uris(void)
+/*----------------------------------------------------*/
+{
+  auto result = std::list<rdf::URI>{} ;
+  auto stmnt = m_graph->get_statements(rdf::Node(), rdf::RDF::type, bsml::BSML::Annotation) ;
+  if (!stmnt.end()) {
+    do {
+      auto ann_node = stmnt.get_subject() ;
+      if (!m_graph->contains(rdf::Node(), rdf::PRV::precededBy, ann_node)) {
+        auto subj = m_graph->get_statements(ann_node, rdf::DCT::subject, rdf::Node()) ;
+        if (!subj.end()) {
+          auto subject = subj.get_object() ;
+          if (subject == uri()
+           || (m_graph->contains(subject, rdf::RDF::type, bsml::BSML::Segment)
+            && m_graph->contains(subject, rdf::DCT::source, uri()))
+           || (m_graph->contains(subject, rdf::RDF::type, bsml::BSML::Signal)
+            && m_graph->contains(subject, bsml::BSML::recording, uri()))
+              ) result.push_back(rdf::URI(ann_node)) ;
+          }
+        }
+      } while (!stmnt.next()) ;
+    }
+  return result ;
   }
