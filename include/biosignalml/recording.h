@@ -64,6 +64,8 @@ namespace bsml {
     RESOURCE(DCT::subject,    Annotation)
 
    public:
+    virtual void close(void) { }
+
     Interval::Ptr new_interval(const double start, const double duration, const std::string & units = "second") ;
     Instant::Ptr new_instant(const double start, const std::string & units = "second") ;
 
