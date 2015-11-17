@@ -30,7 +30,7 @@ using namespace bsml ;
 
 
 HDF5::Clock::Clock(const rdf::URI &uri, const rdf::URI &units)
-/*----------------------------------------------------------*/
+/*==========================================================*/
 : HDF5::Clock(uri)
 {
   this->set_units(units) ;
@@ -57,7 +57,7 @@ std::vector<double> HDF5::Clock::read(size_t pos, intmax_t length)
 
 
 HDF5::Signal::Signal(const rdf::URI &uri, const rdf::URI &units, double rate)
-/*-------------------------------------------------------------------------*/
+/*=========================================================================*/
 : HDF5::Signal(uri)
 {
   this->set_units(units) ;  // bsml::Units::get_units_uri(const rdf::URI &u)

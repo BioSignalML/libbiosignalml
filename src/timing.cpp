@@ -44,7 +44,7 @@ Instant::Instant(const rdf::URI &uri, const double start, const std::string &uni
 
 
 Clock::Clock(const rdf::URI &uri, const rdf::URI &units)
-/*----------------------------------------------------*/
+/*====================================================*/
 : Clock(uri)
 {
   set_units(units) ;   // Units::get_units_uri(const std::string &u)

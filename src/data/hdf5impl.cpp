@@ -66,7 +66,6 @@ HDF5::Dataset::Dataset()
   }
 
 
-
 // Check that the HDF5 dataset (given by `dataref`) has the given `uri` and if
 // an array, set `m_index` to the index of the uri in the array.
 HDF5::Dataset::Dataset(const std::string &uri, const HDF5::DatasetRef &dataref)
@@ -781,7 +780,7 @@ HDF5::SignalData::Ptr HDF5::File::get_signal(const std::string &uri)
 
 
 static herr_t save_signal(hid_t id, const char *name, void *op_data)
-/*---------------------------------------------------------------*/
+/*----------------------------------------------------------------*/
 {
   SaveInfo *info = (SaveInfo *)op_data ;
   std::list<HDF5::SignalData::Ptr> &sig
@@ -841,7 +840,8 @@ HDF5::ClockData::Ptr HDF5::File::get_clock(const std::string &uri)
 //:return: A :class:`HDF5::ClockData` or None if the URI is unknown or
 //         the dataset is not that for a clock.
   HDF5::DatasetRef dataref = get_dataref(uri, "/recording/clock/") ;
-  if (!dataref.valid()) throw HDF5::Exception("Cannot find clock: " + uri) ;
+  if (!dataref.valid())
+     throw HDF5::Exception("Cannot find clock: " + uri) ;
   return HDF5::ClockData::get_clock(uri, dataref) ;
   }
 
