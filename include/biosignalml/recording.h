@@ -114,8 +114,8 @@ namespace bsml {
 
    protected:
     std::string m_base ;
-    INITIALISE(                                 \
-      m_base = this->uri().to_string() + "/" ;  \
+    INITIALISE(                                                                 \
+      m_base = this->uri().is_valid() ? (this->uri().to_string() + "/") : "" ;  \
       )
 
    private:
