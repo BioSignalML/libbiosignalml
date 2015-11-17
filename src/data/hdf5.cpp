@@ -159,7 +159,7 @@ void HDF5::Recording::close(void)
     if (!m_readonly) {
       rdf::Graph::Format format = rdf::Graph::Format::TURTLE ;
 // Prefixes are duplicated in file...  (serd bug ??)
-      m_file->store_metadata(serialise_metadata(format, m_base),
+      m_file->store_metadata(serialise_metadata(format, m_base, true),
                              rdf::Graph::format_to_mimetype(format)) ;
       }
     for (auto ds : datasets) ds->close() ;
