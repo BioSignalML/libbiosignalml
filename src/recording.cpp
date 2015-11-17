@@ -27,7 +27,9 @@ Interval::Ptr Recording::new_interval(const double start, const double duration,
 /*----------------------------------------------------------------------------*/
                                       const std::string &units)
 {
-  auto tm = Interval::new_reference(timeline()->uri().make_URI(), start, duration, units, timeline()) ;
+  rdf::URI u = timeline() && timeline()->is_valid() ? timeline()->uri().make_URI()
+                                                    : uri().make_URI() ;
+  auto tm = Interval::create(u, start, duration, units, timeline()) ;
   add_resource<Interval>(tm) ;
   return tm ;
   }
@@ -35,7 +37,9 @@ Interval::Ptr Recording::new_interval(const double start, const double duration,
 Instant::Ptr Recording::new_instant(const double start, const std::string &units)
 /*-----------------------------------------------------------------------------*/
 {
-  auto tm = Instant::new_reference(timeline()->uri().make_URI(), start, units, timeline()) ;
+  rdf::URI u = timeline() && timeline()->is_valid() ? timeline()->uri().make_URI()
+                                                    : uri().make_URI() ;
+  auto tm = Instant::create(u, start, units, timeline()) ;
   add_resource<Instant>(tm) ;
   return tm ;
   }
