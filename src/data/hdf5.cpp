@@ -171,14 +171,17 @@ HDF5::Clock::Ptr HDF5::Recording::get_clock(const rdf::URI &uri)
   return get_resource<HDF5::Clock>(rdf::URI(uri)) ;
   }
 
-std::list<HDF5::Clock::Reference> HDF5::Recording::get_clocks(void)
 HDF5::Clock::Ptr HDF5::Recording::get_clock(const std::string &uri)
 /*---------------------------------------------------------------*/
 {
-  return get_resources<HDF5::Clock>() ;
   return get_clock(rdf::URI(uri)) ;
   }
 
+std::list<rdf::URI> HDF5::Recording::get_clock_uris(void)
+/*-----------------------------------------------------*/
+{
+  return get_resource_uris<HDF5::Clock>() ;
+  }
 
 
 HDF5::Signal::Ptr HDF5::Recording::get_signal(const rdf::URI &uri)
@@ -187,14 +190,16 @@ HDF5::Signal::Ptr HDF5::Recording::get_signal(const rdf::URI &uri)
   return get_resource<HDF5::Signal>(rdf::URI(uri)) ;
   }
 
-std::list<HDF5::Signal::Reference> HDF5::Recording::get_signals(void)
 HDF5::Signal::Ptr HDF5::Recording::get_signal(const std::string &uri)
 /*-----------------------------------------------------------------*/
 {
-  return get_resources<HDF5::Signal>() ;
   return get_signal(rdf::URI(uri)) ;
   }
 
+std::list<rdf::URI> HDF5::Recording::get_signal_uris(void)
+/*------------------------------------------------------*/
+{
+  return get_resource_uris<HDF5::Signal>() ;
   }
 
 

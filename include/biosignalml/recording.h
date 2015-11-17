@@ -67,21 +67,21 @@ namespace bsml {
     Interval::Ptr new_interval(const double start, const double duration, const std::string & units = "second") ;
     Instant::Ptr new_instant(const double start, const std::string & units = "second") ;
 
-    std::list<Clock::Reference> get_clocks(void) ;
     Clock::Ptr get_clock(const rdf::URI &uri) ;
     Clock::Ptr get_clock(const std::string &uri) ;
+    virtual std::list<rdf::URI> get_clock_uris(void) ;
 
-    std::list<Signal::Reference> get_signals(void) ;
     virtual Signal::Ptr get_signal(const rdf::URI &uri) ;
     virtual Signal::Ptr get_signal(const std::string &uri) ;
+    virtual std::list<rdf::URI> get_signal_uris(void) ;
 
-    std::list<Event::Reference> get_events(const rdf::URI &type=rdf::URI()) ;
     Event::Ptr get_event(const rdf::URI &uri) ;
     Event::Ptr get_event(const std::string &uri) ;
+    std::list<rdf::URI> get_event_uris(const rdf::URI &type=rdf::URI()) ;
 
-    std::list<Annotation::Reference> get_annotations(void) ;
     Annotation::Ptr get_annotation(const rdf::URI &uri) ;
     Annotation::Ptr get_annotation(const std::string &uri) ;
+    std::list<rdf::URI> get_annotation_uris(void) ;
 
     template<class CLOCK_TYPE=Clock>
     typename CLOCK_TYPE::Ptr new_clock(const std::string &uri, const rdf::URI &units)

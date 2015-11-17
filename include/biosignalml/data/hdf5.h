@@ -136,13 +136,14 @@ namespace bsml {
 
       void close(void) override ;
 
-      std::list<Clock::Reference> get_clocks(void) ;
-      std::list<Signal::Reference> get_signals(void) ;
       Clock::Ptr get_clock(const rdf::URI &uri) ;
       Clock::Ptr get_clock(const std::string &uri) ;
+      std::list<rdf::URI> get_clock_uris(void) override ;
 
       Signal::Ptr get_signal(const rdf::URI &uri) override ;
       Signal::Ptr get_signal(const std::string &uri) override ;
+      std::list<rdf::URI> get_signal_uris(void) override ;
+
       Clock::Ptr new_clock(const std::string &uri, const rdf::URI &units,
                                  double *times = nullptr, size_t datasize=0) ;
 

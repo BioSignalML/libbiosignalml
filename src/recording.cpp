@@ -47,14 +47,17 @@ Clock::Ptr Recording::get_clock(const rdf::URI &uri)
   return get_resource<Clock>(rdf::URI(uri)) ;
   }
 
-std::list<Clock::Reference> Recording::get_clocks(void)
 Clock::Ptr Recording::get_clock(const std::string &uri)
 /*---------------------------------------------------*/
 {
-  return get_resources<Clock>() ;
   return get_clock(uri) ;
   }
 
+std::list<rdf::URI> Recording::get_clock_uris(void)
+/*-----------------------------------------------*/
+{
+  return get_resource_uris<Clock>() ;
+  }
 
 
 Signal::Ptr Recording::get_signal(const rdf::URI &uri)
@@ -68,6 +71,11 @@ Signal::Ptr Recording::get_signal(const std::string &uri)
 {
   return get_signal(rdf::URI(uri)) ;
   }
+
+std::list<rdf::URI> Recording::get_signal_uris(void)
+/*------------------------------------------------*/
+{
+  return get_resource_uris<Signal>() ;
   }
 
 
@@ -82,6 +90,11 @@ Event::Ptr Recording::get_event(const std::string &uri)
 {
   return get_event(rdf::URI(uri)) ;
   }
+
+std::list<rdf::URI> Recording::get_event_uris(const rdf::URI &type)
+/*---------------------------------------------------------------*/
+{
+  return get_resource_uris<Event>() ;  // lambda returning bool
   }
 
 
