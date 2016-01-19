@@ -34,8 +34,6 @@
 #include <cassert>
 #include <list>
 
-using namespace rdf ;
-
 
 namespace bsml {
 
@@ -45,17 +43,8 @@ namespace bsml {
   {
     TYPED_OBJECT(Recording, BSML::Recording)
 
-    PROPERTY_NODE(format, DCT::format)
+    PROPERTY_NODE(format, rdf::DCT::format)
     PROPERTY_NODE(dataset, BSML::dataset)
-    PROPERTY_NODE_SET(source, DCT::source)
-
-    PROPERTY_NODE(investigation, DCT::subject)
-    PROPERTY_NODE(investigator, DCT::creator)  // Also Object::creator
-    PROPERTY_DATETIME(starttime, DCT::created) // Also Object::created
-    PROPERTY_DURATION(duration, DCT::extent)
-
-    PROPERTY_OBJECT(timeline, TL::timeline, RelativeTimeLine)
-    PROPERTY_NODE(generatedBy, PROV::wasGeneratedBy)  // SUBELEMENT/AOBJECT ??
 
     // Other reources that directly reference a Recording
     RESOURCE(BSML::recording, Clock)
@@ -63,7 +52,17 @@ namespace bsml {
     RESOURCE(BSML::recording, Event)
     RESOURCE(DCT::source,     Segment)
     RESOURCE(DCT::subject,    Annotation)
+    PROPERTY_NODE_SET(source, rdf::DCT::source)
 
+    PROPERTY_NODE(investigation, rdf::DCT::subject)
+    PROPERTY_NODE(investigator, rdf::DCT::creator)  // Also Resource::creator
+    PROPERTY_DATETIME(starttime, rdf::DCT::created) // Also Resource::created
+    PROPERTY_DURATION(duration, rdf::DCT::extent)
+
+    PROPERTY_OBJECT(timeline, rdf::TL::timeline, RelativeTimeLine)
+
+//    PROPERTY_OBJECT(generatedBy, rdf::PROV::wasGeneratedBy, Provenace class...)
+    PROPERTY_URI(generatedBy, rdf::PROV::wasGeneratedBy)   // TODO...
    public:
     virtual void close(void) { }
 

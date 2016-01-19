@@ -29,8 +29,6 @@
 #include <string>
 #include <vector>
 
-using namespace rdf ;
-
 
 namespace bsml {
 
@@ -52,7 +50,7 @@ namespace bsml {
     PROPERTY_INTEGER(dataBits, BSML::dataBits)
     PROPERTY_NODE(signaltype, BSML::signalType)
     PROPERTY_DURATION(offset, BSML::offset)
-    PROPERTY_DURATION(duration, DCT::extent)
+    PROPERTY_DURATION(duration, rdf::DCT::extent)
 
    public:
     Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
