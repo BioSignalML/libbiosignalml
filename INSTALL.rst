@@ -1,28 +1,39 @@
 Dependencies
-------------
+============
 
-OS/X
-~~~~
 
-* brew install --with-cxx --c++11 hdf5
+HDF5
+----
+
+Use CMake build from https://www.hdfgroup.org/HDF5/release/cmakebuild.html
 
 
 Windows
 ~~~~~~~
 
-set HDF5_DIR=c:/Program Files/HDF_Group/HDF5/1.8.14/cmake/hdf5
+Build with: ::
 
-??? set HDF5_ROOT=c:/Program Files/HDF_Group/HDF5/1.8.14/cmake/hdf5
+  ctest -S HDF518config.cmake,BUILD_GENERATOR=VS201364,INSTALLDIR=C:\usr\local ^
+        -C Release -V -O hdf518.log
+
+Then run installer and set `HDF5_DIR` environment variable to location of
+installed CMake files. e.g: ::
+
+  set HDF5_DIR=c:/Program Files/HDF_Group/HDF5/1.8.16/cmake
 
 
+OS/X and Ubuntu
+~~~~~~~~~~~~~~~
 
-Linux
-~~~~~
+Build with: ::
 
-HDF5 static libraries must be built with `-fPIC`.
+  ctest -S HDF518config.cmake,BUILD_GENERATOR=Unix,INSTALLDIR=/usr/local \
+        -C Release -V -O hdf518.log
 
+and after installation: ::
 
-export HDF5_ROOT=/usr/local/HDF_Group/HDF5/1.8.15/
+  export HDF5_DIR=/usr/local/share/cmake/
 
-# To find SZIP configuration
-export CMAKE_PREFIX_PATH=/usr/local/share/cmake
+The `szip` and `zlib` static libraries and CMake files must be manually copied
+if HDF5 is then installed by running `make install` from the build directory;
+they though are in the created `.tar.gz` archives.
