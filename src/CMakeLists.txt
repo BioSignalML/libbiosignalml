@@ -1,4 +1,4 @@
-set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/object.cpp
+set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resource.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/recording.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/signal.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/segment.cpp
