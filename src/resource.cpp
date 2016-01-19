@@ -18,4 +18,4 @@
  *                                                                            *
  ******************************************************************************/
 
-#include <biosignalml/object.h>
+#include <biosignalml/resource.h>
