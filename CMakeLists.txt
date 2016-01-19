@@ -12,7 +12,6 @@ endif()
 include(CPack)
 
 ### CMake helpers...
-include(GenerateExportHeader)
 include(CMakePackageConfigHelpers)
 
 if (UNIX)
