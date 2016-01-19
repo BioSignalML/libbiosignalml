@@ -9,4 +9,4 @@ endif (NOT WIN32)
 
 set(biosignalml_INCLUDE_DIR "${_IMPORT_PREFIX}/include")
 set(biosignalml_LIBRARY_DIR "${_IMPORT_PREFIX}/lib")
-find_library(biosignalml_LIBRARY biosignalml PATHS ${biosignalml_LIBRARY_DIR})
+find_library(biosignalml_LIBRARY biosignalmlt@CMAKE_DEBUG_POSTFIX@ PATHS ${biosignalml_LIBRARY_DIR})

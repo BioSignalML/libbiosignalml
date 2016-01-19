@@ -23,6 +23,13 @@ elseif(WIN32)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS -wd4251)
 endif()
 
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+  message(STATUS "Building DEBUG version")
+  set(CMAKE_DEBUG_POSTFIX _d)
+else()
+  message(STATUS "Building RELEASE version")
+endif()
+
 set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
 
 FIND_PACKAGE(typedobject REQUIRED)
@@ -92,7 +99,7 @@ export(EXPORT biosignalmlTargets
   )
 configure_file(cmake/biosignalmlConfig.cmake
   "${CMAKE_CURRENT_BINARY_DIR}/biosignalml/biosignalmlConfig.cmake"
-  COPYONLY
+  @ONLY
   )
 
 if(WIN32)
@@ -112,7 +119,7 @@ install(EXPORT biosignalmlTargets
 
 install(
   FILES
-    cmake/biosignalmlConfig.cmake
+    "${CMAKE_CURRENT_BINARY_DIR}/biosignalml/biosignalmlConfig.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/biosignalml/biosignalmlConfigVersion.cmake"
   DESTINATION
     ${ConfigPackageLocation}
