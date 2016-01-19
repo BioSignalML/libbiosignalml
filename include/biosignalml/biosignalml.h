@@ -21,6 +21,8 @@
 #ifndef BIOSIGNALML_H
 #define BIOSIGNALML_H
 
+#include <string>
+
 namespace bsml
 /*==========*/
 {
