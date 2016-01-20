@@ -45,13 +45,6 @@ namespace bsml {
 
     PROPERTY_NODE(format, rdf::DCT::format)
     PROPERTY_NODE(dataset, BSML::dataset)
-
-    // Other reources that directly reference a Recording
-    RESOURCE(BSML::recording, Clock)
-    RESOURCE(BSML::recording, Signal)
-    RESOURCE(BSML::recording, Event)
-    RESOURCE(DCT::source,     Segment)
-    RESOURCE(DCT::subject,    Annotation)
     PROPERTY_NODE_SET(source, rdf::DCT::source)
 
     PROPERTY_NODE(investigation, rdf::DCT::subject)
@@ -63,6 +56,17 @@ namespace bsml {
 
 //    PROPERTY_OBJECT(generatedBy, rdf::PROV::wasGeneratedBy, Provenace class...)
     PROPERTY_URI(generatedBy, rdf::PROV::wasGeneratedBy)   // TODO...
+
+    // Other reources that directly refer to a Recording
+//    RESOURCE(BSML::recording,  Clock)    // The type of these must change to HDF5::Clock etc
+//    RESOURCE(BSML::recording,  Signal)
+//    RESOURCE(BSML::recording,  Event)
+//    RESOURCE(rdf::DCT::source, Segment)
+
+// What we want are ALL bsml::Annotation resources in recording's Graph
+//    RESOURCE(bsml::Annotation) // Is this enough to get C++ type??,    Annotation)
+//    RESOURCE(rdf::DCT::subject,    Annotation)
+
    public:
     virtual void close(void) { }
 
