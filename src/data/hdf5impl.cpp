@@ -998,17 +998,18 @@ HDF5::SignalData::Ptr HDF5::SignalData::get_signal(const std::string &uri, const
 /*-------------------------------------------------------------------------------------------------------*/
 {
   H5::DataSet dset = dataref.first ;
-  H5::StrType varstr(H5::PredType::C_S1, H5T_VARIABLE) ;
-
-  std::string units ;
+//  H5::StrType varstr(H5::PredType::C_S1, H5T_VARIABLE) ;
+// TODO...
+//  std::string units ;
   double rate = 0.0 ;
-
   try {
-    H5::Attribute attr = dset.openAttribute("units") ;
-    attr.read(varstr, units) ;
-    attr.close() ;
+//    H5::Attribute attr = dset.openAttribute("units") ;  // This could be an array...
+////std::cout << "reading attr" << std::endl ;
+//    attr.read(varstr, units) ;
+////std::cout << "read units attr" << std::endl ;
+//    attr.close() ;
 
-    attr = dset.openAttribute("rate") ;
+    H5::Attribute attr = dset.openAttribute("rate") ;
     attr.read(H5::PredType::NATIVE_DOUBLE, &rate) ;
     attr.close() ;
     }
