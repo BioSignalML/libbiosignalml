@@ -51,6 +51,7 @@ namespace bsml {
     class SignalData ;  // Declare forward
 
     class Recording ;   // VS2013 needs class visible for friendship...
+    class Signal ;      // VS2013 needs class visible for friendship...
 
     class IOError : public data::Exception
     /*----------------------------------*/
