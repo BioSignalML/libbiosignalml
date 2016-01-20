@@ -800,7 +800,7 @@ static herr_t save_signal(hid_t id, const char *name, void *op_data)
       sig.push_back(HDF5::SignalData::get_signal(uri, dataref)) ;
       }
     else if (nsignals > 1) {
-      char *uris[nsignals] ;
+      char **uris = (char **)calloc(nsignals, sizeof(char *)) ;
       attr.read(varstr, uris) ;
       int n = 0 ;
       while (n < nsignals) {
@@ -808,6 +808,7 @@ static herr_t save_signal(hid_t id, const char *name, void *op_data)
         free(uris[n]) ;
         ++n ;
         }
+      free(uris) ;
       }
     }
   catch (H5::FileIException e) { }
