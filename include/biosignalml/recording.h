@@ -58,8 +58,8 @@ namespace bsml {
     PROPERTY_URI(generatedBy, rdf::PROV::wasGeneratedBy)   // TODO...
 
     // Other reources that directly refer to a Recording
-//    RESOURCE(BSML::recording,  Clock)    // The type of these must change to HDF5::Clock etc
-//    RESOURCE(BSML::recording,  Signal)
+      RESOURCE(BSML::recording,  Clock)    // The type of these must change to HDF5::Clock etc
+      RESOURCE(BSML::recording,  Signal)
 //    RESOURCE(BSML::recording,  Event)
 //    RESOURCE(rdf::DCT::source, Segment)
 

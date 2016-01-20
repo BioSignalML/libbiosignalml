@@ -132,8 +132,8 @@ namespace bsml {
       TYPED_OBJECT(Recording, BSML::Recording)
       RESTRICT_NODE(format, Format::HDF5)
 
-//      RESOURCE(BSML::recording, Clock)    // The type of these must change to HDF5::Clock etc
-//      RESOURCE(BSML::recording, Signal)
+      RESOURCE(BSML::recording, Clock)    // The type of these must change to HDF5::Clock etc
+      RESOURCE(BSML::recording, Signal)
 
      public:
       Recording(const rdf::URI &uri, const std::string &filename, bool create=false) ;
