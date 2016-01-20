@@ -23,6 +23,7 @@ set(LIBRARIES ${LIBRARIES}
               PARENT_SCOPE)
 
 set(SOURCES ${SOURCES}
+            ${CMAKE_CURRENT_SOURCE_DIR}/timeseries.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/hdf5impl.cpp
             PARENT_SCOPE)
