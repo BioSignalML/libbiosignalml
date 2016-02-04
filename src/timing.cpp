@@ -56,6 +56,20 @@ double Clock::time(const size_t n) const
   return (this->rate() > 0.0) ? ((double)n)/this->rate() : 0.0 ;
   }
 
+size_t Clock::index(const double t) const
+/*-------------------------------------*/
+{
+  // Return the position of the first time point that is not less than `t`.
+  return (this->rate() > 0.0) ? (size_t)std::floor(t*this->rate()) : 0 ;
+  }
+
+size_t Clock::index_right(const double t) const
+/*-------------------------------------------*/
+{
+  // Return the position of the first time point that is not less than `t`.
+  return (this->rate() > 0.0) ? (size_t)std::ceil(t*this->rate()) : 0 ;
+  }
+
 void Clock::extend(const double *points, const size_t length)
 /*---------------------------------------------------------*/
 {

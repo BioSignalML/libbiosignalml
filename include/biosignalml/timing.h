@@ -94,6 +94,10 @@ namespace bsml {
     Clock(const rdf::URI &uri, const rdf::URI &units) ;
 
     virtual double time(const size_t n) const ;
+    //! Return the position of the first time point that is
+    //! not less than `t`. i.e. largest `n` such that `time(n) <= t`.
+    virtual size_t index(const double t) const ;
+    virtual size_t index_right(const double t) const ;
     virtual void extend(const double *times, const size_t length) ;
     virtual std::vector<double> read(size_t pos=0, intmax_t length=-1) ;
     void extend(const std::vector<double> &points) ;
