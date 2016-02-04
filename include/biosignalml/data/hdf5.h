@@ -100,6 +100,8 @@ namespace bsml {
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
       Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Ptr clock) ;
       void extend(const double *points, const size_t length) override ;
+      //! Read all points spanned by the closed interval (i.e. include points at start
+      //! and end of interval.
       data::TimeSeries::Ptr read(Interval::Ptr interval, ssize_t maxpoints=-1) override ;
       data::TimeSeries::Ptr read(size_t pos=0, ssize_t length=-1) override ;
 
