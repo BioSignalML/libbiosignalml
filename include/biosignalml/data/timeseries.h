@@ -78,13 +78,14 @@ namespace bsml {
      public:
       SHARED_PTR(UniformTimeSeries)
       UniformTimeSeries() ;
-      UniformTimeSeries(const double rate, const size_t size) ;
-      UniformTimeSeries(const double rate, const std::vector<double> &data) ;
+      UniformTimeSeries(const double rate, const size_t size, const double start=0.0) ;
+      UniformTimeSeries(const double rate, const std::vector<double> &data, const double start=0.0) ;
 
       virtual Point point(const size_t n) const ;
 
      private:
       double m_rate ;
+      double m_start ;
       } ;
 
     } ;

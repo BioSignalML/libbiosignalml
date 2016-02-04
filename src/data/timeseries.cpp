@@ -56,26 +56,31 @@ data::UniformTimeSeries::UniformTimeSeries()
 : TimeSeries()
 {
   m_rate = 0.0 ;
+  m_start = 0.0 ;
   }
 
-data::UniformTimeSeries::UniformTimeSeries(const double rate, const std::vector<double> &data)
-/*-------------------------------------------------------------------------------------------*/
+data::UniformTimeSeries::UniformTimeSeries(const double rate, const std::vector<double> &data,
+/*------------------------------------------------------------------------------------------*/
+                                           const double start)
 : data::TimeSeries()
 {
   m_data = data ;
   m_rate = rate ;
+  m_start = start ;
   }
 
-data::UniformTimeSeries::UniformTimeSeries(const double rate, const size_t size)
+data::UniformTimeSeries::UniformTimeSeries(const double rate, const size_t size,
 /*----------------------------------------------------------------------------*/
+                                           const double start)
 : TimeSeries()
 {
-  m_rate = rate ;
   m_data = std::vector<double>(size) ;
+  m_rate = rate ;
+  m_start = start ;
   }
 
 data::Point data::UniformTimeSeries::point(const size_t n) const
 /*------------------------------------------------------------*/
 {
-  return data::Point(n*m_rate, m_data[n]) ;
+  return data::Point((m_start + (double)n)/m_rate, m_data[n]) ;
   }
