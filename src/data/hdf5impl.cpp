@@ -220,7 +220,7 @@ void HDF5::Dataset::extend(const double *data, ssize_t size, int nsignals)
       }
     start[0] = shape[0] ;
     newshape[0] = shape[0] + count[0] ;
-    if (clocksize >= 0 && clocksize < newshape[0])
+    if (clocksize >= 0 && (hsize_t)clocksize < newshape[0])
       throw HDF5::Exception("Clock for '" + m_uri + "' doesn't have sufficient times") ;
     m_dataset.extend(newshape) ;
     dspace = m_dataset.getSpace() ;
