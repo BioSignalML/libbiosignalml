@@ -21,6 +21,7 @@
 #include <biosignalml/data/timeseries.h>
 
 #include <cassert>
+#include <algorithm>
 
 
 using namespace bsml ;
@@ -48,6 +49,26 @@ data::Point data::TimeSeries::point(const size_t n) const
 /*-----------------------------------------------------*/
 {
   return data::Point(m_times[n], m_data[n]) ;
+  }
+
+double data::TimeSeries::time(const size_t n) const
+/*-----------------------------------------------*/
+{
+  return m_times[n] ;
+  }
+
+double data::TimeSeries::duration(void) const
+/*-----------------------------------------*/
+{
+  return (size() > 1) ? (time(size() - 1) - time(0)) : 0.0 ;
+  }
+
+ssize_t data::TimeSeries::index(const double t)
+/*-------------------------------------------*/
+{
+  // Get iterator to first item not less than `t`.
+  auto lb = std::lower_bound(m_times.begin(), m_times.end(), t) ;
+  return (lb == m_times.end()) ? -1 : std::distance(m_times.begin(), lb) ;
   }
 
 
@@ -83,4 +104,16 @@ data::Point data::UniformTimeSeries::point(const size_t n) const
 /*------------------------------------------------------------*/
 {
   return data::Point((m_start + (double)n)/m_rate, m_data[n]) ;
+  }
+
+double data::UniformTimeSeries::time(const size_t n) const
+/*------------------------------------------------------*/
+{
+  return (m_start + (double)n)/m_rate ;
+  }
+
+ssize_t data::UniformTimeSeries::index(const double t)
+/*--------------------------------------------------*/
+{
+  return (t < m_start) ? -1 : (ssize_t)std::floor(m_rate*(t - m_start)) ;
   }

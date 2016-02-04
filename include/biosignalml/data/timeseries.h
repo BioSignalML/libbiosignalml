@@ -62,6 +62,11 @@ namespace bsml {
       inline const std::vector<double> & data(void) { return m_data ; }
       inline const std::vector<double> & times(void) { return m_times ; }
       virtual Point point(const size_t n) const ;
+      virtual double time(const size_t n) const ;
+      //! Find largest `n` such that `time(n) <= t`. Return `-1` if `t`
+      //! is before the start of the time series.
+      virtual ssize_t index(const double t) ;
+      double duration(void) const ;
 
       // std::vector<Point> points(void) { return Point(m_times[n], m_data[n]) ; }
       // Can we use std::valarray<double> ??
@@ -82,6 +87,8 @@ namespace bsml {
       UniformTimeSeries(const double rate, const std::vector<double> &data, const double start=0.0) ;
 
       virtual Point point(const size_t n) const ;
+      virtual double time(const size_t n) const ;
+      virtual ssize_t index(const double t) ;
 
      private:
       double m_rate ;
