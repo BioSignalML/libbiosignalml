@@ -59,7 +59,10 @@ namespace bsml {
     virtual void extend(const double *points, const size_t length) ;
     void extend(const std::vector<double> &points) ;
     
-    //! Time based
+    //! Time based.
+    //!
+    //! The returned time-series should be the longest bounded by the closed
+    //! interval, i.e. the interval `[ start, start+duration ]`.
     virtual bsml::data::TimeSeries::Ptr read(bsml::Interval::Ptr interval, ssize_t maxpoints=-1) ;
     //! Point based
     virtual data::TimeSeries::Ptr read(size_t pos=0, ssize_t length=0) ;

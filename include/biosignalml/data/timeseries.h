@@ -48,6 +48,19 @@ namespace bsml {
       double m_data ;
       } ;
 
+
+    //! A sequence of time points.
+    //!
+    //! Points are accessed via the `time()` method using a 0-origin index.
+    //!
+    //! If `T` is a TimeSeries then:
+    //!   - start(T) = time(0)
+    //!   - end(T) = time(size(T) - 1)
+    //!   - duration(T) = end(T) - start(T)
+    //!   - interval(T) = Interval(start(T), duration(T))
+    //!   .
+    //! N.B. Intervals are considered as closed, that is they include both
+    //! start and end points.
     class BIOSIGNALML_EXPORT TimeSeries
     /*-------------------------------*/
     {

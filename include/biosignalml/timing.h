@@ -51,6 +51,10 @@ namespace bsml {
     } ;
 
 
+  //! An interval on a time line.
+  //!
+  //! Intervals are `closed` in the mathematical sense, that is they contain
+  //! their end points.
   class BIOSIGNALML_EXPORT Interval : public TemporalEntity
   /*-----------------------------------------------------*/
   {
