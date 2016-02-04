@@ -79,14 +79,14 @@ void HDF5::Signal::extend(const double *points, const size_t length)
   }
 
 
-data::TimeSeries::Ptr HDF5::Signal::read(Interval::Ptr interval, intmax_t maxpoints)
-/*--------------------------------------------------------------------------------*/
+data::TimeSeries::Ptr HDF5::Signal::read(Interval::Ptr interval, ssize_t maxpoints)
+/*-------------------------------------------------------------------------------*/
 {
   return read(0, 10000) ;  // ******* TODO Need to find point range and call read(pos, len)
   }
 
-data::TimeSeries::Ptr HDF5::Signal::read(size_t pos, intmax_t length)    // Point based
-/*-----------------------------------------------------------------*/
+data::TimeSeries::Ptr HDF5::Signal::read(size_t pos, ssize_t length)    // Point based
+/*----------------------------------------------------------------*/
 {
   if (rate() > 0)
     return data::UniformTimeSeries::create(rate(), m_data->read(pos, length)) ;

@@ -188,8 +188,8 @@ int64_t HDF5::Dataset::clock_size(void)
   }
 
 
-void HDF5::Dataset::extend(const double *data, intmax_t size, int nsignals)
-/*-----------------------------------------------------------------------*/
+void HDF5::Dataset::extend(const double *data, ssize_t size, int nsignals)
+/*----------------------------------------------------------------------*/
 {
 
   int64_t clocksize = this->clock_size() ;
@@ -237,8 +237,8 @@ void HDF5::Dataset::extend(const double *data, intmax_t size, int nsignals)
   }
 
 
-std::vector<double> HDF5::Dataset::read(size_t pos, intmax_t size)
-/*--------------------------------------------------------------*/
+std::vector<double> HDF5::Dataset::read(size_t pos, ssize_t size)
+/*-------------------------------------------------------------*/
 {
   std::vector<double> points ;
 

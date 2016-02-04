@@ -52,13 +52,13 @@ void bsml::Signal::extend(const std::vector<double> &points)
   }
 
 #include <iostream>
-bsml::data::TimeSeries::Ptr bsml::Signal::read(bsml::Interval::Ptr interval, intmax_t maxpoints)
-/*--------------------------------------------------------------------------------------------*/
+bsml::data::TimeSeries::Ptr bsml::Signal::read(bsml::Interval::Ptr interval, ssize_t maxpoints)
+/*-------------------------------------------------------------------------------------------*/
 {
   return read(0, 0) ;
   }
 
-bsml::data::TimeSeries::Ptr bsml::Signal::read(size_t pos, intmax_t length)
+bsml::data::TimeSeries::Ptr bsml::Signal::read(size_t pos, ssize_t length)
 /*-----------------------------------------------------------------------*/
 {
   return data::TimeSeries::create() ;

@@ -64,8 +64,8 @@ namespace bsml {
       hobj_ref_t get_reference(void) const ;
       size_t size(void) const ;
       std::string name(void) const ;
-      void extend(const double *data, intmax_t length, int nsignals) ;
-      std::vector<double> read(size_t pos, intmax_t length) ;
+      void extend(const double *data, ssize_t length, int nsignals) ;
+      std::vector<double> read(size_t pos, ssize_t length) ;
 
      protected:
       std::string m_uri ;

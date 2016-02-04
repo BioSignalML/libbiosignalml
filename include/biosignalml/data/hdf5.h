@@ -77,7 +77,7 @@ namespace bsml {
       Clock(const rdf::URI &uri, const rdf::URI &units) ;
       double time(const size_t n) const override ;
       void extend(const double *times, const size_t length) override ;
-      std::vector<double> read(size_t pos=0, intmax_t length=-1) override ;
+      std::vector<double> read(size_t pos=0, ssize_t length=-1) override ;
 
      private:
       std::shared_ptr<ClockData> m_data ;
@@ -96,8 +96,8 @@ namespace bsml {
       Signal(const rdf::URI &uri, const rdf::URI &units, double rate) ;
       Signal(const rdf::URI &uri, const rdf::URI &units, Clock::Ptr clock) ;
       void extend(const double *points, const size_t length) override ;
-      data::TimeSeries::Ptr read(Interval::Ptr interval, intmax_t maxpoints=-1) override ;
-      data::TimeSeries::Ptr read(size_t pos=0, intmax_t length=-1) override ;
+      data::TimeSeries::Ptr read(Interval::Ptr interval, ssize_t maxpoints=-1) override ;
+      data::TimeSeries::Ptr read(size_t pos=0, ssize_t length=-1) override ;
 
      private:
       std::shared_ptr<SignalData> m_data ;
