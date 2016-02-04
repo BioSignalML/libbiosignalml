@@ -324,7 +324,11 @@ HDF5::File *HDF5::File::create(const std::string &uri, const std::string &fname,
 #if !H5_DEBUG
     H5::Exception::dontPrint() ;
 #endif
-    H5::H5File h5file = H5::H5File(fname, replace ? H5F_ACC_TRUNC : H5F_ACC_EXCL) ;
+    auto access_properties = H5::FileAccPropList() ;
+    // Use at least HDF5 1.8 format (which has compact group/attribute storage)
+    access_properties.setLibverBounds(H5F_LIBVER_18, H5F_LIBVER_LATEST) ;
+    H5::H5File h5file = H5::H5File(fname, replace ? H5F_ACC_TRUNC : H5F_ACC_EXCL,
+      H5::FileCreatPropList::DEFAULT, access_properties) ;
 
     H5::StrType varstr(H5::PredType::C_S1, H5T_VARIABLE) ;
     H5::DataSpace scalar(H5S_SCALAR) ;
