@@ -40,7 +40,10 @@ HDF5::Clock::Clock(const rdf::URI &uri, const rdf::URI &units)
 double HDF5::Clock::time(const size_t n) const
 /*------------------------------------------*/
 {
-  return 0.0 ;
+  if (rate() > 0.0) return ((double)n)/rate() ;
+  else              return m_data->read_time(n) ;
+  }
+
 size_t HDF5::Clock::index(const double t) const
 /*-------------------------------------------*/
 {

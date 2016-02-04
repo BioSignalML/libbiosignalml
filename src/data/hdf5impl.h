@@ -123,6 +123,7 @@ namespace bsml {
       size_t index_right(const double t) ;
 
      private:
+      friend class Clock ;
       friend class IndexCache ;
       double read_time(size_t pos) const ;
 
