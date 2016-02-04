@@ -25,6 +25,7 @@
 
 #include <stdexcept>
 #include <memory>
+#include <algorithm>
 
 using namespace bsml ;
 
@@ -40,7 +41,19 @@ double HDF5::Clock::time(const size_t n) const
 /*------------------------------------------*/
 {
   return 0.0 ;
+size_t HDF5::Clock::index(const double t) const
+/*-------------------------------------------*/
+{
+  return (rate() > 0.0) ? std::floor(t*rate()) : m_data->index(t) ;
   }
+
+
+size_t HDF5::Clock::index_right(const double t) const
+/*-------------------------------------------------*/
+{
+  return (rate() > 0.0) ? std::ceil(t*rate()) : m_data->index_right(t) ;
+  }
+
 
 void HDF5::Clock::extend(const double *times, const size_t length)
 /*--------------------------------------------------------------*/

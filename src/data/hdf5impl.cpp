@@ -25,6 +25,7 @@
 #include <string>
 #include <list>
 #include <string.h>    // For memcpy() and strcmp()
+#include <algorithm>
 
 #include <biosignalml/data/hdf5.h>
 #include "hdf5impl.h"
@@ -937,16 +938,89 @@ std::pair<std::string, std::string> HDF5::File::get_metadata(void)
   }
 
 
+HDF5::IndexCache::IndexCache(const HDF5::ClockData *clock, const bool right)
+/*------------------------------------------------------------------------*/
+: m_clock(clock), m_right(right),
+  m_indexes(std::vector<ssize_t>()), m_times(std::vector<double>())
+{
+  }
+
+void HDF5::IndexCache::insert(const size_t pos, const double t, const ssize_t index)
+/*--------------------------------------------------------------------------------*/
+{
+  m_times.insert(m_times.begin() + pos, t) ;
+  m_indexes.insert(m_indexes.begin() + pos, index) ;
+  }
+
+// Search `clock` for the index with time `t` and if not an exact match
+// return the index to the immediate left (or right if `right` set). Return
+// `-1` (`clock->size()`) if none to the left (right).
+ssize_t HDF5::IndexCache::search(size_t start, size_t end, const double t) const
+/*----------------------------------------------------------------------------*/
+{
+  // `t` is after `time(start)` and before `time(end)`
+  // Want largest index such that `t <= time(index)`
+  while (start < end) {
+    auto mid = (start + end)/2 ;
+    auto tmid = m_clock->read_time(mid) ;
+    if (t == tmid) return mid ;
+    else if (t < tmid) end = mid ;
+    else start = mid + 1 ;
+    }
+  return m_right ? end : (end - 1) ;  // start - 1 ??
+  }
+
+// LEFT:
+//  Find largest `n` such that `time(n) <= t`.
+//  Return `-1` if `n` doesn't exist.
+// RIGHT:
+//  Find smallest `n` such that `t <= time(n)`.
+//  Return `size()` if `n` doesn't exist.
+ssize_t HDF5::IndexCache::find(const double t)
+/*------------------------------------------*/
+{
+  ssize_t index ;
+
+  if (m_times.size() == 0) {
+    index = this->search(0, m_clock->size(), t) ;
+    this->insert(0, t, index) ;
+    }
+  else {
+    // Get iterator to first item greater than or equal to `t` in cache.
+    auto lb = std::lower_bound(m_times.begin(), m_times.end(), t) ;
+    size_t n = std::distance(m_times.begin(), lb) ;
+
+    if (t == *lb) {                             // Match
+      return m_indexes[n] ;
+      }
+    else if (n == 0) {                          // Before first item in cache
+      index = this->search(0, m_indexes[0], t) ;
+      }
+    else if (lb == m_times.end()) {             // After last item in cache
+      // index is after `m_indexes[n-1]` and before this->size()
+      index = this->search(m_indexes[n-1], m_clock->size(), t) ;
+      }
+    else if (m_indexes[n-1] == m_indexes[n]) {  // Overlap
+      return m_indexes[n] ;
+      }
+    else {                                      // Between `m_indexes[n-1]` and `m_indexes[n]`
+      index = this->search(m_indexes[n-1], m_indexes[n], t) ;
+      }
+    this->insert(n, t, index) ;
+    }
+  return index ;
+  }
+
 
 HDF5::ClockData::ClockData()
 /*------------------------*/
-: HDF5::Dataset()
+: HDF5::Dataset(), m_leftcache(this, false), m_rightcache(this, true)
 {
   }
 
 HDF5::ClockData::ClockData(const std::string &uri, const HDF5::DatasetRef &ds)
 /*--------------------------------------------------------------------------*/
-: HDF5::Dataset(uri, ds)
+: HDF5::Dataset(uri, ds), m_leftcache(this, false), m_rightcache(this, true)
 {
   }
 
@@ -977,7 +1051,38 @@ HDF5::ClockData::Ptr HDF5::ClockData::get_clock(const std::string &uri, const HD
   return std::make_shared<HDF5::ClockData>(uri, dataref) ;
   }
 
+double HDF5::ClockData::read_time(size_t pos) const
+/*-----------------------------------------------*/
+{
+  H5::DataSpace dspace = m_dataset.getSpace() ;
+  hsize_t shape[1], count[1], start[1] ;
+  try {
+    double times[1] ;
+    dspace.getSimpleExtentDims(shape) ;
+    if (pos >= shape[0]) pos = shape[0] ;  // reading past end...
+    start[0] = pos ;
+    count[0] = 1 ;
+    dspace.selectHyperslab(H5S_SELECT_SET, count, start) ;
+    H5::DataSpace mspace(1, count, count) ;
+    m_dataset.read((void *)times, H5::PredType::NATIVE_DOUBLE, mspace, dspace) ;
+    return times[0] ;
+    }
+  catch (H5::DataSetIException e) {
+    throw HDF5::Exception("Cannot read Clock '" + m_uri + "': " + e.getDetailMsg()) ;
+    }
+  }
 
+ssize_t HDF5::ClockData::index(const double t)
+/*-----------------------------------------*/
+{
+  return m_leftcache.find(t) ;
+  }
+
+size_t HDF5::ClockData::index_right(const double t)
+/*-----------------------------------------------*/
+{
+  return m_rightcache.find(t) ;
+  }
 
 
 HDF5::SignalData::SignalData()

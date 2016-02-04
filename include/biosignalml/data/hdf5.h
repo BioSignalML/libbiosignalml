@@ -76,6 +76,10 @@ namespace bsml {
      public:
       Clock(const rdf::URI &uri, const rdf::URI &units) ;
       double time(const size_t n) const override ;
+      //! Return the position of the first time point that is
+      //! not less than `t`.
+      size_t index(const double t) const override ;
+      size_t index_right(const double t) const override ;
       void extend(const double *times, const size_t length) override ;
       std::vector<double> read(size_t pos=0, ssize_t length=-1) override ;
 

@@ -78,6 +78,31 @@ namespace bsml {
       } ;
 
 
+    class IndexCache
+    /*------------*/
+    {
+     public:
+      IndexCache(const ClockData *clock, const bool right) ;
+      virtual ~IndexCache() = default ;
+
+      //! Insert `(t, index)` before `pos`.
+      void insert(const size_t pos, const double t, const ssize_t index) ;
+      //! Find first position in cache with time greater than or equal to `t`.
+      //! Returns `-1` if no such time exists.
+      ssize_t find(const double t) ;
+      //! Search `clock` for the index with time `t` and if not an exact match
+      //! return the index to the immediate left (or right if `right` set). Return
+      //! `-1` (`clock->size()`) if none to the left (right).
+      ssize_t search(size_t start, size_t end, const double t) const ;
+
+     private:
+      const ClockData *m_clock ;
+      const bool m_right ;
+      std::vector<ssize_t> m_indexes ;
+      std::vector<double> m_times ;
+      } ;
+
+
     class BIOSIGNALML_EXPORT ClockData : public Dataset
     /*-----------------------------------------------*/
     {
@@ -87,6 +112,22 @@ namespace bsml {
 
       using Ptr = std::shared_ptr<ClockData> ;
       static Ptr get_clock(const std::string &uri, const DatasetRef &ds) ;
+
+      //! Return the position of the first time point that is
+      //! not less than `t`. i.e. largest `n` such that `time(n) <= t`.
+      //! Returns -1 if no such `n` exists.
+      ssize_t index(const double t) ;
+      //! Return the position of the first time point that is
+      //! not more than `t`. i.e. smallest `n` such that `t <= time(n)`.
+      //! Returns `size()` if no such `n` exists.
+      size_t index_right(const double t) ;
+
+     private:
+      friend class IndexCache ;
+      double read_time(size_t pos) const ;
+
+      IndexCache m_leftcache ;
+      IndexCache m_rightcache ;
       } ;
 
 
