@@ -268,11 +268,8 @@ std::vector<double> HDF5::Dataset::read(size_t pos, ssize_t size)
         start[n] = 0 ;
         }
       }
-    dspace = m_dataset.getSpace() ;
     dspace.selectHyperslab(H5S_SELECT_SET, count, start) ;
     H5::DataSpace mspace(ndims, count, count) ;
-
-    points = std::vector<double>(size) ;
     m_dataset.read((void *)points.data(), H5::PredType::NATIVE_DOUBLE, mspace, dspace) ;
     }
   catch (H5::DataSetIException e) {
