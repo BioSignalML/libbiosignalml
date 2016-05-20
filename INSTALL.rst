@@ -13,7 +13,7 @@ Windows
 
 Build with: ::
 
-  ctest -S HDF518config.cmake,BUILD_GENERATOR=VS201364,INSTALLDIR=C:\usr\local ^
+  ctest -S HDF5config.cmake,BUILD_GENERATOR=VS201364,INSTALLDIR=C:\usr\local ^
         -C Release -V -O hdf518.log
 
 Then run installer and set `HDF5_DIR` environment variable to location of
@@ -27,7 +27,7 @@ OS/X and Ubuntu
 
 Build with: ::
 
-  ctest -S HDF518config.cmake,BUILD_GENERATOR=Unix,INSTALLDIR=/usr/local \
+  ctest -S HDF5config.cmake,BUILD_GENERATOR=Unix,INSTALLDIR=/usr/local \
         -C Release -V -O hdf518.log
 
 and after installation: ::
