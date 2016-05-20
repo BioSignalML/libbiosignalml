@@ -991,15 +991,15 @@ ssize_t HDF5::IndexCache::find(const double t)
     auto lb = std::lower_bound(m_times.begin(), m_times.end(), t) ;
     size_t n = std::distance(m_times.begin(), lb) ;
 
-    if (t == *lb) {                             // Match
+    if (lb == m_times.end()) {                  // After last item in cache
+      // index is after `m_indexes[n-1]` and before this->size()
+      index = this->search(m_indexes[n-1], m_clock->size(), t) ;
+      }
+    else if (t == *lb) {                        // Match
       return m_indexes[n] ;
       }
     else if (n == 0) {                          // Before first item in cache
       index = this->search(0, m_indexes[0], t) ;
-      }
-    else if (lb == m_times.end()) {             // After last item in cache
-      // index is after `m_indexes[n-1]` and before this->size()
-      index = this->search(m_indexes[n-1], m_clock->size(), t) ;
       }
     else if (m_indexes[n-1] == m_indexes[n]) {  // Overlap
       return m_indexes[n] ;
