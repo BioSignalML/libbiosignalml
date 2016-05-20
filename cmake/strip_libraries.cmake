@@ -1,0 +1,7 @@
+if(UNIX)
+  if(APPLE)
+    execute_process(COMMAND strip -x $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbiosignalml.dylib)
+  else()
+    execute_process(COMMAND strip    $ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libbiosignalml.so)
+  endif()
+endif()

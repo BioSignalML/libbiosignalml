@@ -1,15 +1,11 @@
 cmake_minimum_required(VERSION 3.0)
 
 project("libBioSignalML")
-set(BioSignalML_VERSION 0.0.8a)
+set(BioSignalML_VERSION_MAJOR 0)
+set(BioSignalML_VERSION_MINOR 8)
 
-### Build a package...
-if(WIN32)
-  set(CPACK_GENERATOR "ZIP")
-else()
-  set(CPACK_GENERATOR "TGZ")
-endif()
-include(CPack)
+set(BioSignalML_VERSION ${BioSignalML_VERSION_MAJOR}.${BioSignalML_VERSION_MINOR})
+set(BioSignalML_VERSION_SO ${BioSignalML_VERSION_MAJOR})
 
 ### CMake helpers...
 include(CMakePackageConfigHelpers)
@@ -63,10 +59,10 @@ add_subdirectory(tests)
 
 
 set_property(TARGET biosignalml PROPERTY VERSION ${BioSignalML_VERSION})
-set_property(TARGET biosignalml PROPERTY SOVERSION 0)
-set_property(TARGET biosignalml PROPERTY INTERFACE_biosignalml_MAJOR_VERSION 0)
+set_property(TARGET biosignalml PROPERTY SOVERSION ${BioSignalML_VERSION_SO})
+set_property(TARGET biosignalml PROPERTY INTERFACE_biosignalml_VERSION_MAJOR ${BioSignalML_VERSION_MAJOR})
 set_property(TARGET biosignalml APPEND PROPERTY
-  COMPATIBLE_INTERFACE_STRING biosignalml_MAJOR_VERSION
+  COMPATIBLE_INTERFACE_STRING biosignalml_VERSION_MAJOR
   )
 
 install(TARGETS biosignalml EXPORT biosignalmlTargets
@@ -124,3 +120,17 @@ install(
   COMPONENT
     Devel
   )
+
+# Ensure symbols are stripped from packaged libraries
+install(SCRIPT cmake/strip_libraries.cmake)
+
+### Build a package...
+if(WIN32)
+  set(CPACK_GENERATOR "ZIP")
+else()
+  set(CPACK_GENERATOR "TGZ")
+endif()
+set(CPACK_PACKAGE_VERSION_MAJOR ${BioSignalML_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${BioSignalML_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION ${BioSignalML_VERSION})
+include(CPack)
