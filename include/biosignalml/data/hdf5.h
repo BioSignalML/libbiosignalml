@@ -29,6 +29,10 @@
 #include <memory>
 #include <list>
 
+#if defined(_MSC_VER)
+#include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
+#endif
 
 namespace bsml {
 
