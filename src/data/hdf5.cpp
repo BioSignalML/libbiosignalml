@@ -47,14 +47,14 @@ double HDF5::Clock::time(const size_t n) const
 size_t HDF5::Clock::index(const double t) const
 /*-------------------------------------------*/
 {
-  return (rate() > 0.0) ? std::floor(t*rate()) : m_data->index(t) ;
+  return (rate() > 0.0) ? (size_t)std::floor(t*rate()) : m_data->index(t) ;
   }
 
 
 size_t HDF5::Clock::index_right(const double t) const
 /*-------------------------------------------------*/
 {
-  return (rate() > 0.0) ? std::ceil(t*rate()) : m_data->index_right(t) ;
+  return (rate() > 0.0) ? (size_t)std::ceil(t*rate()) : m_data->index_right(t) ;
   }
 
 
