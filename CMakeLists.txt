@@ -24,7 +24,6 @@ endif()
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
   message(STATUS "Building DEBUG version")
-  set(CMAKE_DEBUG_POSTFIX _d)
 else()
   message(STATUS "Building RELEASE version")
 endif()
