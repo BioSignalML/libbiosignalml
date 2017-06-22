@@ -26,7 +26,9 @@ endif()
 
 set(INCLUDES $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>)
 
-FIND_PACKAGE(typedobject REQUIRED)
+if("${typedobject_LIBRARY}" STREQUAL "")
+  find_package(typedobject REQUIRED)
+endif()
 set(INCLUDES ${INCLUDES} ${typedobject_INCLUDE_DIR})
 set(LIBRARIES ${typedobject_LIBRARY})
 

@@ -26,7 +26,7 @@
 namespace bsml
 /*==========*/
 {
-  const std::string VERSION = "0.8.1" ;
+  const std::string VERSION = "0.8.3" ;
   } ;
 
 #include <biosignalml/ontology.h>
