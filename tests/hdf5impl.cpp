@@ -61,8 +61,6 @@ int main(void)
 //    h->store_metadata("metadata", "format") ;
     h->close() ;
 
-    delete s ;  // dynamic pointers ???
-    delete c ;
     delete h ;
 
 //    HDF5::file r = HDF5::File::open("t2.h5") ;

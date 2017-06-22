@@ -1,3 +1,5 @@
+include_directories(${INCLUDES})
+
 ### Find Boost unit testing package:
 set(Boost_USE_STATIC_LIBS       OFF)
 set(Boost_USE_MULTITHREADED      ON)
@@ -9,6 +11,7 @@ find_package (Boost COMPONENTS system filesystem unit_test_framework REQUIRED)
 
 add_definitions (-DBOOST_TEST_DYN_LINK)
 include_directories(${Boost_INCLUDE_DIRS})
+
 ###
 
 set(LIBRARIES biosignalml
@@ -22,6 +25,12 @@ if(WIN32)
 endif()
 
 
+add_executable(test_rdf rdf.cpp)
+target_link_libraries(test_rdf ${LIBRARIES})
+add_test(RDF, test_rdf)
+
+
+
 add_executable(unittest unittest.cpp)
 target_link_libraries(unittest ${LIBRARIES})
 add_test(UNITTEST, unittest)
@@ -30,6 +39,10 @@ add_test(UNITTEST, unittest)
 add_executable(test_bsml bsml.cpp)
 target_link_libraries(test_bsml biosignalml)
 add_test(BSML, test_bsml)
+
+add_executable(test_bsml2 bsml2.cpp)
+target_link_libraries(test_bsml2 biosignalml)
+add_test(BSML2, test_bsml2)
 
 add_executable(test_hdf5 hdf5.cpp)
 target_link_libraries(test_hdf5 biosignalml)
