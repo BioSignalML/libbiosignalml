@@ -7,7 +7,7 @@ endif()
 ## with CMake 3.4 and that released with HDF5 1.8.16, so we use `hdf5-config.cmake`
 ## from the HDF5 release and augment its results. This requires that `HDF5_DIR` is
 ## set to the location of `hdf5-config.cmake`.
-FIND_PACKAGE(HDF5 "1.8" REQUIRED COMPONENTS static C CXX HL CXX_HL NO_MODULE)
+FIND_PACKAGE(HDF5 "1.10" REQUIRED COMPONENTS static C CXX HL CXX_HL NO_MODULE)
 set(HDF5_LIBRARY_DIRS ${HDF5_BUILD_DIR}/lib)
 if(WIN32)
   set(HDF5_LIBRARIES hdf5 hdf5_cpp hdf5_hl hdf5_hl_cpp szip zlib)

@@ -175,7 +175,7 @@ int64_t HDF5::Dataset::clock_size(void)
     hobj_ref_t ref ;
     attr.read(H5::PredType::STD_REF_OBJ, &ref) ;
     attr.close() ;
-    H5::DataSet clk(H5Rdereference(H5Iget_file_id(m_dataset.getId()), H5R_OBJECT, &ref)) ;
+    H5::DataSet clk(H5Rdereference(H5Iget_file_id(m_dataset.getId()), H5P_DEFAULT, H5R_OBJECT, &ref)) ;
     H5::DataSpace cspace = clk.getSpace() ;
     int cdims = cspace.getSimpleExtentNdims() ;
     hsize_t *cshape = (hsize_t *)calloc(cdims, sizeof(hsize_t)) ;
@@ -325,8 +325,6 @@ HDF5::File *HDF5::File::create(const std::string &uri, const std::string &fname,
     H5::Exception::dontPrint() ;
 #endif
     auto access_properties = H5::FileAccPropList() ;
-    // Use at least HDF5 1.8 format (which has compact group/attribute storage)
-    access_properties.setLibverBounds(H5F_LIBVER_18, H5F_LIBVER_LATEST) ;
     H5::H5File h5file = H5::H5File(fname, replace ? H5F_ACC_TRUNC : H5F_ACC_EXCL,
       H5::FileCreatPropList::DEFAULT, access_properties) ;
 
@@ -338,7 +336,7 @@ HDF5::File *HDF5::File::create(const std::string &uri, const std::string &fname,
     H5::Group uris = h5file.createGroup("/uris") ;
     H5::Group rec = h5file.createGroup("/recording") ;
     h5file.createGroup("/recording/signal") ;
-    
+
     attr = root.createAttribute("version", varstr, scalar) ;
     attr.write(varstr, BSML_H5_VERSION) ;
     attr.close() ;
@@ -696,7 +694,7 @@ HDF5::ClockData::Ptr HDF5::File::create_clock(const std::string &uri, const std:
 
   if (datasize > 0 && rate != 0.0)
     throw HDF5::Exception("A Clock cannot have both 'times' and a 'rate'") ;
-  
+
   hsize_t maxshape[] = { H5S_UNLIMITED } ;
   hsize_t shape[]    = { datasize } ;
   HDF5::DatasetRef clkdata = create_dataset("clock", 1, shape, maxshape, data) ;
@@ -1044,7 +1042,7 @@ HDF5::ClockData::Ptr HDF5::ClockData::get_clock(const std::string &uri, const HD
 
   if (rate != 0.0) return std::make_shared<HDF5::ClockData>(uri, dataref) ;
 
-// Actually reading data points needs to be a separate method... 
+// Actually reading data points needs to be a separate method...
 //  size_t size = dset.getSpace().getSimpleExtentNpoints() ;
 //  std::vector<double> times(size) ;
 //  dset.read((void *)(times.data()), H5DataTypes(&rate).mtype) ;
