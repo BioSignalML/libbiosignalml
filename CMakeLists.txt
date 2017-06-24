@@ -98,11 +98,8 @@ configure_file(cmake/biosignalmlConfig.cmake
   @ONLY
   )
 
-if(WIN32)
-  set(ConfigPackageLocation cmake)
-else()
-  set(ConfigPackageLocation lib/cmake/biosignalml)
-endif()
+# Where package configuration files are put
+set(ConfigPackageLocation lib/cmake/biosignalml)
 
 install(EXPORT biosignalmlTargets
   FILE
