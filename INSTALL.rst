@@ -16,7 +16,7 @@ Build with: ::
   wget http://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.1/src/CMake-hdf5-1.10.1.zip
   unzip CMake-hdf5-1.10.1.zip
   cd CMake-hdf5-1.10.1
-  ctest -S HDF5config.cmake,BUILD_GENERATOR=VS201564,INSTALLDIR=C:\usr\local -C Release -V -O build.log
+  ctest -S HDF5config.cmake,BUILD_GENERATOR=VS201564 -C Release -V -O build.log
 
   cd build
   ./HDF5-1.10.1-win64.exe
@@ -29,8 +29,7 @@ installed CMake files. e.g: ::
 
 For a debug version build with: ::
 
-  ctest -S HDF5config.cmake,BUILD_GENERATOR=VS201564,CTEST_BUILD_CONFIGURATION=Debug,INSTALLDIR=C:\\usr\\local ^
-        -C Debug -V -O build.log
+  ctest -S HDF5config.cmake,BUILD_GENERATOR=VS201564,CTEST_BUILD_CONFIGURATION=Debug -C Debug -V -O build.log
 
 
 macOS and Linux
