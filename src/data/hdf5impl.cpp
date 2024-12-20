@@ -487,7 +487,6 @@ HDF5::DatasetRef HDF5::File::create_dataset(const std::string &group,
     m_h5file.reference(&reference, dsetname) ;
     }
   catch (H5::FileIException e) {
-    e.printError() ;
     throw HDF5::Exception("Cannot create '" + group + "' dataset: " + e.getDetailMsg()) ;
     }
   free(chunks) ;
