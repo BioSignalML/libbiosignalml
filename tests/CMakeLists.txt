@@ -35,11 +35,6 @@ add_executable(unittest unittest.cpp)
 target_link_libraries(unittest ${LIBRARIES})
 add_test(UNITTEST, unittest)
 
-
-add_executable(test_bsml bsml.cpp)
-target_link_libraries(test_bsml biosignalml)
-add_test(BSML, test_bsml)
-
 add_executable(test_bsml2 bsml2.cpp)
 target_link_libraries(test_bsml2 biosignalml)
 add_test(BSML2, test_bsml2)
