@@ -5,6 +5,7 @@
 @prefix bsml: <http://www.biosignalml.org/ontologies/2011/04/biosignalml#> .
 @prefix ns5: <http://www.biosignalml.org/ontologies/examples/physiobank#> .
 @prefix tl: <http://purl.org/NET/c4dm/timeline.owl#> .
+@prefix cdt: <https://w3id.org/cdt/> .
 
 <http://demo.biosignalml.org/physiobank/mitdb/102>
         ns3:timeline <http://demo.biosignalml.org/physiobank/mitdb/102/timeline> ;
@@ -29,6 +30,6 @@
         bsml:rate 360 ;
         bsml:recording <http://demo.biosignalml.org/physiobank/mitdb/102> ;
         bsml:signalType bsml:ECG ;
-        bsml:units <http://www.sbpax.org/uome/list.owl#Millivolt> ;
+        bsml:units "mV"^^cdt:ucumunit ;
         a bsml:Signal ;
         rdfs:label "V5" .

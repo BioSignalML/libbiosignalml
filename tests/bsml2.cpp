@@ -9,6 +9,7 @@ std::string rec_rdf = R"(@prefix dct: <http://purl.org/dc/terms/> .
 @prefix bsml: <http://www.biosignalml.org/ontologies/2011/04/biosignalml#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix cdt: <https://w3id.org/cdt/> .
 
 <http://ex.org/recording>
 	dct:description "testing 123..." ;
@@ -18,7 +19,7 @@ std::string rec_rdf = R"(@prefix dct: <http://purl.org/dc/terms/> .
 <http://ex.org/recording/signal>
 	bsml:rate 1000.0 ;
 	bsml:recording <http://ex.org/recording> ;
-	bsml:units <http://units.org/mV> ;
+	bsml:units "mV"^^cdt:ucumunit ;
 	a bsml:Signal .
 )" ;
 

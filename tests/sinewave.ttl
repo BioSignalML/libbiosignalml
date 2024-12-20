@@ -1,6 +1,7 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dct: <http://purl.org/dc/terms/> .
+@prefix cdt: <https://w3id.org/cdt/> .
 @prefix bsml: <http://www.biosignalml.org/ontologies/2011/04/biosignalml#> .
 @prefix ns4: <http://purl.org/NET/c4dm/timeline.owl#> .
 
@@ -82,7 +83,7 @@
     bsml:index 0 ;
     bsml:rate 100.0 ;
     bsml:recording <http://demo.biosignalml.org/examples/sinewave> ;
-    bsml:units <http://www.sbpax.org/uome/list.owl#Microvolt> ;
+    bsml:units "uV"^^cdt:ucumunit ;
     a bsml:Signal ;
     rdfs:label "Sin wave" .
 
