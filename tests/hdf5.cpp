@@ -73,7 +73,7 @@ void test_read(bsml::HDF5::Signal::Ptr signal, double start, double duration,
     }
   else assert(s_index > e_index) ;
 
-  for (auto n = 0 ;  n < d->size() ;  ++n) {
+  for (size_t n = 0 ;  n < d->size() ;  ++n) {
     auto p = d->point(n) ;
     std::cout << "  DATA: " << p.time() << " " << p.value() << std::endl ;
     }
