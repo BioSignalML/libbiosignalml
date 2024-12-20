@@ -48,6 +48,9 @@ namespace bsml {
 
      public:
       SHARED_PTR(SignalArray)
+
+      virtual ~SignalArray() = default;
+
       virtual void extend(const double *points, const size_t length)
       {
         (void)points ;     // Unused parameters
