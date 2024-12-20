@@ -24,12 +24,9 @@ if(WIN32)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
-
 add_executable(test_rdf rdf.cpp)
 target_link_libraries(test_rdf ${LIBRARIES})
 add_test(RDF, test_rdf)
-
-
 
 add_executable(unittest unittest.cpp)
 target_link_libraries(unittest ${LIBRARIES})
